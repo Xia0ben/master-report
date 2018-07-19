@@ -1,0 +1,22 @@
+% Chapter 3
+
+\chapter{Study of Wu et. al.'s algorithm for locally optimal NAMO} % Main chapter title
+
+\label{Chapter3} % For referencing the chapter elsewhere, use \ref{Chapter3}
+
+\section{Removing ambiguity}
+
+\paragraph{A word on notations} The presented algorithms' pseudocode originally had some typos and mathematical incongruities like storing costs and paths in the same variable, confusing the reading. These mistakes have been fixed and for easier understanding, we will admit the following notations :
+
+\begin{itemize}
+  \item Paths (also called plans) will be noted with a lowercase $p$. Lists or sets of paths will be noted with an uppercase $P$.
+  \item Paths are ordered sets of "steps", which are in fact 2D position vectors.
+  \item Calling the A* or D*Lite algorithms returns A PATH if one is found, or null if none.
+  \item Components of a path are subsets of consecutive "steps" (therefore, paths themselves) and are noted with a lowercase $c$.
+  \item The norm of a path (written $|p|$) corresponds to the sum of the euclidean distances between consecutive steps, and $+\infty$ if the path is null.
+  \item $moveCost$ and $pushCost$ are constants without dimension.
+\end{itemize}
+
+\section{Interpretation of Levihn's recommendations as Pseudocode}
+
+\section{Discussion on the hypotheses of the original algorithms for a more realistic setting}

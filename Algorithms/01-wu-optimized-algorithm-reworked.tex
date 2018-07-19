@@ -1,0 +1,82 @@
+\begin{algorithm}[H]
+
+  \caption{Optimized algorithm for NAMO in unknown environments of Wu et. al. (2010), commented}
+
+  \label{alg:namoue}
+
+  \begin{algorithmic}[1]
+
+      \Procedure{OPTIMIZED}{$R_{init}$, $R_{goal}$}
+
+        \State $R \gets R_{init}$ \Comment{Current robot position initialization.}
+
+        \State $P_{sort} \gets \emptyset$ \Comment{List of plans, ascendingly sorted by $minCost$.}
+
+        \State $p_{opt} \gets A$*$(R_{init}, R_{goal})$ \Comment{Current plan initialized as simple A* path from init to goal.}
+
+        \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \Comment{Added line for mathematical coherence.}
+
+        \While{$R \neq R_{goal}$} \Comment{Follow current plan and recompute it as needed until goal is reached.}
+
+          \State $\mathcal{O}_{new} \gets \mathcal{O}_{new} \bigcup$ GET-NEW-INFORMATION() \Comment{\nameref{get-new-information_note}}
+
+          \If{$p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$} \Comment{Recalculate only if new obstacles invalidate the current plan.}
+
+            \State $p_{opt} \gets A$*($R$, $R_{goal}$) \Comment{\nameref{reset_plan_note}}
+            \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \Comment{Added line for mathematical coherence.}
+
+            \For{each $o \in \mathcal{O}_{new}$} \Comment{All newly detected objects are evaluated for any displacements.}
+              \For{each possible push direction $d$ on $o$}
+                \State $P_{sort}$.insert(OPT-EVALUATE-ACTION($o$,$d$,$p_{opt}$))
+              \EndFor
+            \EndFor
+
+            \State $p_{next} \gets P_{sort}[0]$ \Comment{Re-evaluate (older or not) plans that appear promising.}
+            \While{$p_{opt}.cost \geq p_{next}.minCost$}
+              \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o, p_{next}.d, p_{opt}$) \Comment{\nameref{re-evaluation_note}}
+              \If{$p.cost \leq p_{opt}.cost$}
+                \State $p_{opt} \gets p$ \Comment{No $break$ here because $P_{next}$ in $P_{sort}$ could be better if re-evaluated.}
+              \EndIf
+              \State $p_{next} \gets P_{sort}$.getNext()
+            \EndWhile
+
+            \State $\mathcal{O}_{new} \gets \emptyset$ \Comment{We don't want all older objects to be reconsidered in the double-for loop.}
+
+          \EndIf
+
+          \State $R \gets$ Next step in $p_{opt}$ \Comment{\textbf{The robot and what it perceives only change here.}}
+
+        \EndWhile
+
+    \EndProcedure
+
+    \\
+
+    \Procedure{OPT-EVALUATE-ACTION}{$o$, $d$, $p_{opt}$}
+
+    \State $P_{o,d} \gets \emptyset$ \Comment{Unordered list for remembering a plan for each new opening.}
+    \State $c_{1} \gets A$*$(R, o.init)$ \Comment{Path for reaching the contact point for pushing in $d$.}
+    \State $c_{2} \gets \emptyset$ \Comment{Current path for moving $o$ in $d$}
+    \State $o.position \gets o.init$ \Comment{$o.position$ and $o.init$ are both position vectors.}
+
+    \While{push on $o$ in $d$ possible AND $|c_{2}| * pushCost \leq p_{opt}.cost$} \Comment{\nameref{bound_note}}
+      \State $o.position \gets o.position + one\_push\_in\_d$ \Comment{Discrete pushes \textbf{only} in direction d.}
+      \If{push created new opening} \Comment{\nameref{opening_detection_note}}
+        \State $c_{2} \gets \{o.init, o.position\}$ \Comment{\nameref{c2_computation_note}}
+        \State $c_{3} \gets A$*$(o.position, R_{goal})$ \Comment{Path from moved $o$ to the goal.}
+        \State $p \gets c_{1} + c_{2} + c_{3}$ \Comment{Complete new path.}
+        \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * pushCost$ \Comment{\nameref{cost_computation_note}}
+        \State $p.minCost \gets |c_{2}| * pushCost + |c_{3}| * moveCost$ \Comment{Underestimated cost for the plan.}
+        \State $p.o \gets o$ \Comment{A plan only implies one obstacle $o$,...}
+        \State $p.d \gets d$ \Comment{... and a set of pushes in a single direction $d$.}
+        \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+      \EndIf
+    \EndWhile
+
+    \State return $p \in P_{o,d}$ with minimal $p.cost$ \Comment{Only return best plan.}
+
+    \EndProcedure
+
+  \end{algorithmic}
+
+\end{algorithm}

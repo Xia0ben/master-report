@@ -1,0 +1,605 @@
+
+@incollection{alami_geometrical_1990,
+	title = {A geometrical approach to planning manipulation tasks. The case of discrete placements and grasps},
+	url = {https://hal.archives-ouvertes.fr/hal-01309950},
+	abstract = {This paper presents a new geometrical formulation of the manipulation task planning problem in robotics. The problem is shown to be a constrained instance of the coordinated motion planning problem for multiple moving bodies. The constraints are related to the placement and the motion of objects, and can be expressed geometrically.
+
+We give a general paradigm for building Manipulation Task Planners based on the proposed formulation. A manipulation task appears as a path in the configuration space of the robot and all movable objects. A \{{\textbackslash}em manipulation path\} is a sequence of constrained paths: \{{\textbackslash}em transit-paths\}, where the robot moves "alone'', and \{{\textbackslash}em transfer-paths\}, where the robot holds an object. The approach consists in building a \{{\textbackslash}em Manipulation Graph\} that models
+the connectivity between certain regions in the global configuration space by transit-paths and transfer-paths.  
+
+This approach is then applied to the case of a finite number of object placements and grasps. The nodes in the Manipulation Graph correspond to well identified configurations and the edges correspond to paths  built from a series of configuration space slices. An implemented system is presented and discussed.},
+	pages = {453--463},
+	booktitle = {The fifth international symposium on Robotics research},
+	publisher = {{MIT} Press},
+	author = {Alami, Rachid and Siméon, Thierry and Laumond, Jean-Paul},
+	editor = {Miura, Hirofumi},
+	urldate = {2018-02-28},
+	date = {1990},
+	keywords = {Manipulation Planning, Robot Planning, Task and Motion Planning},
+	file = {citation-234831639.ris:/home/xia0ben/Zotero/storage/XR5HL7J4/citation-234831639.ris:text/plain;HAL PDF Full Text:/home/xia0ben/Zotero/storage/6B5VEPI2/Alami et al. - 1990 - A geometrical approach to planning manipulation ta.pdf:application/pdf}
+}
+
+@article{wilfong_motion_1991,
+	title = {Motion planning in the presence of movable obstacles},
+	volume = {3},
+	issn = {1012-2443, 1573-7470},
+	url = {https://link.springer.com/article/10.1007/BF01530890},
+	doi = {10.1007/BF01530890},
+	abstract = {Most motion planning algorithms have dealt with motion in a static workspace, or more recently, with motion in a workspace that changes in a known manner. We consider the problem of finding collision-free motions in a changeable workspace. That is, we wish to find a motion for an object where the object is permitted to move some of the obstacles. In such a workspace, the final positions of the movable obstacles may or may not be part of the goal. In the case where the final positions of the obstacles are specified, the general problem is shown to be {PSPACE}-hard. In the case where the final positions of the obstacles are unspecified, the motion planning problem is shown to be {NP}-hard. Algorithms that run {inO}(n3) time are presented for the case where there is only one movable obstacle in a polygonal environment withn corners and the object to be moved and the obstacle are convex polygons of constant complexity.},
+	pages = {131--150},
+	number = {1},
+	journaltitle = {Annals of Mathematics and Artificial Intelligence},
+	shortjournal = {Ann Math Artif Intell},
+	author = {Wilfong, Gordon},
+	urldate = {2018-02-28},
+	date = {1991-03-01},
+	langid = {english},
+	file = {10.1007%2FBF01530890.ris:/home/xia0ben/Zotero/storage/ZT5FFCFI/10.1007%2FBF01530890.ris:text/plain;Snapshot:/home/xia0ben/Zotero/storage/2ZQPINJL/BF01530890.html:text/html;Wilfong_1991.pdf:/home/xia0ben/Zotero/storage/5DRGSD38/Wilfong_1991.pdf:application/pdf}
+}
+
+@inproceedings{chen_practical_1991,
+	title = {Practical path planning among movable obstacles},
+	doi = {10.1109/ROBOT.1991.131618},
+	abstract = {Path planning among movable obstacles is a practical problem that is in need of a solution. An efficient heuristic algorithm is presented that uses a generate-and-test paradigm: a good candidate path is hypothesized by a global planner and subsequently verified by a local planner. In the process of formalizing the problem, a technique for modeling object interactions through contact is presented. The algorithm has been tested on a variety of examples, and was able to generate solutions within 10 s on a 17-{MIPS} Sun Sparc workstation},
+	eventtitle = {1991 {IEEE} International Conference on Robotics and Automation Proceedings},
+	pages = {444--449 vol.1},
+	booktitle = {1991 {IEEE} International Conference on Robotics and Automation Proceedings},
+	author = {Chen, P. C. and Hwang, Y. K.},
+	date = {1991-04},
+	keywords = {mobile robots, Mobile robots, path planning, movable obstacles, Contracts, global planner, heuristic algorithm, Heuristic algorithms, Laboratories, local planner, modeling, object interactions, optimisation, Partitioning algorithms, Path planning, planning (artificial intelligence), Robot sensing systems, Sun, Sun Sparc workstation, Testing, Workstations},
+	file = {Hwang_1990.pdf:/home/xia0ben/Zotero/storage/PVJTD3DU/Hwang_1990.pdf:application/pdf;IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/8LCWA7TY/131618.html:text/html}
+}
+
+@inproceedings{dacre-wright_motion_1992,
+	title = {Motion planning for a robot and a movable object amidst polygonal obstacles},
+	doi = {10.1109/ROBOT.1992.220094},
+	abstract = {The authors address the motion planning problem for a robot and a movable object within polygonal obstacles. Motion planning in this context appears as a constrained instance of the coordinated motion planning problem for two robots. The object cannot move itself, it only does when the robot grasps it. A topological property that characterizes the existence of solutions in the subspace of configurations where the robot touches the object is discussed. This property provides a general resolution scheme which is applied to the special case of a convex polygonal robot moving in translation with a convex polygonal object amidst polygonal obstacles. The algorithm has been implemented, and experimental results are discussed},
+	eventtitle = {Proceedings 1992 {IEEE} International Conference on Robotics and Automation},
+	pages = {2474--2480 vol.3},
+	booktitle = {Proceedings 1992 {IEEE} International Conference on Robotics and Automation},
+	author = {Dacre-Wright, B. and Laumond, J. P. and Alami, R.},
+	date = {1992-05},
+	keywords = {mobile robots, Motion planning, Orbital robotics, path planning, Robot kinematics, Path planning, Computational geometry, configuration subspace, convex polygons, coordinated motion planning problem, movable object, polygonal obstacles, robot, Robot motion, Terminology, topological property, translational motion},
+	file = {Dacre-Wright_1992.pdf:/home/xia0ben/Zotero/storage/9UPG4KCZ/Dacre-Wright_1992.pdf:application/pdf;IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/LMJNYWC6/220094.html:text/html}
+}
+
+@article{hwang_gross_1992,
+	title = {Gross motion planning—a survey},
+	volume = {24},
+	issn = {0360-0300},
+	url = {http://doi.acm.org/10.1145/136035.136037},
+	doi = {10.1145/136035.136037},
+	abstract = {Motion planning is one of the most important areas of robotics research. The complexity of the motion-planning problem has hindered the development of practical algorithms. This paper surveys the work on gross-motion planning, including motion planners for point robots, rigid robots, and manipulators in stationary, time-varying, constrained, and movable-object environments. The general issues in motion planning are explained. Recent approaches and their performances are briefly described, and possible future research directions are discussed.},
+	pages = {219--291},
+	number = {3},
+	journaltitle = {{ACM} Comput. Surv.},
+	author = {Hwang, Yong K. and Ahuja, Narendra},
+	urldate = {2018-02-28},
+	date = {1992-09},
+	keywords = {path planning, collision detection, computational geometry, implementation, motion planning, obstacle avoidance, spatial representation},
+	file = {citation-220566702.ris:/home/xia0ben/Zotero/storage/WM6X54H6/citation-220566702.ris:text/plain;Hwang_1992.pdf:/home/xia0ben/Zotero/storage/ZL64KNNA/Hwang_1992.pdf:application/pdf}
+}
+
+@article{dor_sokoban_1999,
+	title = {{SOKOBAN} and other motion planning problems},
+	volume = {13},
+	issn = {0925-7721},
+	url = {http://www.sciencedirect.com/science/article/pii/S0925772199000176},
+	doi = {10.1016/S0925-7721(99)00017-6},
+	abstract = {We consider a natural family of motion planning problems with movable obstacles and obtain hardness results for them. Some members of the family are shown to be {PSPACE}-complete thus improving and extending (and also simplifying) a previous {NP}-hardness result of Wilfong. The family considered includes a motion planning problem which forms the basis of a popular computer game called {SOKOBAN}. The decision problem corresponding to {SOKOBAN} is shown to be {NP}-hard. The motion planning problems considered are related to the “warehouseman's problem” considered by Hopcroft, Schwartz and Sharir, and to geometric versions of the motion planning problem on graphs considered by Papadimitriou, Raghavan, Sudan and Tamaki.},
+	pages = {215--228},
+	number = {4},
+	journaltitle = {Computational Geometry},
+	shortjournal = {Computational Geometry},
+	author = {Dor, Dorit and Zwick, Uri},
+	urldate = {2018-02-28},
+	date = {1999-10-01},
+	keywords = {Motion planning, {NP}-hardness, {PSPACE}-completeness, {SOKOBAN}},
+	file = {dor_1999.pdf:/home/xia0ben/Zotero/storage/EBYBVMMJ/dor_1999.pdf:application/pdf;S0925772199000176.ris:/home/xia0ben/Zotero/storage/9LL5BNJQ/S0925772199000176.ris:text/plain;ScienceDirect Snapshot:/home/xia0ben/Zotero/storage/3J8IT7QD/S0925772199000176.html:text/html}
+}
+
+@inproceedings{ota_rearrangement_2004,
+	title = {Rearrangement of multiple movable objects - integration of global and local planning methodology},
+	volume = {2},
+	doi = {10.1109/ROBOT.2004.1308111},
+	abstract = {A rearrangement planning methodology of multiple movable objects by a mobile robot is proposed. Several objects are to be moved from an initial configuration to separate destinations as a result of a robot handling operation. This report proposes a planning algorithm consisting of a global motion planner and a local motion planner. The global planner utilizes a priority graph of a movable object, while the local planner requires a real-time search methodology. The simulation results of rearrangements with three, four, and eight movable objects demonstrate the effectiveness of the proposed algorithm.},
+	eventtitle = {2004 {IEEE} International Conference on Robotics and Automation, 2004. Proceedings. {ICRA} '04},
+	pages = {1962--1967 Vol.2},
+	booktitle = {2004 {IEEE} International Conference on Robotics and Automation, 2004. Proceedings. {ICRA} '04},
+	author = {Ota, J.},
+	date = {2004-04},
+	keywords = {Artificial intelligence, Assembly, Automatic control, Control systems, global motion planner, local motion planner, materials handling, Materials handling, mobile robot, mobile robots, Mobile robots, Motion planning, multiple movable objects, Orbital robotics, path planning, planning algorithm, Precision engineering, Production facilities, real time search method, rearrangement planning method},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/Q5AMF6IK/1308111.html:text/html;ota_2004.pdf:/home/xia0ben/Zotero/storage/6ZRAA9ZM/ota_2004.pdf:application/pdf}
+}
+
+@inproceedings{okada_environment_2004,
+	title = {Environment manipulation planner for humanoid robots using task graph that generates action sequence},
+	volume = {2},
+	doi = {10.1109/IROS.2004.1389555},
+	abstract = {In this paper, we describe a planner for a humanoid robot that is capable of finding a path in an environment with movable objects, whereas previous motion planner only deals with an environment with fixed objects. We address an environment manipulation problem for a humanoid robot that finds a walking path from the given start location to the goal location while displacing obstructing objects on the walking path. This problem requires more complex configuration space than previous researches using a mobile robot especially in a manipulation phase, since a humanoid robot has many degrees of freedom in its arm than a forklift type robot. Our approach is to build environment manipulation task graph that decompose the given task into subtasks which are solved using navigation path planner or whole body motion planner. We also propose a standing location search and a displacing obstacle location search for connecting subtasks. Efficient method to solve manipulation planning that relies on whole body inverse kinematics and motion planning technology is also shown. Finally, we show experimental results in an environment with movable objects such as chairs and trash boxes. The planner finds an action sequence consists of walking paths and manipulating obstructing objects to walk from the start position to the goal position.},
+	eventtitle = {2004 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS}) ({IEEE} Cat. No.04CH37566)},
+	pages = {1174--1179 vol.2},
+	booktitle = {2004 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS}) ({IEEE} Cat. No.04CH37566)},
+	author = {Okada, K. and Haneda, A. and Nakai, H. and Inaba, M. and Inoue, H.},
+	date = {2004-09},
+	keywords = {mobile robot, mobile robots, Mobile robots, Motion planning, Orbital robotics, path planning, motion control, Path planning, complex configuration space, environment manipulation planner, graph theory, humanoid robots, Humanoid robots, Information science, inverse kinematics, Joining processes, Legged locomotion, motion planning technology, Navigation, navigation path planner, obstacle location search, standing location search, task graph, Technology planning},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/JYM6DNIF/1389555.html:text/html;okada_2004.pdf:/home/xia0ben/Zotero/storage/TXGFZX72/okada_2004.pdf:application/pdf}
+}
+
+@inproceedings{okada_humanoid_2005,
+	title = {Humanoid motion generation system on {HRP}2-{JSK} for daily life environment},
+	volume = {4},
+	doi = {10.1109/ICMA.2005.1626828},
+	abstract = {This paper describes software system for a humanoid robot viewed from a motion generation aspect by taking kitchen helping behaviors as an example of a real world task. Our software consists of high level reasoning modules including 3D geometric model based action/motion planner and runtime modules contains 3D visual processor, force manipulation controller and walking controller. We discuss how a high level motion and action planner based motion generation functions contribute to various real world humanoid tasks and a role of perception based motion generation using a vision sensor and force sensors.},
+	eventtitle = {{IEEE} International Conference Mechatronics and Automation, 2005},
+	pages = {1772--1777 Vol. 4},
+	booktitle = {{IEEE} International Conference Mechatronics and Automation, 2005},
+	author = {Okada, K. and Ogura, T. and Haneda, A. and Fujimoto, J. and Gravot, F. and Inaba, M.},
+	date = {2005-07},
+	keywords = {mobile robots, Motion planning, path planning, manipulators, motion control, Robot kinematics, humanoid robots, Humanoid robots, Legged locomotion, 3D geometric model, 3D visual processor, action planner, control engineering computing, force control, Force control, force manipulation controller, force sensors, Force sensors, {HRP}2-{JSK}, humanoid robot, inference mechanisms, kitchen helping behaviors, Motion control, motion generation, motion planner, reasoning modules, software system, Software systems, Solid modeling, System software, vision sensor, walking controller},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/RT3IULD9/1626828.html:text/html;okada_2005.pdf:/home/xia0ben/Zotero/storage/A9MAZTW6/okada_2005.pdf:application/pdf}
+}
+
+@article{stilman_navigation_2005,
+	title = {Navigation among movable obstacles: real-time reasoning in complex environments},
+	volume = {02},
+	issn = {0219-8436},
+	url = {http://www.worldscientific.com/doi/abs/10.1142/S0219843605000545},
+	doi = {10.1142/S0219843605000545},
+	shorttitle = {Navigation among movable obstacles},
+	abstract = {In this paper, we address the problem of Navigation Among Movable Obstacles ({NAMO}): a practical extension to navigation for humanoids and other dexterous mobile robots. The robot is permitted to reconfigure the environment by moving obstacles and clearing free space for a path. This paper presents a resolution complete planner for a subclass of {NAMO} problems. Our planner takes advantage of the navigational structure through state-space decomposition and heuristic search. The planning complexity is reduced to the difficulty of the specific navigation task, rather than the dimensionality of the multi-object domain. We demonstrate real-time results for spaces that contain large numbers of movable obstacles. We also present a practical framework for single-agent search that can be used in algorithmic reasoning about this domain.},
+	pages = {479--503},
+	number = {4},
+	journaltitle = {International Journal of Humanoid Robotics},
+	shortjournal = {Int. J. Human. Robot.},
+	author = {Stilman, Mike and Kuffner, James J.},
+	urldate = {2018-02-28},
+	date = {2005-12-01},
+	file = {Snapshot:/home/xia0ben/Zotero/storage/6E5D57V7/S0219843605000545.html:text/html;stilman_michael_2004_1.pdf:/home/xia0ben/Zotero/storage/L6PNT5L3/stilman_michael_2004_1.pdf:application/pdf;wspc_ijhr02_479.ris:/home/xia0ben/Zotero/storage/64VII8CN/wspc_ijhr02_479.ris:text/plain}
+}
+
+@article{stilman_planning_2007,
+	title = {Planning and executing navigation among movable obstacles},
+	volume = {21},
+	issn = {0169-1864},
+	url = {https://doi.org/10.1163/156855307782227408},
+	doi = {10.1163/156855307782227408},
+	abstract = {This paper explores autonomous locomotion, reaching, grasping and manipulation for the domain of navigation among movable obstacles ({NAMO}). The robot perceives and constructs a model of an environment filled with various fixed and movable obstacles, and automatically plans a navigation strategy to reach a desired goal location. The planned strategy consists of a sequence of walking and compliant manipulation operations. It is executed by the robot with online feedback. We give an overview of our {NAMO} system, as well as provide details of the autonomous planning, online grasping and compliant hand positioning during dynamically stable walking. Finally, we present results of a successful implementation running on the humanoid robot {HRP}-2.},
+	pages = {1617--1634},
+	number = {14},
+	journaltitle = {Advanced Robotics},
+	author = {Stilman, Mike and Nishiwaki, Koichi and Kagami, Satoshi and Kuffner, James J.},
+	urldate = {2018-02-28},
+	date = {2007-01-01},
+	keywords = {{HUMANOID}, {MANIPULATION}, {MOTION} {PLANNING}, {MOVABLE} {OBSTACLES}, {NAMO}, {NAVIGATION} {AMONG} {MOVABLE} {OBJECTS}},
+	file = {Snapshot:/home/xia0ben/Zotero/storage/VTTWHBTJ/156855307782227408.html:text/html;stilman_2007.pdf:/home/xia0ben/Zotero/storage/KRAUC2FF/stilman_2007.pdf:application/pdf;tandf_tadr2021_1617.ris:/home/xia0ben/Zotero/storage/SMG9GQYW/tandf_tadr2021_1617.ris:text/plain}
+}
+
+@inproceedings{stilman_manipulation_2007,
+	title = {Manipulation Planning Among Movable Obstacles},
+	doi = {10.1109/ROBOT.2007.363986},
+	abstract = {This paper presents the resolve spatial constraints ({RSC}) algorithm for manipulation planning in a domain with movable obstacles. Empirically we show that our algorithm quickly generates plans for simulated articulated robots in a highly nonlinear search space of exponential dimension. {RSC} is a reverse-time search that samples future robot actions and constrains the space of prior object displacements. To optimize the efficiency of {RSC}, we identify methods for sampling object surfaces and generating connecting paths between grasps and placements. In addition to experimental analysis of {RSC}, this paper looks into object placements and task-space motion constraints among other unique features of the three dimensional manipulation planning domain.},
+	eventtitle = {Proceedings 2007 {IEEE} International Conference on Robotics and Automation},
+	pages = {3327--3332},
+	booktitle = {Proceedings 2007 {IEEE} International Conference on Robotics and Automation},
+	author = {Stilman, M. and Schamburek, J. U. and Kuffner, J. and Asfour, T.},
+	date = {2007-04},
+	keywords = {Motion planning, Orbital robotics, path planning, Computer science, manipulation planning, manipulators, Manipulators, Motion analysis, motion control, movable obstacles, nonlinear search space, Object detection, object placements, object surface sampling, resolve spatial constraints algorithm, reverse-time search, Robot kinematics, Robotic assembly, Robotics and automation, search problems, task-space motion, {USA} Councils},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/DKQC6GLM/4209604.html:text/html;stilman-schamburek-ICRA07_2007.pdf:/home/xia0ben/Zotero/storage/T8G5E6XY/stilman-schamburek-ICRA07_2007.pdf:application/pdf}
+}
+
+@thesis{stilman_navigation_2007,
+	location = {Pittsburgh, {PA}},
+	title = {Navigation Among Movable Obstacles},
+	url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.591.3574&rep=rep1&type=pdf},
+	abstract = {Robots would be much more useful if they could move obstacles out of the way. Traditional
+motion planning searches for collision free paths from a start to a goal.  However,  real
+world search and rescue, construction, home and nursing home domains contain debris,
+materials clutter, doors and objects that need to be moved by the robot.  Theoretically,
+one can represent all possible interactions between the robot and movable objects as a
+huge search.  We present methods that simplify the problem and make Navigation Among
+Movable  Obstacles  ({NAMO})  a  practical  challenge  that  can  be  addressed  with  current
+computers.
+This thesis gives a full development cycle from motion planning to implementation on a
+humanoid robot.  First, we devise a state space decomposition strategy that reasons about
+free space connectivity to select objects and identify helpful displacements.  Second, we
+present controls for balance and manipulation that allow the robot to move objects with
+previously unknown dynamics.  Finally,  we combine these results in a complete system
+that recognizes environment objects and executes Navigation Among Movable Obstacles.
+Our continued work in {NAMO} planning has focused on three topics:  reasoning about
+object interaction, three dimensional manipulation and interaction with constrained ob-
+jects.  This thesis presents the computational and theoretical challenges that arise from
+these elaborations of the {NAMO} domain.  In each case we introduce extensions to our
+algorithms that respond to the challenge and evaluate their performance in simulation.
+All the methods presented in this thesis not only solve previously unsolved problems but
+also operate efficiently, giving real-time results that can be used during online operation.},
+	pagetotal = {145},
+	institution = {Carnegie Mellon University},
+	type = {phdthesis},
+	author = {Stilman, Mike},
+	date = {2007-10},
+	langid = {american},
+	file = {mike_stilman_thesis.ris:/home/xia0ben/Zotero/storage/6FW7Z3HT/mike_stilman_thesis.ris:text/plain;THESIS_Stilman_2007.pdf:/home/xia0ben/Zotero/storage/S6K4LSNF/THESIS_Stilman_2007.pdf:application/pdf}
+}
+
+@incollection{nieuwenhuisen_effective_2008,
+	title = {An Effective Framework for Path Planning Amidst Movable Obstacles},
+	isbn = {978-3-540-68404-6 978-3-540-68405-3},
+	url = {https://link.springer.com/chapter/10.1007/978-3-540-68405-3_6},
+	series = {Springer Tracts in Advanced Robotics},
+	abstract = {This paper addresses the problem of navigating an autonomous moving entity in an environment with both stationary and movable obstacles. If a movable obstacle blocks the path of the entity attempting to reach its goal configuration, the entity is allowed to alter the placement of the obstacle by manipulation (e.g. pushing or pulling), to clear its path. This paper presents a probabilistically complete framework for solving path planning problems among movable obstacles. Heuristics are presented to provide efficient solutions for problems in environments encountered in practical situations.},
+	pages = {87--102},
+	booktitle = {Algorithmic Foundation of Robotics {VII}},
+	publisher = {Springer, Berlin, Heidelberg},
+	author = {Nieuwenhuisen, Dennis and Stappen, A. Frank van der and Overmars, Mark H.},
+	urldate = {2018-02-28},
+	date = {2008},
+	langid = {english},
+	doi = {10.1007/978-3-540-68405-3_6},
+	file = {10.1007%2F978-3-540-68405-3_6.ris:/home/xia0ben/Zotero/storage/Y8CMNGA7/10.1007%2F978-3-540-68405-3_6.ris:text/plain;nieuwenhuisen_2008.pdf:/home/xia0ben/Zotero/storage/TWGGVF8F/nieuwenhuisen_2008.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/CV9JIAHB/10.html:text/html}
+}
+
+@article{stilman_planning_2008,
+	title = {Planning Among Movable Obstacles with Artificial Constraints},
+	volume = {27},
+	issn = {0278-3649},
+	url = {https://doi.org/10.1177/0278364908098457},
+	doi = {10.1177/0278364908098457},
+	abstract = {In this paper we present artificial constraints as a method for guiding heuristic search in the  computationally challenging domain of motion planning among movable obstacles. The robot is permitted to manipulate  unspecified obstacles in order to create space for a path. A plan is an ordered sequence of paths for robot motion and object manipulation. We show that under monotone assumptions, anticipating future manipulation paths results in constraints on both the choice of objects and their  placements at earlier stages in the plan. We present an algorithm that uses this observation to incrementally reduce the search space and quickly find solutions to previously unsolved classes of  movable obstacle problems. Our planner is developed for arbitrary robot geometry and kinematics. It is presented with an implementa tion for the domain of navigation among movable obstacles.},
+	pages = {1295--1307},
+	number = {11},
+	journaltitle = {The International Journal of Robotics Research},
+	shortjournal = {The International Journal of Robotics Research},
+	author = {Stilman, Mike and Kuffner, James},
+	urldate = {2018-02-28},
+	date = {2008-11-01},
+	langid = {english},
+	file = {10.1007%2F978-3-540-68405-3_8.ris:/home/xia0ben/Zotero/storage/28YIYGS4/10.1007%2F978-3-540-68405-3_8.ris:text/plain;stilman_michael_2006_2.pdf:/home/xia0ben/Zotero/storage/WWXFMAQC/stilman_michael_2006_2.pdf:application/pdf}
+}
+
+@incollection{berg_path_2009,
+	title = {Path Planning among Movable Obstacles: A Probabilistically Complete Approach},
+	isbn = {978-3-642-00311-0 978-3-642-00312-7},
+	url = {https://link.springer.com/chapter/10.1007/978-3-642-00312-7_37},
+	series = {Springer Tracts in Advanced Robotics},
+	shorttitle = {Path Planning among Movable Obstacles},
+	abstract = {In this paper we study the problem of path planning among movable obstacles, in which a robot is allowed to move the obstacles if they block the robot’s way from a start to a goal position. We make the observation that we can decouple the computations of the robot motions and the obstacle movements, and present a probabilistically complete algorithm, something which to date has not been achieved for this problem. Our algorithm maintains an explicit representation of the robot’s configuration space. We present an efficient implementation for the case of planar, axis-aligned environments and report experimental results on challenging scenarios.},
+	pages = {599--614},
+	booktitle = {Algorithmic Foundation of Robotics {VIII}},
+	publisher = {Springer, Berlin, Heidelberg},
+	author = {Berg, Jur van den and Stilman, Mike and Kuffner, James and Lin, Ming and Manocha, Dinesh},
+	urldate = {2018-02-28},
+	date = {2009},
+	langid = {english},
+	doi = {10.1007/978-3-642-00312-7_37},
+	file = {10.1007%2F978-3-642-00312-7_37.ris:/home/xia0ben/Zotero/storage/67JZT6SJ/10.1007%2F978-3-642-00312-7_37.ris:text/plain;Berg_2010.pdf:/home/xia0ben/Zotero/storage/7EVSLWHY/Berg_2010.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/8JK7KRTT/10.html:text/html}
+}
+
+@inproceedings{hauser_integrating_2009,
+	title = {Integrating task and prm motion planning: Dealing with many infeasible motion planning queries},
+	shorttitle = {Integrating task and prm motion planning},
+	abstract = {To accomplish a task an autonomous robot must break this task into “primitive ” subtasks and order them to satisfy precedence constraints. Each subtask requires performing a motion. The existence of a feasible trajectory is an additional precondition for the subtask, but a very expensive one to test. Probabilistic {RoadMaps} ({PRM}) are an effective approach to plan feasible trajectories when these exist. However, {PRM} planners are unable to detect that no solution exists. On the other hand, a task/motion planner must often consider many subtasks, a fraction of which, only, admit feasible trajectories. This paper proposes a general algorithm (I‐{TMP}) that specifically addresses this issue. This algorithm interweaves task and motion planning, and allows distributing computational effort where it is most useful. It is probabilistically complete in the following sense: if I‐{TMP} can generate a sequence of subtasks that admits a feasible trajectory, such a trajectory will eventually be found with high probability. An application of I‐{TMP} to multi-limbed robots navigating on rough terrain is presented. I.},
+	booktitle = {in {ICAPS}09 Workshop on Bridging the Gap between Task and Motion Planning},
+	author = {Hauser, Kris and Latombe, Jean-claude},
+	date = {2009},
+	file = {citation-255626800.ris:/home/xia0ben/Zotero/storage/2JGDEIPY/citation-255626800.ris:text/plain;Citeseer - Full Text PDF:/home/xia0ben/Zotero/storage/85LT7EHM/Hauser and Latombe - 2009 - Integrating task and prm motion planning Dealing .pdf:application/pdf;Citeseer - Snapshot:/home/xia0ben/Zotero/storage/IHWN9UVZ/summary.html:text/html}
+}
+
+@inproceedings{gallagher_gatmo_2009,
+	title = {{GATMO} : A Generalized Approach to Tracking Movable Objects},
+	doi = {10.1109/ROBOT.2009.5152863},
+	shorttitle = {{GATMO}},
+	abstract = {We present {GATMO} (Generalized Approach to Tracking Movable Objects), a system for localization and mapping that incorporates the dynamic nature of the environment while maintaining semantic labels. Objects in the environment are broken down into multiple mobility levels, from static (walls) to highly mobile (people), by maintaining a history of object movement. Object classification is accomplished through a multi-layer, multi-hypothesis approach that does not rely on any static features such as shape or size. Maps are stored in an efficient manner that incorporates a history of previous orientations of each object. {GATMO} is initialized with a static map; it subsequently changes the map over time as objects in the map change position.},
+	eventtitle = {2009 {IEEE} International Conference on Robotics and Automation},
+	pages = {2043--2048},
+	booktitle = {2009 {IEEE} International Conference on Robotics and Automation},
+	author = {Gallagher, G. and Srinivasa, S. S. and Bagnell, J. A. and Ferguson, D.},
+	date = {2009-05},
+	keywords = {Robotics and automation, Navigation, Robots, Humans, History, Indoor environments, Labeling, Postal services, Shape, Simultaneous localization and mapping},
+	file = {gatmo_gallagher_2009.pdf:/home/xia0ben/Zotero/storage/6CW8SNCX/gatmo_gallagher_2009.pdf:application/pdf;IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/YABP9BRX/5152863.html:text/html}
+}
+
+@collection{harada_motion_2010,
+	location = {London},
+	title = {Motion Planning for Humanoid Robots},
+	isbn = {978-1-84996-219-3},
+	url = {//www.springer.com/fr/book/9781849962193},
+	abstract = {Research on humanoid robots has been mostly with the aim of developing robots that can replace humans in the performance of certain tasks. Motion planning for these robots can be quite difficult, due to their complex kinematics, dynamics and environment. It is consequently one of the key research topics in humanoid robotics research and the last few years have witnessed considerable progress in the field. Motion Planning for Humanoid Robots surveys the remarkable recent advancement in both the theoretical and the practical aspects of humanoid motion planning. Various motion planning frameworks are presented in Motion Planning for Humanoid Robots, including one for skill coordination and learning, and one for manipulating and grasping tasks. The problem of planning sequences of contacts that support acyclic motion in a highly constrained environment is addressed and a motion planner that enables a humanoid robot to push an object to a desired location on a cluttered table is described. The main areas of interest include: • whole body motion planning, • task planning, • biped gait planning, and • sensor feedback for motion planning. Torque-level control of multi-contact behavior, autonomous manipulation of moving obstacles, and movement control and planning architecture are also covered. Motion Planning for Humanoid Robots will help readers to understand the current research on humanoid motion planning. It is written for industrial engineers, advanced undergraduate and postgraduate students.},
+	publisher = {Springer-Verlag},
+	editor = {Harada, Kensuke and Yoshida, Eiichi and Yokoi, Kazuhito},
+	urldate = {2018-03-01},
+	date = {2010},
+	langid = {english},
+	file = {10.1007%2F978-1-84996-220-9_8.ris:/home/xia0ben/Zotero/storage/APV4UIH2/10.1007%2F978-1-84996-220-9_8.ris:text/plain;BOOK_Joel Chestnutt (auth.), Kensuke Harada, Eiichi Yoshida, Kazuhito Yokoi (eds.)-Motion Planning for Humanoid Robots-Springer-Verlag London (2010).pdf:/home/xia0ben/Zotero/storage/KEEW7NEI/BOOK_Joel Chestnutt (auth.), Kensuke Harada, Eiichi Yoshida, Kazuhito Yokoi (eds.)-Motion Planning for Humanoid Robots-Springer-Verlag London (2010).pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/UI6D2QFY/9781849962193.html:text/html}
+}
+
+@inproceedings{kakiuchi_working_2010,
+	title = {Working with movable obstacles using on-line environment perception reconstruction using active sensing and color range sensor},
+	doi = {10.1109/IROS.2010.5650206},
+	abstract = {We propose a strategy for a robot to operate in an environment with movable obstacles using only onboard sensors, with no previous knowledge of the objects in that environment. Movable obstacles are detected using active sensing and a color range sensor, and when an obstacle is moved, the perception of the environment is reconstructed. Active sensing is defined as the classification of an object as either movable or static after the robot tries to push the object using its arm. This classification is collectively based on force sensor inputs, joint angles, and color range sensor inputs. In order to gather information from the environment, we use a color range sensor consisting of a {TOF} (Time of Flight) range sensor and conventional stereo cameras. Finally, we show experimental result in the environment with movable obstacles such as a table and chairs. Humanoid robot {HRP}-2 detects that a chair is a movable obstacle, moves the chair to clear a path to its goal, and then reaches the goal.},
+	eventtitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	pages = {1696--1701},
+	booktitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	author = {Kakiuchi, Y. and Ueda, R. and Kobayashi, K. and Okada, K. and Inaba, M.},
+	date = {2010-10},
+	keywords = {movable obstacles, humanoid robots, force sensors, humanoid robot, collision avoidance, active sensing, cameras, color range sensor, force sensor, object classification, onboard sensors, online environment perception reconstruction, stereo cameras, {TOF} range},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/UNUHDJ6S/5650206.html:text/html;working_with_kakiuchi_2010.pdf:/home/xia0ben/Zotero/storage/8BUUEV58/working_with_kakiuchi_2010.pdf:application/pdf}
+}
+
+@inproceedings{wu_navigation_2010,
+	title = {Navigation Among Movable Obstacles in unknown environments},
+	doi = {10.1109/IROS.2010.5649744},
+	abstract = {This paper explores the Navigation Among Movable Obstacles ({NAMO}) problem in an unknown environment. We consider the realistic scenario in which the robot has to navigate to a goal position in an unknown environment consisting of static and movable objects. The robot may move objects if the goal can not be reached otherwise or if moving the object may significantly shorten the path to the goal. We consider real situations in which the robot only has limited sensing information and where the action selection can therefore only be based on partial knowledge learned from the environment at that point. This paper introduces an algorithm that significantly reduces the necessary calculations to accomplish this task compared to a direct approach. We present an efficient implementation for the case of planar, axis-aligned environments and report experimental results on challenging scenarios with more than 50 objects.},
+	eventtitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	pages = {1433--1438},
+	booktitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	author = {Wu, Hai-Ning and Levihn, M. and Stilman, M.},
+	date = {2010-10},
+	keywords = {mobile robots, path planning, {NAMO} problem, navigation among movable obstacle problem, robot navigation},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/U2EBCEG2/5649744.html:text/html;wu_2010.pdf:/home/xia0ben/Zotero/storage/CYB79XLE/wu_2010.pdf:application/pdf}
+}
+
+@report{levihn_efficient_2011,
+	title = {Efficient Opening Detection},
+	url = {https://smartech.gatech.edu/handle/1853/40954},
+	abstract = {We present an efficient and powerful algorithm for detecting openings. Openings indicate the existence of a new path for the robot. The reliable detection of new openings is especially relevant to the domain of Navigation Among Movable Obstacles in known [7] as well as unknown [2] environments.  Tremendous speed-ups for algorithms in these domains can be achieved by limiting the considerations of obstacle manipulations to cases where manipulations create new openings. The presented algorithm can detect openings for obstacles of arbitrary shapes being displaced in arbitrary directions in changing environments. To the knowledge of the authors, this is the first algorithm to achieve efficient opening detection for arbitrary shaped obstacles.},
+	institution = {Georgia Institute of Technology},
+	type = {Technical Report},
+	author = {Levihn, Martin and Stilman, Mike},
+	urldate = {2018-03-25},
+	date = {2011},
+	langid = {american},
+	file = {Full Text PDF:/home/xia0ben/Zotero/storage/B5FCYCN6/Levihn and Stilman - 2011 - Efficient Opening Detection.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/7LR3FSUJ/40954.html:text/html;tech_paper_efficient_opening_detection.ris:/home/xia0ben/Zotero/storage/WVV6ICIN/tech_paper_efficient_opening_detection.ris:text/plain}
+}
+
+@inproceedings{kaelbling_hierarchical_2011,
+	title = {Hierarchical task and motion planning in the now},
+	doi = {10.1109/ICRA.2011.5980391},
+	abstract = {In this paper we outline an approach to the integration of task planning and motion planning that has the following key properties: It is aggressively hierarchical; it makes choices and commits to them in a top-down fashion in an attempt to limit the length of plans that need to be constructed, and thereby exponentially decrease the amount of search required. It operates on detailed, continuous geometric representations and does not require a-priori discretization of the state or action spaces.},
+	eventtitle = {2011 {IEEE} International Conference on Robotics and Automation},
+	pages = {1470--1477},
+	booktitle = {2011 {IEEE} International Conference on Robotics and Automation},
+	author = {Kaelbling, L. P. and Lozano-Pérez, T.},
+	date = {2011-05},
+	keywords = {mobile robots, path planning, motion planning, Robot sensing systems, Concrete, continuous geometric representations, Geometry, Grasping, hierarchical task planning, Planning, Semantics, top-down fashion},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/GM8KEWLY/5980391.html:text/html;Kaelbling_2011.pdf:/home/xia0ben/Zotero/storage/2WAD87MG/Kaelbling_2011.pdf:application/pdf}
+}
+
+@book{latombe_robot_1991,
+	title = {Robot Motion Planning},
+	isbn = {978-1-4615-4022-9},
+	abstract = {One of the ultimate goals in Robotics is to create autonomous robots. Such robots will accept high-level descriptions of tasks and will execute them without further human intervention. The input descriptions will specify what the user wants done rather than how to do it. The robots will be any kind of versatile mechanical device equipped with actuators and sensors under the control of a computing system. Making progress toward autonomous robots is of major practical inter est in a wide variety of application domains including manufacturing, construction, waste management, space exploration, undersea work, as sistance for the disabled, and medical surgery. It is also of great technical interest, especially for Computer Science, because it raises challenging and rich computational issues from which new concepts of broad useful ness are likely to emerge. Developing the technologies necessary for autonomous robots is a formidable undertaking with deep interweaved ramifications in auto mated reasoning, perception and control. It raises many important prob lems. One of them - motion planning - is the central theme of this book. It can be loosely stated as follows: How can a robot decide what motions to perform in order to achieve goal arrangements of physical objects? This capability is eminently necessary since, by definition, a robot accomplishes tasks by moving in the real world. The minimum one would expect from an autonomous robot is the ability to plan its x Preface own motions.},
+	pagetotal = {668},
+	publisher = {Springer Science \& Business Media},
+	author = {Latombe, Jean-Claude},
+	date = {1991},
+	langid = {english},
+	note = {Google-Books-{ID}: {nQ}7aBwAAQBAJ},
+	keywords = {Computers / Computer Vision \& Pattern Recognition, Computers / Intelligence ({AI}) \& Semantics, Technology \& Engineering / Automation, Technology \& Engineering / Electrical},
+	file = {(The Springer International Series in Engineering and Computer Science 124) Jean-Claude Latombe (auth.)-Robot Motion Planning-Springer US (1991).pdf:/home/xia0ben/Zotero/storage/5KQ2V6TK/(The Springer International Series in Engineering and Computer Science 124) Jean-Claude Latombe (auth.)-Robot Motion Planning-Springer US (1991).pdf:application/pdf;10.1007%2F978-1-4615-4022-9_11.ris:/home/xia0ben/Zotero/storage/5PFQHYRF/10.1007%2F978-1-4615-4022-9_11.ris:text/plain}
+}
+
+@incollection{levihn_hierarchical_2013,
+	title = {Hierarchical Decision Theoretic Planning for Navigation Among Movable Obstacles},
+	isbn = {978-3-642-36278-1 978-3-642-36279-8},
+	url = {https://link.springer.com/chapter/10.1007/978-3-642-36279-8_2},
+	series = {Springer Tracts in Advanced Robotics},
+	abstract = {In this paper we present the first decision theoretic planner for the problem of Navigation Among Movable Obstacles ({NAMO}). While efficient planners for {NAMO} exist, they are challenging to implement in practice due to the inherent uncertainty in both perception and control of real robots. Generalizing existing {NAMO} planners to nondeterministic domains is particularly difficult due to the sensitivity of {MDP} methods to task dimensionality. Our work addresses this challenge by combining ideas from Hierarchical Reinforcement Learning with Monte Carlo Tree Search, and results in an algorithm that can be used for fast online planning in uncertain environments. We evaluate our algorithm in simulation, and provide a theoretical argument for our results which suggest linear time complexity in the number of obstacles for typical environments.},
+	pages = {19--35},
+	booktitle = {Algorithmic Foundations of Robotics X},
+	publisher = {Springer, Berlin, Heidelberg},
+	author = {Levihn, Martin and Scholz, Jonathan and Stilman, Mike},
+	urldate = {2018-02-28},
+	date = {2013},
+	langid = {english},
+	doi = {10.1007/978-3-642-36279-8_2},
+	file = {10.1007%2F978-3-642-36279-8_2.ris:/home/xia0ben/Zotero/storage/3QEHSQTQ/10.1007%2F978-3-642-36279-8_2.ris:text/plain;Levihn_2013.pdf:/home/xia0ben/Zotero/storage/5AA3B8K3/Levihn_2013.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/UYKVTVFH/978-3-642-36279-8_2.html:text/html}
+}
+
+@inproceedings{levihn_planning_2013,
+	title = {Planning with movable obstacles in continuous environments with uncertain dynamics},
+	doi = {10.1109/ICRA.2013.6631116},
+	abstract = {In this paper we present a decision theoretic planner for the problem of Navigation Among Movable Obstacles ({NAMO}) operating under conditions faced by real robotic systems. While planners for the {NAMO} domain exist, they typically assume a deterministic environment or rely on discretization of the configuration and action spaces, preventing their use in practice. In contrast, we propose a planner that operates in real-world conditions such as uncertainty about the parameters of workspace objects and continuous configuration and action (control) spaces. To achieve robust {NAMO} planning despite these conditions, we introduce a novel integration of Monte Carlo simulation with an abstract {MDP} construction. We present theoretical and empirical arguments for time complexity linear in the number of obstacles as well as a detailed implementation and examples from a dynamic simulation environment.},
+	eventtitle = {2013 {IEEE} International Conference on Robotics and Automation},
+	pages = {3832--3838},
+	booktitle = {2013 {IEEE} International Conference on Robotics and Automation},
+	author = {Levihn, M. and Scholz, J. and Stilman, M.},
+	date = {2013-05},
+	keywords = {Planning, Robots, abstract {MDP} construction, Abstracts, action spaces, Aerospace electronics, collision avoidance, computational complexity, continuous environments, decision theoretic planner, decision theory, deterministic environment, dynamic simulation environment, Friction, linear time complexity, Monte Carlo methods, Monte Carlo simulation, movable obstacle planning, {NAMO} domain, {NAMO} planning, navigation among movable obstacles, real robotic systems, real-world conditions, robot dynamics, uncertain dynamics, Uncertainty, workspace object configuration},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/G7UXSMFQ/6631116.html:text/html;LevihnICRA_2013.pdf:/home/xia0ben/Zotero/storage/GTGGVYMP/LevihnICRA_2013.pdf:application/pdf}
+}
+
+@inproceedings{srivastava_combined_2014,
+	title = {Combined task and motion planning through an extensible planner-independent interface layer},
+	doi = {10.1109/ICRA.2014.6906922},
+	abstract = {The need for combined task and motion planning in robotics is well understood. Solutions to this problem have typically relied on special purpose, integrated implementations of task planning and motion planning algorithms. We propose a new approach that uses off-the-shelf task planners and motion planners and makes no assumptions about their implementation. Doing so enables our approach to directly build on, and benefit from, the vast literature and latest advances in task planning and motion planning. It uses a novel representational abstraction and requires only that failures in computing a motion plan for a high-level action be identifiable and expressible in the form of logical predicates at the task level. We evaluate the approach and illustrate its robustness through a number of experiments using a state-of-the-art robotics simulator and a {PR}2 robot. These experiments show the system accomplishing a diverse set of challenging tasks such as taking advantage of a tray when laying out a table for dinner and picking objects from cluttered environments where other objects need to be re-arranged before the target object can be reached.},
+	eventtitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	pages = {639--646},
+	booktitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	author = {Srivastava, S. and Fang, E. and Riano, L. and Chitnis, R. and Russell, S. and Abbeel, P.},
+	date = {2014-05},
+	keywords = {path planning, Grasping, Planning, cluttered environments, extensible planner-independent interface layer, Generators, Grippers, Indexes, motion planners, motion planning algorithms, off-the-shelf task planners, picking objects, {PR}2 robot, robotics simulator, Robots, task planning, Trajectory, tray},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/ZF53K6E7/6906922.html:text/html;Srivastava_2014.pdf:/home/xia0ben/Zotero/storage/TI6338Y5/Srivastava_2014.pdf:application/pdf}
+}
+
+@inproceedings{mueggler_aerial-guided_2014,
+	title = {Aerial-guided navigation of a ground robot among movable obstacles},
+	doi = {10.1109/SSRR.2014.7017662},
+	abstract = {We demonstrate the fully autonomous collaboration of an aerial and a ground robot in a mock-up disaster scenario. Within this collaboration, we make use of the individual capabilities and strengths of both robots. The aerial robot first maps an area of interest, then it computes the fastest mission for the ground robot to reach a spotted victim and deliver a first-aid kit. Such a mission includes driving and removing obstacles in the way while being constantly monitored and commanded by the aerial robot. Our mission-planning algorithm distinguishes between movable and fixed obstacles and considers both the time for driving and removing obstacles. The entire mission is executed without any human interaction once the aerial robot is launched and requires a minimal amount of communication between the robots. We describe both the hardware and software of our system and detail our mission-planning algorithm. We present exhaustive results of both simulation and real experiments. Our system was successfully demonstrated more than 20 times at a trade fair.},
+	eventtitle = {2014 {IEEE} International Symposium on Safety, Security, and Rescue Robotics (2014)},
+	pages = {1--8},
+	booktitle = {2014 {IEEE} International Symposium on Safety, Security, and Rescue Robotics (2014)},
+	author = {Mueggler, E. and Faessler, M. and Fontana, F. and Scaramuzza, D.},
+	date = {2014-10},
+	keywords = {Mobile robots, movable obstacles, Robot sensing systems, Planning, Navigation, Grippers, collision avoidance, aerial robot, aerial-guided navigation, aerospace navigation, autonomous aerial vehicles, Collaboration, disasters, driving obstacles, fixed obstacles, fully autonomous collaboration, ground robot, mission-planning algorithm, mock-up disaster scenario, removing obstacles, rescue robots, system hardware, system software},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/CVPSRLKE/7017662.html:text/html;SSRR14_Mueggler.pdf:/home/xia0ben/Zotero/storage/746YZC2J/SSRR14_Mueggler.pdf:application/pdf}
+}
+
+@inproceedings{levihn_locally_2014,
+	title = {Locally optimal navigation among movable obstacles in unknown environments},
+	doi = {10.1109/HUMANOIDS.2014.7041342},
+	abstract = {Mobile manipulators and humanoid robots should be able to utilize their manipulation capabilities to move obstacles out of their way. This concept is captured within the domain of Navigation Among Movable Obstacles ({NAMO}). While a variety of {NAMO} algorithms exists, they typically assume full world knowledge. In contrast, real robot systems only have limited sensor range and partial environment knowledge. In this work we present the first {NAMO} system for unknown environments capable of handling a large set of possible object motions and arbitrary object shapes while guaranteeing optimal decision making for the given knowledge. We demonstrate empirical results with up to 70 obstacles.},
+	eventtitle = {2014 {IEEE}-{RAS} International Conference on Humanoid Robots},
+	pages = {86--91},
+	booktitle = {2014 {IEEE}-{RAS} International Conference on Humanoid Robots},
+	author = {Levihn, M. and Stilman, M. and Christensen, H.},
+	date = {2014-11},
+	keywords = {manipulators, motion control, Robot kinematics, Robot sensing systems, Planning, humanoid robots, Navigation, collision avoidance, arbitrary object shapes, Collision avoidance, decision making, locally optimal navigation, mobile manipulators, {NAMO} algorithms, {NAMO} system, navigation, Navigation Among Movable Obstacles, object motions, Optimization, partial environment knowledge, robot systems, unknown environments},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/M3F39RYG/7041342.html:text/html;LevihnH_2014.pdf:/home/xia0ben/Zotero/storage/QDXLLDUL/LevihnH_2014.pdf:application/pdf}
+}
+
+@inproceedings{scholz_learning_2015,
+	title = {Learning non-holonomic object models for mobile manipulation},
+	doi = {10.1109/ICRA.2015.7139972},
+	abstract = {For a mobile manipulator to interact with large everyday objects, such as office tables, it is often important to have dynamic models of these objects. However, as it is infeasible to provide the robot with models for every possible object it may encounter, it is desirable that the robot can identify common object models autonomously. Existing methods for addressing this challenge are limited by being either purely kinematic, or inefficient due to a lack of physical structure. In this paper, we present a physics-based method for estimating the dynamics of common non-holonomic objects using a mobile manipulator, and demonstrate its efficiency compared to existing approaches.},
+	eventtitle = {2015 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	pages = {5531--5536},
+	booktitle = {2015 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	author = {Scholz, J. and Levihn, M. and Isbell, C. L. and Christensen, H. and Stilman, M.},
+	date = {2015-05},
+	keywords = {Mobile robots, Manipulators, Robot sensing systems, Trajectory, Friction, common object models, dynamic models, learning nonholonomic object models, learning systems, manipulator dynamics, mobile manipulation, object dynamics, office tables, physics-based method, Wheels},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/P8KEJGN8/7139972.html:text/html;learning_non_scholz_2015.pdf:/home/xia0ben/Zotero/storage/C3I9DF8K/learning_non_scholz_2015.pdf:application/pdf}
+}
+
+@inproceedings{scholz_navigation_2016,
+	title = {Navigation Among Movable Obstacles with learned dynamic constraints},
+	doi = {10.1109/IROS.2016.7759546},
+	abstract = {In this paper we present the first planner for the problem of Navigation Among Movable Obstacles ({NAMO}) on a real robot that can handle environments with under-specified object dynamics. This result makes use of recent progress from two threads of the Reinforcement Learning literature. The first is a hierarchical Markov-Decision Process formulation of the {NAMO} problem designed to handle dynamics uncertainty. The second is a physics-based Reinforcement Learning framework which offers a way to ground this uncertainty in a compact model space that can be efficiently updated from data received by the robot online. Our results demonstrate the ability of a robot to adapt to unexpected object behavior in a real office scenario.},
+	eventtitle = {2016 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	pages = {3706--3713},
+	booktitle = {2016 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	author = {Scholz, J. and Jindal, N. and Levihn, M. and Isbell, C. L. and Christensen, H. I.},
+	date = {2016-10},
+	keywords = {Planning, humanoid robots, Navigation, Grippers, Robots, {NAMO} problem, Aerospace electronics, collision avoidance, navigation among movable obstacles, robot dynamics, Dynamics, hierarchical Markov-decision process formulation, learned dynamic constraints, learning (artificial intelligence), Learning (artificial intelligence), Markov processes, object behavior, office scenario, physics-based reinforcement learning framework, uncertainty dynamics, under-specified object dynamics},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/4FDQYTRQ/7759546.html:text/html;navigation_among_scholz_2016.pdf:/home/xia0ben/Zotero/storage/X7IK7FLK/navigation_among_scholz_2016.pdf:application/pdf}
+}
+
+@inproceedings{sun_semantic_2017,
+	title = {Semantic mapping and semantics-boosted navigation with path creation on a mobile robot},
+	doi = {10.1109/ICCIS.2017.8274775},
+	abstract = {Movable obstacles are challenges for robotic navigation in human living environments because they lead to frequent changes in pre-built maps. Such changes cause navigation failures and high costs in path replanning. In this paper, we focus on the problem of semantic mapping and semantics-boosted navigation, introducing our intelligent robotic system that is capable of real-time belief-based scene understanding, object detection and recognition, as well as path creation strategy based on the semantic information. With deeper understanding of the environments, robotic navigation in cluttered environments filled with movable obstacles is improved. Scene understanding and object detection are achieved by our state-of-the-art Convolu-tional Neural Network ({CNN}) with multi-functions and then transformed into robotic beliefs using Bayes filtering to ensure temporal coherence. Object beliefs are further extended from 2D to 3D space with geometric feature detection and used for semantic mapping together with scene beliefs. Planning algorithm is designed to utilize semantic beliefs to create path through cluttered environments by manipulating movable obstacles at minimal costs. We evaluate the system on our robots with real human-living office scenarios.},
+	eventtitle = {2017 {IEEE} International Conference on Cybernetics and Intelligent Systems ({CIS}) and {IEEE} Conference on Robotics, Automation and Mechatronics ({RAM})},
+	pages = {207--212},
+	booktitle = {2017 {IEEE} International Conference on Cybernetics and Intelligent Systems ({CIS}) and {IEEE} Conference on Robotics, Automation and Mechatronics ({RAM})},
+	author = {Sun, H. and Meng, Z. and Ang, M. H.},
+	date = {2017-11},
+	keywords = {mobile robot, mobile robots, movable obstacles, Object detection, Semantics, Navigation, cluttered environments, Robots, collision avoidance, navigation, Bayes filtering, Bayes methods, convolution, Convolutional Neural Network, feedforward neural nets, filtering theory, human living environments, intelligent robotic system, intelligent robots, navigation failures, neurocontrollers, object beliefs, object detection, object recognition, path creation strategy, path replanning, Proposals, real-time belief-based scene understanding, robot vision, robotic beliefs, robotic navigation, scene beliefs, semantic beliefs, semantic information, semantic mapping, temporal coherence, Three-dimensional displays},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/XZVI6Q22/8274775.html:text/html;semantic_mapping_sun_2017.pdf:/home/xia0ben/Zotero/storage/R547XDP6/semantic_mapping_sun_2017.pdf:application/pdf}
+}
+
+@inproceedings{clingerman_dynamic_2015,
+	title = {Dynamic and probabilistic estimation of manipulable obstacles for indoor navigation},
+	doi = {10.1109/IROS.2015.7354249},
+	abstract = {In this paper we derive and implement an algorithm for an indoor mobile robotics platform to estimate the manipulability of initially unknown obstacles while navigating through its environment to a pre-specified goal. The environment is represented by an evidence grid, where each cell contains a gamma-distributed cost as well as visual feature data in the form of a color histogram. While navigating, the robot associates visual features of objects occupying a given cell with manipulability cost estimates of that cell, learning whether an object or obstacle can be moved or not in the robot's attempt to reach the goal. We derive and utilize a lower confidence bound ({LCB}) estimate for the cost of each cell in order to incorporate an exploration (versus pure exploitation) element to the robot's search for the lowest-cost path. Combining the {LCB} cost estimates with the dynamic replanning search algorithm D*-Lite, we can quickly compute optimal navigation paths regardless of the numerous changes occurring in the robot's environmental belief state. We explain the probabilistic representation of cost in the evidence grid and provide simulation and real-world results for our algorithm in a navigation scenario with static and movable objects.},
+	eventtitle = {2015 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	pages = {6121--6128},
+	booktitle = {2015 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	author = {Clingerman, C. and Wei, P. J. and Lee, D. D.},
+	date = {2015-09},
+	keywords = {mobile robots, path planning, search problems, Heuristic algorithms, Planning, Navigation, Robots, color histogram, D*-Lite, dynamic estimation, dynamic replanning search algorithm, estimation theory, gamma distribution, gamma-distributed cost, Histograms, indoor mobile robotics platform, indoor navigation, lower confidence bound estimate, manipulable obstacle, Mathematical model, probabilistic estimation, Probabilistic logic, probabilistic representation, visual feature data},
+	file = {clingerman_dynamic_2015.pdf:/home/xia0ben/Zotero/storage/SRU24QEC/clingerman_dynamic_2015.pdf:application/pdf;IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/IULTIYHA/7354249.html:text/html}
+}
+
+@inproceedings{clingerman_estimating_2014,
+	title = {Estimating manipulability of unknown obstacles for navigation in indoor environments},
+	doi = {10.1109/ICRA.2014.6907256},
+	abstract = {The challenging task of navigating in cluttered environments has been studied extensively with indoor autonomous mobile robots. However, few approaches attempt to estimate real-valued costs for manipulating said obstacles with no prior knowledge of the environment. Our approach not only estimates these costs but also models the uncertainty inherent in making such estimates. We present an algorithm that, with no prior knowledge of the environment, allows a mobile robot to determine which obstacles are movable and which are not while navigating a cluttered environment. The algorithm also applies this knowledge of manipulability to obstacles encountered in the future that are similar in appearance to ones previously seen. Using our approach, a mobile robot can act intelligently about uncertain information as well as successfully navigate initially unknown indoor environments without relying on human-provided information.},
+	eventtitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	pages = {2771--2778},
+	booktitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	author = {Clingerman, C. and Lee, D. D.},
+	date = {2014-05},
+	keywords = {mobile robots, Robot kinematics, Robot sensing systems, Navigation, cluttered environments, robot navigation, collision avoidance, Uncertainty, navigation, Gaussian processes, indoor autonomous mobile robots, indoor environment, manipulability estimation, motion estimation, unknown obstacles, Visualization},
+	file = {clingerman_estimating_2014.pdf:/home/xia0ben/Zotero/storage/9W7VYZII/clingerman_estimating_2014.pdf:application/pdf;IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/ZG7NUQI6/6907256.html:text/html}
+}
+
+@inproceedings{levihn_foresight_2013,
+	title = {Foresight and reconsideration in hierarchical planning and execution},
+	doi = {10.1109/IROS.2013.6696357},
+	abstract = {We present a hierarchical planning and execution architecture that maintains the computational efficiency of hierarchical decomposition while improving optimality. It provides mechanisms for monitoring the belief state during execution and performing selective replanning to repair poor choices and take advantage of new opportunities. It also provides mechanisms for looking ahead into future plans to avoid making short-sighted choices. The effectiveness of this architecture is shown through comparative experiments in simulation and demonstrated on a real {PR}2 robot.},
+	eventtitle = {2013 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	pages = {224--231},
+	booktitle = {2013 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	author = {Levihn, M. and Kaelbling, L. P. and Lozano-Pérez, T. and Stilman, M.},
+	date = {2013-11},
+	keywords = {Robot kinematics, Robot sensing systems, Planning, inference mechanisms, {PR}2 robot, Abstracts, collision avoidance, belief state monitoring, Computational efficiency, Computer architecture, hierarchical execution architecture, hierarchical planning architecture, robots},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/TSRIUDAV/6696357.html:text/html;levihn_foresight_2013.pdf:/home/xia0ben/Zotero/storage/9SLIHRD8/levihn_foresight_2013.pdf:application/pdf}
+}
+
+@inproceedings{mirabel_hpp:_2016,
+	title = {{HPP}: A new software for constrained motion planning},
+	doi = {10.1109/IROS.2016.7759083},
+	shorttitle = {{HPP}},
+	abstract = {We present {HPP}, a software designed for complex classes of motion planning problems, such as navigation among movable objects, manipulation, contact-rich multiped locomotion, or elastic rods in cluttered environments. {HPP} is an open-source answer to the lack of a standard framework for these important issues for robotics and graphics communities.},
+	eventtitle = {2016 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	pages = {383--389},
+	booktitle = {2016 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS})},
+	author = {Mirabel, J. and Tonneau, S. and Fernbach, P. and Seppälä, A. K. and Campana, M. and Mansard, N. and Lamiraux, F.},
+	date = {2016-10},
+	keywords = {path planning, Planning, cluttered environments, Robots, Collision avoidance, robots, constrained motion planning, elastic rods, graphics communities, {HPP}, Kinematics, Level set, Libraries, manipulation, motion planning problems, multiped locomotion, open-source answer, Software, software design},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/INB4BVIW/7759083.html:text/html;Mirabel et al. - 2016 - HPP A new software for constrained motion plannin.pdf:/home/xia0ben/Zotero/storage/PSCDN7Y5/Mirabel et al. - 2016 - HPP A new software for constrained motion plannin.pdf:application/pdf}
+}
+
+@online{tosello_cognitive_2016,
+	title = {Cognitive Task Planning for Smart Industrial Robots},
+	url = {http://paduaresearch.cab.unipd.it/9784/},
+	abstract = {This research work presents a novel Cognitive Task Planning framework for Smart Industrial Robots. The framework makes an industrial mobile manipulator robot Cognitive by applying Semantic Web Technologies. It also introduces a novel Navigation Among Movable Obstacles algorithm for robots navigating and manipulating inside a ﬁrm. 
+
+The objective of Industrie 4.0 is the creation of Smart Factories: modular ﬁrms provided with cyber-physical systems able to strong customize products under the condition of highly ﬂexible mass-production. Such systems should real-time communicate and cooperate with each other and with humans via the Internet of Things. They should intelligently adapt to the changing surroundings and autonomously navigate inside a ﬁrm while moving obstacles that occlude free paths, even if seen for the ﬁrst time. At the end, in order to accomplish all these tasks while being eﬃcient, they should learn from their actions and from that of other agents. 
+
+Most of existing industrial mobile robots navigate along pre-generated trajectories. They follow ectriﬁed wires embedded in the ground or lines painted on th eﬂoor. When there is no expectation of environment changes and cycle times are critical, this planning is functional. When workspaces and tasks change frequently, it is better to plan dynamically: robots should autonomously navigate without relying on modiﬁcations of their environments. Consider the human behavior: humans reason about the environment and consider the possibility of moving obstacles if a certain goal cannot be reached or if moving objects may signiﬁcantly shorten the path to it. This problem is named Navigation Among Movable Obstacles and is mostly known in rescue robotics. This work transposes the problem on an industrial scenario and tries to deal with its two challenges: the high dimensionality of the state space and the treatment of uncertainty. 
+
+The proposed {NAMO} algorithm aims to focus exploration on less explored areas. For this reason it extends the Kinodynamic Motion Planning by Interior-Exterior Cell Exploration algorithm. The extension does not impose obstacles avoidance: it assigns an importance to each cell by combining the eﬀorts necessary to reach it and that needed to free it from obstacles. The obtained algorithm is scalable because of its independence from the size of the map and from the number, shape, and pose of obstacles. It does not impose restrictions on actions to be performed: the robot can both push and grasp every object. Currently, the algorithm assumes full world knowledge but the environment is reconﬁgurable and the algorithm can be easily extended in order to solve {NAMO} problems in unknown environments. The algorithm handles sensor feedbacks and corrects uncertainties. 
+
+Usually Robotics separates Motion Planning and Manipulation problems. {NAMO} forces their combined processing by introducing the need of manipulating multiple objects, often unknown, while navigating. Adopting standard precomputed grasps is not suﬃcient to deal with the big amount of existing diﬀerent objects. A Semantic Knowledge Framework is proposed in support of the proposed algorithm by giving robots the ability to learn to manipulate objects and disseminate the information gained during the fulﬁllment of tasks. The Framework is composed by an Ontology and an Engine. The Ontology extends the {IEEE} Standard Ontologies for Robotics and Automation and contains descriptions of learned manipulation tasks and detected objects. It is accessible from any robot connected to the Cloud. It can be considered a data store for the eﬃcient and reliable execution of repetitive tasks; and a Web-based repository for the exchange of information between robots and for the speed up of the learning phase. No other manipulation ontology exists respecting the {IEEE} Standard and, regardless the standard, the proposed ontology diﬀers from the existing ones because of the type of features saved and the eﬃcient way in which they can be accessed: through a super fast Cascade Hashing algorithm. The Engine lets compute and store the manipulation actions when not present in the Ontology. It is based on Reinforcement Learning techniques that avoid massive trainings on large-scale databases and favors human-robot interactions. 
+
+The overall system is ﬂexible and easily adaptable to diﬀerent robots operating in diﬀerent industrial environments. It is characterized by a modular structure where each software block is completely reusable. Every block is based on the open-source Robot Operating System. Not all industrial robot controllers are designed to be {ROS}-compliant. This thesis presents the method adopted during this research in order to Open Industrial Robot Controllers and create a {ROS}-Industrial interface for them.},
+	type = {Ph.D. thesis},
+	author = {Tosello, Elisa},
+	urldate = {2018-07-11},
+	date = {2016-07},
+	file = {Full Text PDF:/home/xia0ben/Zotero/storage/NQ6R66VZ/Tosello - 2016 - Cognitive Task Planning for Smart Industrial Robot.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/F7Y9WXFZ/9784.html:text/html}
+}
+
+@inproceedings{castaman_sampling-based_2016,
+	title = {A Sampling-Based Tree Planner for Navigation Among Movable Obstacles},
+	abstract = {This paper proposes a planner that solves Navigation Among Movable Obstacles problems giving robots the ability to reason about the environment and choose when manipulating obstacles. It finds a path from a robot start configuration S to a goal configuration G taking into consideration the possibility of moving objects if G cannot be reached or if moving objects may significantly shorten the path. The planner combines the A*-Search and the exploration strategy of the Kinodynamic Motion Planning by Interior-Exterior Cell Exploration algorithm. It is locally optimal and independent from the size of the map and from the number, shape, and position of obstacles. It assumes full world knowledge but it can be easily extended in order to explore unknown environments.},
+	author = {Castaman, Nicola and Tosello, Elisa and Pagello, Enrico},
+	date = {2016-06-21},
+	file = {castaman_sampling_2016.pdf:/home/xia0ben/Zotero/storage/KHX33FU4/castaman_sampling_2016.pdf:application/pdf;Full Text PDF:/home/xia0ben/Zotero/storage/CP9FGMX8/Castaman et al. - 2016 - A Sampling-Based Tree Planner for Navigation Among.pdf:application/pdf}
+}
+
+@thesis{mirabel_manipulation_2017,
+	title = {Manipulation planning for documented objects},
+	url = {https://hal.laas.fr/tel-01516897/document},
+	abstract = {This thesis tackles the manipulation planning for documented objects. The difficulty of the problem is the coupling of a symbolic and a geometrical problem. Classical approaches combine task and motion planning. They are hard to implement and time consuming. This approach is different on three aspects. The first aspect is a theoretical framework to model admissible motions of the robot and objects. This model uses constraints to link symbolic task and motions achieving such task. A graph of constraint models the manipulation rules. A planning algorithm using this graph is proposed. The second aspect is the handling of constrained motion. In manipulation planning, an abstract definition of numerical constraint is necessary. A continuity criterion for Newton-Raphson methods is proposed to ensure the continuity of trajectories in sub-manifolds. The last aspect is object documentation. Some information, easy to define for human beings, greatly speeds up the search. This documentation, specific to each object and end-effector, is used to generate a graph of constraint, easing the problem specification and resolution.},
+	institution = {Institut National Polytechnique De Toulouse},
+	type = {phdthesis},
+	author = {Mirabel, Joseph},
+	urldate = {2018-07-11},
+	date = {2017-02-21},
+	langid = {english},
+	file = {Full Text PDF:/home/xia0ben/Zotero/storage/Y54ZIHJ8/Mirabel - 2017 - Manipulation planning for documented objects.pdf:application/pdf;Snapshot:/home/xia0ben/Zotero/storage/EYVFRTUD/tel-01516897.html:text/html}
+}
+
+@inproceedings{castaman_conditional_2018,
+	title = {Conditional Task and Motion Planning through an Effort-based Approach},
+	doi = {10.1109/SIMPAR.2018.8376270},
+	abstract = {This paper proposes a preliminary work on a Conditional Task and Motion Planning algorithm able to find a plan that minimizes robot efforts while solving assigned tasks. Unlike most of the existing approaches that replan a path only when it becomes unfeasible (e.g., no collision-free paths exist), the proposed algorithm takes into consideration a replanning procedure whenever an effort-saving is possible. The effort is here considered as the execution time, but it is extensible to the robot energy consumption. The computed plan is both conditional and dynamically adaptable to the unexpected environmental changes. Based on the theoretical analysis of the algorithm, authors expect their proposal to be complete and scalable. In progress experiments aim to prove this investigation.},
+	author = {Castaman, Nicola and Tosello, Elisa and Pagello, Enrico},
+	date = {2018-05-16},
+	file = {Full Text PDF:/home/xia0ben/Zotero/storage/LX724JGZ/Castaman et al. - 2018 - Conditional Task and Motion Planning through an Ef.pdf:application/pdf}
+}
+
+@inproceedings{levihn_autonomous_2014,
+	title = {Autonomous environment manipulation to assist humanoid locomotion},
+	doi = {10.1109/ICRA.2014.6907536},
+	abstract = {Legged robots have unique capabilities to traverse complex environments by stepping over and onto objects. Many footstep planners have been developed to take advantage of these capabilities. However, legged robots also have inherent constraints such as a maximum step height and distance. These constraints typically limit their reachable space, independent of footstep planning. Thus, we propose that robots such as humanoid robots that have manipulation capabilities should use them. A robot should autonomously modify its environment if necessary. We present a system that enabled a real robot to use a box to create itself a stair step or place a board on the ground to cross a gap, allowing it to reach its otherwise unreachable goal configuration.},
+	eventtitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	pages = {4633--4638},
+	booktitle = {2014 {IEEE} International Conference on Robotics and Automation ({ICRA})},
+	author = {Levihn, M. and Nishiwaki, K. and Kagami, S. and Stilman, M.},
+	date = {2014-05},
+	keywords = {path planning, Robot kinematics, Planning, humanoid robots, Humanoid robots, Visualization, autonomous environment manipulation capabilities, footstep planning independence, humanoid locomotion, legged locomotion, legged robots, maximum step distance, maximum step height, Service robots, Space exploration},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/LQM5JQ37/6907536.html:text/html;Levihn et al. - 2014 - Autonomous environment manipulation to assist huma.pdf:/home/xia0ben/Zotero/storage/47V63PNI/Levihn et al. - 2014 - Autonomous environment manipulation to assist huma.pdf:application/pdf}
+}
