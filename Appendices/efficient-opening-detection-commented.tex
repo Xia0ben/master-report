@@ -1,0 +1,17 @@
+\subsection{Efficient Opening Detection, Levihn M. and Stilman M. (2011), Commented}\label{eod_section}
+
+\paragraph{Note on GET-$M'_{i}$-MATRIX}\label{get_mi_matrix_note} The world $W$ is represented by an occupancy grid : this procedure extends the obstacle $M_{i}$ by the robot's diameter, giving us $M'_{i}$, then represented as a binary matrix $M$, which has the size of the bounding box of $M'_{i}$.
+
+\paragraph{Note on GET-NEW-X/Y-POS}\label{x-y-pos_note} Simulate the set of manipulation actions $A_{M}$ and get the world coordinates of the object.
+
+\paragraph{Note on interpreting the value of Z}\label{interpreting_z_note} If $Z$ is the 0-matrix, it means no new openings were detected, as all blocking areas still are blocking after the manipulation. Else, it means that one intersecting area has disappeared, meaning a possible new opening.
+
+\paragraph{Note on detecting blocking areas}\label{check_blockage_note} Check for blockage between $M'_{i}$ (represented by $M$) and other obstacles (which data is contained in the occupancy grid $G$). For that we only call ASSIGN-NR if at least one of the two current elements of both matrices signals an obstacle ($\neq 0$).
+
+\paragraph{Note on deletion}\label{deletion_note} If an index has already been deleted in an element of $BS$, delete it everywhere else because if part of a previous blocking area is detected, it means that the robot is still blocked by the same area. If for a same element of $BS$, there is an index in $BA[x][y] and BA^*_{s}[x][y]$, then it means that the blocking area still exists, thus we zero it in $BS$.
+
+\input{Algorithms/app-01-opening-detection-part1.tex}
+
+\clearpage
+
+\input{Algorithms/app-02-opening-detection-part2.tex}
