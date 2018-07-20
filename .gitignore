@@ -253,3 +253,6 @@ Origin/
 
 # Ignore filesystem manager-specific files
 *.directory
+
+# Ignore libreoffice lock files
+\.~lock*
