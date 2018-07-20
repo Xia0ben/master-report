@@ -49,7 +49,24 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
+% Custom adjustements
+% Packages to display algorithms properly
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
+% Package for easier placement of content
+\usepackage{float}
+
+% Packages for subfigures and associated captions
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Package needed for highlighting
+\usepackage{color,soul}
+% Commands for highlighting
+\newcommand{\hlcyan}[1]{{\sethlcolor{cyan}\hl{#1}}}
+\newcommand{\hlgreen}[1]{{\sethlcolor{green}\hl{#1}}}
 
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
@@ -57,8 +74,8 @@ headsepline, % Uncomment to get a line under the header
 
 \geometry{
 	paper=a4paper, % Change to letterpaper for US letter
-	inner=2.5cm, % Inner margin
-	outer=3.8cm, % Outer margin
+	inner=1.9cm, % Inner margin
+	outer=2.3cm, % Outer margin
 	bindingoffset=.5cm, % Binding offset
 	top=1.5cm, % Top margin
 	bottom=1.5cm, % Bottom margin
@@ -150,19 +167,68 @@ headsepline, % Uncomment to get a line under the header
 \end{titlepage}
 
 %----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%----------------------------------------------------------------------------------------
+
+% \begin{declaration}
+% \addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
+% \noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
+%
+% \begin{itemize}
+% \item This work was done wholly or mainly while in candidature for a research degree at this University.
+% \item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+% \item Where I have consulted the published work of others, this is always clearly attributed.
+% \item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+% \item I have acknowledged all main sources of help.
+% \item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+% \end{itemize}
+%
+% \noindent Signed:\\
+% \rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
+%
+% \noindent Date:\\
+% \rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
+% \end{declaration}
+%
+% \cleardoublepage
+
+%----------------------------------------------------------------------------------------
+%	QUOTATION PAGE
+%----------------------------------------------------------------------------------------
+
+% \vspace*{0.2\textheight}
+%
+% \noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+%
+% \hfill Dave Barry
+
+%----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-\paragraph{Résumé :} Le résumé doit décrire le contenu du rapport. Il doit contenir au moins 70 mots et ne pas dépasser 150 mots. La taille de la police est de 9-point en simple interligne. Il doit y avoir deux lignes vides avant et après le résumé. Ce document est le format exigé pour le rapport de synthèse de PFE.
+\paragraph{Résumé :} L'objectif est de permettre la navigation optimale d’un seul robot dans un environnement intérieur partiellement connu, dynamique et modifiable, en respectant les conventions sociales. % 25 mots
+
+% Le résumé doit décrire le contenu du rapport. Il doit contenir au moins 70 mots et ne pas dépasser 150 mots.
 
 \paragraph{Mots-clefs :} \keywordnamesfr
 
-\paragraph{Abstract:} The abstract should summarize the contents of the paper and should contain at least 70 and at most 150 words. It should be set in 9-point font size and should be inset 1.0 cm from the right and left margins. There should be two blank (10-point) lines before and after the abstract. This document is in the required format.
+\paragraph{Abstract:} The objective is to allow optimal navigation among movable obstacles of a single robot in a partially known interior setting, while respecting social conventions. % 24 mots
+
+% The abstract should summarize the contents of the paper and should contain at least 70 and at most 150 words.
 
 \paragraph{Key-words:} \keywordnames
 \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+% \begin{acknowledgements}
+% \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+% The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
+% \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES

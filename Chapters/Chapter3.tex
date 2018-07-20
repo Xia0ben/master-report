@@ -1,8 +1,46 @@
 % Chapter 3
 
-\chapter{Study of Wu et. al.'s algorithm for locally optimal NAMO} % Main chapter title
+\chapter{Study of Wu et. al.'s algorithm for locally optimal NAMO in unknown environments} % Main chapter title
 
 \label{Chapter3} % For referencing the chapter elsewhere, use \ref{Chapter3}
+
+\section{Original algorithms}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo1.png}
+  \caption{Main loop that evaluates all plans containing the manipulation of an obstacle every time a new one is found}
+  \label{fig:Wu_Original_Algorithm-algo1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo2.png}
+  \caption{Subroutine for evaluating all possible plans for each manipulation direction allowed on an obstacle}
+  \label{fig:Wu_Original_Algorithm-algo2}
+\end{subfigure}
+\caption{Baseline Algorithm as published by Wu et. al. in \parencite{wu_navigation_2010}}
+\label{fig:Wu_Original_Algorithm-baseline}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo3.png}
+  \caption{Main loop}
+  \label{fig:Wu_Original_Algorithm-algo3}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo4.png}
+  \caption{Subroutine}
+  \label{fig:Wu_Original_Algorithm-algo4}
+\end{subfigure}
+\caption{Optimized Algorithm as published by Wu et. al. in \parencite{wu_navigation_2010}}
+\label{fig:Wu_Original_Algorithm-optimized}
+\end{figure}
 
 \section{Removing ambiguity}
 
@@ -17,6 +55,59 @@
   \item $moveCost$ and $pushCost$ are constants without dimension.
 \end{itemize}
 
+\paragraph{Note on Get-New-Information}\label{get-new-information_note} It is not explicit how this method works. It probaly fetches the new objects list from the robot's internal map, which would continuously be updated in another execution thread. Given that in our own hypothesis, we "know" that a movable obstacle
+
+\paragraph{Note on Resetting the Current plan}\label{reset_plan_note} Reset the current plan from current robot position as the path that avoids all known objects.
+
+\paragraph{Note on Re-evaluation}\label{re-evaluation_note} The way the pseudo-code is written, even new obstacles that have just been evaluated might be reevaluated, since they have been inserted into the $P_{sort}$ list right before. Consequently, we should add a condition $p_{next}.o \notin \mathcal{O}_{new}$ to execute the re-evaluation to optimize the algorithm further.
+
+\paragraph{Note on bounding}\label{bound_note} Push until blocked (if the robot cannot get access to the grasping point required to move the object in a given direction or if there is a known obstacles that is going to enter in collision with the currently pushed obstacle, pushing must also be considered impossible) or pushing the object becomes more costly than avoiding the obstacle altogether. This is not a tight bound.
+
+\paragraph{Note on Opening Detection}\label{opening_detection_note} It is not worth computing c2 and c3 if there is no new opening. Opening detection is not adressed in this paper and the method used is not explicit. The technical paper of Levihn and Stilman : "Efficient Opening Detection" (2011) says that : \textit{"The algorithm did not rely on search but simply observed the amount of adjacent free spaces on corners of the manipulated obstacle. While efficient, this algorithm is only applicable for world configurations populated with simple rectangular shaped static and movable obstacles. This is not realistic."}.
+
+\paragraph{Note on the placement of the computation of $c2$}\label{c2_computation_note} $c2$ is only modified for each push \textbf{that creates a new opening} (as $c2$ is not defined if there is none ?). So if, for example, pushing 4 times an obstacle would result in overlapping the bound without creating an opening, the robot would still continue to simulate extra pushes until they are no longer possible (for example after 4 extra times) : given that detecting openings might be computationally expensive, \textbf{it would be better to exchange lines 35 and 36}, or at least, use a tighter bound that doesn't depend on $c2$.
+
+\paragraph{Note on cost computation}\label{cost_computation_note} The formulation here is unclear, as it is not said how multiplying a trajectory by a constant creates a decimal number cost. A decent guess would be that we are in fact multiplying the distance traveled on each path by a constant which could be equivalent to a constant force to apply for accomplishing the action of moving or pushing, which would result in an energy ($distance*force=energy$).
+
+\input{Algorithms/01-wu-reworked-commented.tex}
+
+\clearpage
+
 \section{Interpretation of Levihn's recommendations as Pseudocode}
+
+\subsection*{General notes}
+
+\paragraph{Note on the use of highlighting}\label{highlight_note} \hlgreen{Green} highlights are for lines of the OPTIMIZED procedure that were \textbf{NOT} affected by the use of minCostL and euclideanCostL. \hlcyan{Blue} highlights are for lines of the OPT-EVALUATE-ACTION procedure that were \textbf{NOT} affected by the use $C_{est}$.
+
+\subsection*{Notes on the improved obstacle evaluation}
+
+\paragraph{Note on the computation of $c1$}\label{c1_computation_note} Computation for $c1$ (path component from robot position to object) is done only once for the object as the robot can just grasp any grasping point of the object, according to what Levihn allows (behaviour deducted from the \href{https://www.youtube.com/watch?v=3AvfPVzBb-s}{video}). This would not be possible if only push actions were considered, or the robot had to take holonomic or friction constraints into account.
+
+\paragraph{Note on the computation of $C_{Est}$}\label{cest_computation_note} $C_{M}$ is a constant for the cost of the manipulation equivalent to the $pushCost$ in Wu's paper.
+
+\paragraph{Note}\label{second_opening_detection_note} The method for detecting openings is explained in section \ref{eod_section} \nameref{eod_section}.
+
+\subsection*{Notes on the improved estimation of candidate objects for evaluation}
+
+\paragraph{Note on $euclideanCostL$}\label{euclideanCostL_note} Ordered list of tuples \{obstacle, $c_{3_{(Est)}}$\} ascendingly sorted by estimated euclidean cost assuming completely free space $c_{3_{(Est)}}$.
+
+\paragraph{Note on $minCostL$}\label{minCostL_note} Ordered list of tuples \{obstacle, minCost\} ordered by minCost.
+
+\paragraph{Note on free space creation}\label{free_space_note} Levihn's quote : \textit{"Second, as the algorithm does not acknowledge the fact that free-space can be created during the execution (e.g. by moving objects), which can lower c2 or c3 for some objects, this optimization steps sacrifices local optimality."} . Thus we will consider that any successful manipulation of an object creates new free space (the place it occupied is freed).
+
+\paragraph{Note on the underestimate guarantee of minCostL}\label{underestimate_note} The lists $minCostL$ and $euclideanCostL$ contain underestimates of the cost of moving an object. For $euclideanCostL$, this is guaranteed by the constant update of the $c_{3_{est}}$, which is, for remembrance, the estimated euclidean cost between the current robot and object positions, assuming completely free space. For $minCostL$, the guarantee is not as trivial since its elements are only guaranteed to be underestimates, citing Levihn : \textit{"if no new free-space has been created since the entries were generated : If free-space is created, for example by the robot moving objects, it is possible that entries in minCostL are overestimating the plan cost for specific objects as the newly generated free-space might give rise to simpler manipulation plans for the objects."}. According to Levihn's work, we empty $minCostL$ as soon as new free space is detected so that its elements cannot become overestimates in any case. Concretely, detecting new free space will probably be done by simply detecting whether any object has moved or not.
+
+\paragraph{Note on getting the list element and limit cases}\label{get_list_element_note} For the sake of readability in the pseudocode, if the list element that is asked for is out of bounds (empty list or reached end of list), the "[ ]" operator shall return a "fake" tuple with empty obstacle reference, and infinite cost : \{null, $+\infty$\}. This could easily be implented in code by either using a ternary operator (for example, "$minCostL[i_{m}].minCost$" would become "$minCostL[i_{m}] =$ null ? $+\infty : minCostL[i_{m}].minCost$") or implementing a custom array object with the wanted behaviour.
+
+\paragraph{Note}\label{list_traversal_note} If the next entry from $minCostL$ or $euclideanCostL$ to be considered (the one with the lowest cost) is associated with a cost that is greater than the current optimal plan, it is not worth trying to evaluate any more options, and therefore the loop must end.
+
+\paragraph{Note on the priority}\label{minCostL_priority_note}If the current lowest cost entry is minCostL, evaluate the associated obstacle.
+
+\paragraph{Postponing}\label{postponing_note} If $i_{e}$ points to a lower cost, we only evaluate the associated object if $minCostL$ doesn't already contain an evaluation for it, therefore, it means there is tighter bound for the cost of moving the object, and evaluation can be postponed.
+
+\paragraph{Note on OPT-EVALUATE-ACTION's return values}\label{opt_return_note} If no path has been found, $P_{o,m} = \emptyset$, then $p$ is affected with the "null" value.
+
+\input{Algorithms/02-levihn-mainloop-commented-highlighted.tex}
+\input{Algorithms/03-levihn-subroutine-commented-highlighted.tex}
 
 \section{Discussion on the hypotheses of the original algorithms for a more realistic setting}
