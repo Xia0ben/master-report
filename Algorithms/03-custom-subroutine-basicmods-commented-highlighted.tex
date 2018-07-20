@@ -1,0 +1,62 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+    \algrestore{namoue_augmented}
+
+    \Procedure{OPT-EVALUATE-ACTION}{$o$, $p_{opt}$, $G$, $R$, $R_{goal}$}
+
+      \State $P_{o,g}$ $\gets \emptyset$
+      \State $BA \gets null$
+
+      \For{\hlgreen{each $pushPose$ in $o.pushPoses$}} \Comment{Consider only pushes on grasping points}
+        \State \hlgreen{$pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$}  \Comment{Unit vector for push direction}
+
+        \State \hlgreen{$c_{1} \gets A$*$(R, pushPose, $G$)$} \Comment{Then $c_{1}$ must be recomputed for each}
+
+        \State $seq \gets 1$
+
+        \State $c_{3_{(Est)}} \gets \{o.position, R_{goal}\}$
+
+        \State $C_{est} \gets |c_{1}| + seq * $\hlgreen{$o.C_{M}$}$ + |c_{3_{(Est)}}|$ \Comment{Push cost varies by obstacle}
+
+        \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$} \Comment{onePushDist is a constant}
+
+        \State $oSimPosition \gets $\hlgreen{$pushPose + translation$}
+
+        \State \hlgreen{$safeSweptArea \gets $get-safe-swept-area($o$, $translation$, $G$)} \Comment{get-safe-swept-area() returns null if no safe swept area has been found for translation}
+
+        \While{\hlgreen{$safeSweptArea \neq$ null} AND $C_{est}$ $ \leq p_{opt}.cost$}
+
+          \If{CHECK-NEW-OPENING($G$, $o$, $next\_manipulation\_step$, $BA$)}
+            \State $c_{2} \gets \{$\hlgreen{$pushPose$}$, oSimPosition\}$
+            \State \hlgreen{$c_{3} \gets A$*($oSimPosition$, $R_{goal}$, $G$)}
+            \State $p.path \gets c_{1} + c_{2} + c_{3}$
+            \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * $\hlgreen{$o.C_{M}$}
+            \State $p.minCost \gets |c_{2}| * $\hlgreen{$o.C_{M}$}$ + |c_{3}| * moveCost$
+            \State $p.o \gets o$
+            \State $p.m \gets m$
+            \State \hlgreen{$p.safeSweptArea \gets safeSweptArea$} \Comment{Remember this to allow obstacle collision detection when following path.}
+            \State $P_{o,m} \gets P_{o,m} \bigcup \{p\}$
+          \EndIf
+
+          \State $seq \gets seq + 1$
+
+          \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$} \Comment{onePushDist is a constant}
+
+          \State $oSimPosition \gets $\hlgreen{$pushPose + translation$}
+
+          \State $c_{3_{(Est)}} \gets \{oSimPosition, R_{goal}\}$
+
+          \State $C_{est} \gets |c_{1}| + seq * $\hlgreen{$o.C_{M}$}$ + |c_{3_{(Est)}}|$
+
+          \State \hlgreen{$safeSweptArea \gets $get-safe-swept-area($o$, $translation$, $G$)}
+
+        \EndWhile
+
+      \EndFor
+
+    \State return $p \in P_{o,m}$ with minimal $p.cost$
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

@@ -16,35 +16,35 @@
 
         \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \Comment{Added line for mathematical coherence.}
 
-        \While{$R \neq R_{goal}$} \Comment{Follow current plan and recompute it as needed until goal is reached.}
+        \While{$R \neq R_{goal}$} \Comment{Stop only when goal is reached.}
 
           \State $\mathcal{O}_{new} \gets \mathcal{O}_{new} \bigcup$ GET-NEW-INFORMATION() \Comment{\nameref{get-new-information_note}}
 
-          \If{$p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$} \Comment{Recalculate only if new obstacles invalidate the current plan.}
+          \If{$p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$} \Comment{Recompute when new obstacles invalidate the current plan.}
 
             \State $p_{opt} \gets A$*($R$, $R_{goal}$) \Comment{\nameref{reset_plan_note}}
             \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \Comment{Added line for mathematical coherence.}
 
-            \For{each $o \in \mathcal{O}_{new}$} \Comment{All newly detected objects are evaluated for any displacements.}
+            \For{each $o \in \mathcal{O}_{new}$} \Comment{All new obstacles are evaluated for any displacements.}
               \For{each possible push direction $d$ on $o$}
                 \State $P_{sort}$.insert(OPT-EVALUATE-ACTION($o$,$d$,$p_{opt}$))
               \EndFor
             \EndFor
 
             \State $p_{next} \gets P_{sort}[0]$ \Comment{Re-evaluate (older or not) plans that appear promising.}
-            \While{$p_{opt}.cost \geq p_{next}.minCost$}
+            \While{$p_{opt}.cost \geq p_{next}.minCost$} \Comment{Loop until $p_{next}$ couldn't be better than $p_{opt}$.}
               \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o, p_{next}.d, p_{opt}$) \Comment{\nameref{re-evaluation_note}}
               \If{$p.cost \leq p_{opt}.cost$}
-                \State $p_{opt} \gets p$ \Comment{No $break$ here because $P_{next}$ in $P_{sort}$ could be better if re-evaluated.}
+                \State $p_{opt} \gets p$
               \EndIf
               \State $p_{next} \gets P_{sort}$.getNext()
             \EndWhile
 
-            \State $\mathcal{O}_{new} \gets \emptyset$ \Comment{We don't want all older objects to be reconsidered in the double-for loop.}
+            \State $\mathcal{O}_{new} \gets \emptyset$ \Comment{Reset so that only new objects are considered in the double-for loop.}
 
           \EndIf
 
-          \State $R \gets$ Next step in $p_{opt}$ \Comment{\textbf{The robot and what it perceives only change here.}}
+          \State $R \gets$ Next step in $p_{opt}$ \Comment{\textbf{The robot's pose and what it perceives only change here.}}
 
         \EndWhile
 

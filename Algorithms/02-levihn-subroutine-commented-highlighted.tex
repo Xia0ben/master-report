@@ -1,0 +1,51 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+    \algrestore{namoue_augmented}
+
+    \Procedure{OPT-EVALUATE-ACTION}{$o$, $p_{opt}$, $G$, $R$, $R_{goal}$}
+
+      \State $P_{o,m}$ $\gets \emptyset$
+      \State $c_{1} \gets D$*Lite$(R, o.init, $G$)$ \Comment{\nameref{c1_computation_note}}
+      \State $BA \gets null$ \Comment{Remember blocking areas for more efficient opening detection.}
+
+      \For{each possible manipulation $m$ on $o$}
+
+        \State $seq \gets 1$ \Comment{Current depth of the search, initialized to 1.}
+
+        \State $c_{3_{(Est)}} \gets \{o.position, R_{goal}\}$ \Comment{Straight line between grasping point and goal.}
+
+        \State $C_{est} \gets |c_{1}| + seq * C_{M} + |c_{3_{(Est)}}|$ \Comment{\nameref{cest_computation_note}}
+
+        \State $oSimPosition \gets o.init + next\_manipulation\_step$
+
+        \While{manipulation on $o$ possible AND $C_{est}$ $ \leq p_{opt}.cost$}
+
+          \If{CHECK-NEW-OPENING($G$, $o$, $next\_manipulation\_step$, $BA$)} \Comment{\nameref{second_opening_detection_note}}
+            \State \hlcyan{$c_{2} \gets \{o.init, oSimPosition\}$} \Comment{Supposing we still only push or pull in one direction.}
+            \State $c_{3} \gets D$*Lite($oSimPosition$, $R_{goal}$, $G$)
+            \State \hlcyan{$p.path \gets c_{1} + c_{2} + c_{3}$}
+            \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * C_{M}$
+            \State $p.minCost \gets |c_{2}| * C_{M} + |c_{3}| * moveCost$
+            \State \hlcyan{$p.o \gets o$}
+            \State $p.m \gets m$
+            \State $P_{o,m} \gets P_{o,m} \bigcup \{p\}$
+          \EndIf
+
+          \State $oSimPosition \gets oSimPosition + next\_manipulation\_step$
+
+          \State $seq \gets seq + 1$ \Comment{Increment depth of search for next loop.}
+
+          \State $c_{3_{(Est)}} \gets \{oSimPosition, R_{goal}\}$
+
+          \State $C_{est} \gets |c_{1}| + seq * C_{M} + |c_{3_{(Est)}}|$ \Comment{Update $C_{est}$ for next loop}
+
+        \EndWhile
+
+      \EndFor
+
+    \State return $p \in P_{o,m}$ with minimal $p.cost$ \Comment{\nameref{opt_return_note}}
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

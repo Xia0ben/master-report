@@ -1,0 +1,81 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+
+    \label{alg:namoue_subroutine_custom_observation}
+
+    \Procedure{OPT-EVALUATE-ACTION}{$o$, $p_{opt}$, $G$, $R$, $R_{goal}$}
+
+      \If{$o.movableStatus = IS\_NOT\_MOVABLE$}
+        return $\emptyset$
+      \EndIf
+
+      \State $P_{o,g}$ $\gets \emptyset$
+      \State $BA \gets null$
+
+      \For{each $pushPose$ in $o.pushPoses$}
+        \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
+
+        \State $c_{1} \gets A$*$(R, pushPose, $G$)$
+
+        \State \hlgreen{$o_{1} \gets \emptyset$}
+
+        \If{\hlgreen{$o.movableStatus = IS\_MAYBE\_MOVABLE$}}
+
+          \If {\hlgreen{not $does\_c_{1}\_allow\_to\_check\_obstacle\_status(c_{1})$}} \Comment{For every pose in $c_{1}$, check if at least one allows to see the entire known geometry of the obstacle (if we consider the robot's field of vision as a polygon, it is only a matter of checking if the obstacles's polygon representation is within the robot's field of vision polygonn at the current pose)}
+            \State \hlgreen{$observationWaypoint \gets$ get-observation-waypoint($c_{1}$, $pushPose$, $o$)}  \Comment{If we implement observation points as points that are at constant relative distance of the obstacles sides, simply pick the one nearest that can be reached to the goal grasping point}
+            \State \hlgreen{$o_{1} \gets A$*$(R, observationWaypoint, $G$)$} \Comment{if not add path component $o_{1}$ to observation point and recompute $c_{1}$ from observation point to grasp point to observe before push}
+            \State \hlgreen{$c_{1} \gets A$*$(observationWaypoint, pushPose, $G$)$}
+          \EndIf
+
+          \State \Comment{If $c_{1}$ seems to be okay, no need to generate a path to an observation point}
+
+        \EndIf
+
+        \State $seq \gets 1$
+
+        \State $translation \gets pushUnit * onePushDist * seq$
+
+        \State $oSimPosition \gets pushPose + translation$
+
+        \State $c_{3_{(Est)}} \gets \{oSimPosition, R_{goal}\}$
+
+        \State $C_{est} \gets ($\hlgreen{$|o_{1}|$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * o.C_{M}$
+
+        \State $safeSweptArea \gets $get-safe-swept-area($o$, $translation$, $G$)
+
+        \While{$safeSweptArea \neq$ null AND $C_{est}$ $ \leq p_{opt}.cost$}
+
+          \If{CHECK-NEW-OPENING($G$, $o$, $next\_manipulation\_step$, $BA$)}
+            \State $c_{2} \gets \{pushPose, oSimPosition\}$
+            \State $c_{3} \gets A$*($oSimPosition$, $R_{goal}$, $G$)
+            \State $p.path \gets o_{1} + c_{1} + c_{2} + c_{3}$
+            \State $p.cost \gets ($\hlgreen{$|o_{1}|$}$ + |c_{1}| + |c_{3}|) * moveCost + |c_{2}| * o.C_{M}$
+            \State $p.minCost \gets |c_{2}| * o.C_{M} + |c_{3}| * moveCost$
+            \State $p.o \gets o$
+            \State $p.m \gets m$
+            \State $p.safeSweptArea \gets safeSweptArea$
+            \State $P_{o,m} \gets P_{o,m} \bigcup \{p\}$
+          \EndIf
+
+          \State $seq \gets seq + 1$
+
+          \State $translation \gets pushUnit * onePushDist * seq$
+
+          \State $oSimPosition \gets pushPose + translation$
+
+          \State $c_{3_{(Est)}} \gets \{oSimPosition, R_{goal}\}$
+
+          \State $C_{est} \gets ($\hlgreen{$|o_{1}|$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * o.C_{M}$
+
+          \State $safeSweptArea \gets $get-safe-swept-area($o$, $translation$, $G$)
+
+        \EndWhile
+
+      \EndFor
+
+    \State return $p \in P_{o,m}$ with minimal $p.cost$
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

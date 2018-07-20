@@ -1,0 +1,47 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+    \algrestore{opening_detection}
+
+    \Procedure{ASSIGN-NR}{$BA$, $x$, $y$, $index$}
+
+    \For{$i$ from -1 to 1} \Comment{Assignment is performed based on the 3*3 neighborhood.}
+      \For{$j$ from -1 to 1}
+        \If{$BA[x+i][y+j] \neq 0$} \Comment{If a number is already in the neighborhood, ...}
+          \State $BA[x][y] \gets BA[x+i][y+j]$ \Comment{... the same number is assigned to the element.}
+          \State return
+        \EndIf
+      \EndFor
+    \EndFor
+
+    \State $BA[x][y] \gets index$ \Comment{Else a new number is assigned, equal to the new index.}
+    \State $index \gets index + 1$ \Comment{Only increment index if new intersection is created.}
+    \State return
+
+    \EndProcedure
+
+    \\
+
+    \Procedure{COMPARE}{$BA$, $BA^*_{s}$} \Comment{This function checks for non-zero entries in both matrices.}
+
+    \State $BS \gets BA + BA^*_{s}$ \Comment{Merge the two matrices in one.}
+    \State $del_{num} \gets \emptyset$ \Comment{Set of the indexes of obstacles to delete from $BS$.}
+
+    \For{$x$ from 0 to $|BS|$} \Comment{Iterate over $BS$.}
+      \For{$y$ from 0 to $|BS[x]|$}
+        \If{$BA[x][y] \in del_{num}$} \Comment{\nameref{deletion_note}}
+          \State $BS[x][y] \gets 0$
+        \EndIf
+        \If{$BA[x][y] \neq 0$ AND $BA^*_{s}[x][y] \neq 0$} \Comment{\nameref{deletion_note}}
+          \State $del_{num} = del_{num} \bigcup BS[x][y]$
+          \State $BS[x][y] \gets 0$
+        \EndIf
+      \EndFor
+    \EndFor
+
+    \State return $BS$
+
+    \EndProcedure
+
+  \end{algorithmic}
+
+\end{algorithm}

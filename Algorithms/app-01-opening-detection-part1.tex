@@ -1,0 +1,63 @@
+\begin{algorithm}[H]
+
+  \caption{Efficient Local Opening Detection algorithm, Levihn et. al. (2011), commented}
+
+  \label{alg:opening_detection}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{CHECK-NEW-OPENING}{$G$, $M_{i}$, $A_{M}$, $BA$}
+
+      \State $M \gets$ GET-$M'_{i}$-MATRIX($M_{i}$) \Comment{\nameref{get_mi_matrix_note}}
+      \State $x_{offset} \gets M_{i}.x$ \Comment{$M_{i}.x$ and $M_{i}.y$ are the map coordinates of $M_{i}$'s top left corner.}
+      \State $y_{offset} \gets M_{i}.y$
+      \If{$BA$ is null} \Comment{BA needs not be recomputed if the environment did not change.}
+        \State $BA \gets$ GET-BLOCKING-AREAS($x_{offset}$, $y_{offset}$, $M$, $G$) \Comment{Blocking areas before manip.}
+      \EndIf
+      \State $x_{offset} \gets$ GET-NEW-X-POS($A_{M}$, $M_{i}$) \Comment{\nameref{x-y-pos_note}}
+      \State $y_{offset} \gets$ GET-NEW-Y-POS($A_{M}$, $M_{i}$)
+      \State $BA_{s} \gets$ GET-BLOCKING-AREAS($x_{offset}$, $y_{offset}$, $M$, $G$) \Comment{Blocking areas after manip.}
+      \State $BA^*_{s} \gets [0][0](dim(M))$ \Comment{Since the window of $BA_{s}$ shifted with the manipulation of $M_{i}$, ...}
+
+      \For{$k$ from 0 to $|BA^*_{s}|$} \Comment{... we shift it back for the future comparison with $BA$.}
+        \For{$l$ from 0 to $|BA^*_{s}[i]|$}
+          \State $x \gets (x_{offset} - M_{i}.x) + k$
+          \State $y \gets (y_{offset} - M_{i}.y) + l$
+          \If{$0 < x < |BA^*_{s}|$ AND $0 < y < |BA^*_{s}[x]|$}
+            \State $BA^*_{s}[x][y] \gets |BA^*_{s}|[k][l]$
+          \EndIf
+        \EndFor
+      \EndFor
+
+      \State $Z \gets$ COMPARE($BA$, $BA^*_{s}$) \Comment{Finally, compare the two blocking aread configurations.}
+      \If{$Z = [0][0](dim(M))$} \Comment{\nameref{interpreting_z_note}}
+        \State return $false$
+      \EndIf
+      \State return $true$
+
+    \EndProcedure
+
+    \\
+
+    \Procedure{GET-BLOCKING-AREAS}{$x_{off}$, $y_{off}$, $M$, $G$}
+
+    \State $index \gets 1$
+    \State $BA \gets [0][0](dim(M))$ \Comment{$[0][0](dim(M))$ represents the 0-Matrix of dimensions = $dim(M)$}
+
+    \For{$x$ from 0 to $|M|$} \Comment{Iterate over $M$ to detect and tag blocking areas.}
+      \For{$y$ from 0 to $|M[x]|$}
+        \If{$M[x][y] \neq 0$ AND $G[x+x_{off}][y+y_{off}] \neq 0$} \Comment{\nameref{check_blockage_note}}
+          \State ASSIGN-NR($BA$, $x$, $y$, $index$)  \Comment{$BA$ and $index$ are directly modified in the call.}
+        \EndIf
+      \EndFor
+    \EndFor
+
+    \State return $BA$ \Comment{Return the saved information on the blocked areas.}
+
+    \EndProcedure
+
+    \algstore{opening_detection}
+
+  \end{algorithmic}
+
+\end{algorithm}
