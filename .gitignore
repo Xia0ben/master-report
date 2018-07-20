@@ -247,3 +247,9 @@ TSWLatexianTemp*
 
 # Original template files
 Origin/
+
+# Ignore PDF as long as not in a decent state
+*.pdf
+
+# Ignore filesystem manager-specific files
+*.directory
