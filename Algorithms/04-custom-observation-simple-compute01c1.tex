@@ -1,0 +1,25 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+
+    \caption{Subroutine for computing $o_{1}$ and $c_{1}$ if $c_{1}$ is not already valid.}
+
+    \label{alg:04-custom-observation-simple-compute01c1}
+
+    \Procedure{COMPUTE-O1-C1}{$o$, $I$, $R$, $pushPose$, $o_{1}$, $c_{1}$}
+      \State $c_{1} \gets \emptyset$
+      \State $totalCost \gets +\infty$
+
+      \For{each $obsPose$ in $o.obsPoses$}
+        \State $o \gets A$*($R$, $obsPose$, $I.occGrid$)
+        \State $c \gets A$*($obsPose$, $pushPose$, $I.occGrid$)
+        \State $newTotalCost = |o| + |c|$
+        \If{$newTotalCost < +\infty$ AND ($newTotalCost < totalCost$ OR ($newTotalCost = totalCost$ AND $|o| < |o_{1}|$)}
+          \State $o_{1} = o$
+          \State $c_{1} = c$
+          \State $totalCost = |o_{1}| + |c_{1}|$
+        \EndIf
+      \EndFor
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

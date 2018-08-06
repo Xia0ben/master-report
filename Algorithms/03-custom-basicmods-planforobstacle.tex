@@ -1,0 +1,75 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+
+    \caption{Obstacle evaluation subroutine taking our hypotheses into account.}
+
+    \label{alg:03-custom-basicmods-planforobstacle}
+
+    \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
+
+      \If{$o \in blockedObsL$}
+        \State \textbf{return} null
+      \EndIf
+
+      \State $P_{o,d}$ $\gets \emptyset$
+      % \State $BA \gets null$
+
+      \For{\hlgreen{each $pushPose$ in $o.pushPoses$}}
+        \State \hlgreen{$pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$}  \Comment{Unit vector for push direction}
+
+        \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)} \Comment{$c_{1}$ is computed for each push pose}
+
+        \If{$c_{1} = \emptyset$}
+          \State \hlgreen{\textbf{continue}} \Comment{\nameref{continue_note}}
+        \EndIf
+
+        \State $seq \gets 1$
+
+        \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$} \Comment{onePushDist is a distance constant}
+
+        \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
+
+        \State $oSimPose \gets $\hlgreen{$pushPose + translation$}
+
+        \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
+
+        \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + $\hlgreen{$|translation| * o.pushCost$}
+
+        \While{$C_{est}$ $ \leq p_{opt}.cost$ AND \hlgreen{$safeSweptArea \neq$ null}}
+
+          % \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$)}
+            \State $c_{2} \gets \{$\hlgreen{$pushPose$}$, oSimPose\}$
+            \State \hlgreen{$c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)}
+            \If{$c_{3} \neq \emptyset$}
+              \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
+              \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * $\hlgreen{$o.pushCost$}
+              \State $p.minCost \gets |c_{2}| * $\hlgreen{$o.pushCost$}$ + |c_{3}| * moveCost$
+              \State $p.o \gets$ \hlgreen{COPY($o$)} \Comment{\nameref{copy_note}}
+              \State \hlgreen{$p.translation \gets translation$} \Comment{\nameref{translation_note}}
+              \State \hlgreen{$p.safeSweptArea \gets safeSweptArea$}
+              \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+            \EndIf
+          % \EndIf
+
+          \State $seq \gets seq + 1$
+
+          \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$}
+
+          \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
+
+          \State $oSimPose \gets $\hlgreen{$pushPose + translation$}
+
+          \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
+
+          \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + $\hlgreen{$|translation| * o.pushCost$}
+
+        \EndWhile
+
+      \EndFor
+
+    \State \textbf{return} $p \in P_{o,d}$ with minimal $p.cost$ or null if $P_{o,d} = \emptyset$
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

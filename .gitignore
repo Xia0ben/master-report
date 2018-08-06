@@ -249,10 +249,13 @@ TSWLatexianTemp*
 Origin/
 
 # Ignore PDF as long as not in a decent state
-*.pdf
+.pdf
 
 # Ignore filesystem manager-specific files
 *.directory
 
 # Ignore libreoffice lock files
 \.~lock*
+
+# Original folder with all photos
+Figures/Experiment/

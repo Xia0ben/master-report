@@ -1,0 +1,86 @@
+\begin{algorithm}[H]
+
+  \caption{Optimized algorithm for NAMO in unknown environments of Wu et. al. (2010), fixed - MAIN LOOP}
+
+  \label{alg:01-wu-optimized}
+
+  \begin{algorithmic}[1]
+
+      \Procedure{OPTIMIZED}{$R_{init}$, $R_{goal}$}
+
+        \State $R \gets R_{init}$
+
+        \State $blockedObsL \gets \emptyset$
+
+        \State $P_{sort} \gets \emptyset$
+
+        \State $\mathcal{O}_{new} \gets \emptyset$
+
+        \State $isManipSuccess \gets True$
+
+        \State $I \gets empty\_occupation\_grid$
+
+        \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I.occGrid$)]
+
+        \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
+
+        \While{$R \neq R_{goal}$}
+
+          \State UPDATE-FROM-NEW-INFORMATION($I$) \Comment{\nameref{update-from-new-information_note}}
+
+          \State $\mathcal{O}_{new} \gets \mathcal{O}_{new} \bigcup I.newObstacles$
+
+          \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$ \Comment{\nameref{intersection_note}}
+
+          \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
+
+            \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I.occGrid$)]
+            \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
+
+            \For{each $o \in \mathcal{O}_{new}$}
+              \For{each possible push direction $d$ on $o$}
+                \State $p \gets$ OPT-EVALUATE-ACTION($o$, $d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+                \If{$p \neq$ null}
+                  \State $P_{sort}$.insert(p)
+                \EndIf
+              \EndFor
+            \EndFor
+
+            \If{$P_{sort} \neq \emptyset$}
+              \State $p_{next} \gets P_{sort}[0]$
+              \While{$p_{opt}.cost \geq p_{next}.minCost$ AND $p_{next} \neq$ null} \Comment{\nameref{re-evaluation_note}}
+                \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o$, $p_{next}.d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+                \If{$p \neq$ null AND $p.cost \leq p_{opt}.cost$}
+                  \State $p_{opt} \gets p$
+                \EndIf
+                \State $p_{next} \gets P_{sort}$.getNext() \Comment{\nameref{getnext_note}}
+              \EndWhile
+            \EndIf
+
+            \State $\mathcal{O}_{new} \gets \emptyset$
+
+          \EndIf
+
+          \If{$p_{opt}.components = \emptyset$}
+            \State \textbf{return} $False$ \Comment{\nameref{stop_condition_note}}
+          \EndIf
+
+          \State $isManipSuccess \gets True$
+          \State $R_{next} \gets p_{opt}$.getNextStep() \Comment{\nameref{plan_following_note}}
+          \State $c_{next} \gets p_{opt}$.getNextStepComponent()
+          \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
+          \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
+            \State $isManipSuccess \gets False$
+            \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
+          \EndIf
+          \State $R \gets R_{real}$
+
+        \EndWhile
+
+        \State \textbf{return} $True$
+
+    \EndProcedure
+
+  \end{algorithmic}
+
+\end{algorithm}

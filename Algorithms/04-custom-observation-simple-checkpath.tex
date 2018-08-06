@@ -1,0 +1,17 @@
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+
+    \caption{Subroutine for checking if $path$ allows to identify the obstacle.}
+
+    \label{alg:04-custom-observation-simple-checkpath}
+
+    \Procedure{GET-FIRST-PATH-OBSPOSE}{$o$, $path$, $I$}
+      \For{each $pose$ in $path$}
+        \If{IS-OBS-IN-FOV-FOR-POSE($o$, $pose$, $I$)}
+          \State \textbf{return} $pose$
+        \EndIf
+      \EndFor
+      \State \textbf{return} null
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}

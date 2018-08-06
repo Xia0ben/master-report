@@ -43,7 +43,7 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{mathpazo} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 \addbibresource{namo.bib} % The filename of the bibliography
 
@@ -211,11 +211,11 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-\paragraph{Résumé :} L'objectif est de permettre la navigation optimale d’un seul robot dans un environnement intérieur partiellement connu, dynamique et modifiable, en respectant les conventions sociales. % 25 mots
+\paragraph{Résumé:} L'objectif est de permettre la navigation optimale d’un seul robot dans un environnement intérieur partiellement connu, dynamique et modifiable, en respectant les conventions sociales. % 25 mots
 
 % Le résumé doit décrire le contenu du rapport. Il doit contenir au moins 70 mots et ne pas dépasser 150 mots.
 
-\paragraph{Mots-clefs :} \keywordnamesfr
+\paragraph{Mots-clefs:} \keywordnamesfr
 
 \paragraph{Abstract:} The objective is to allow optimal navigation among movable obstacles of a single robot in a partially known interior setting, while respecting social conventions. % 24 mots
 
@@ -237,7 +237,7 @@ headsepline, % Uncomment to get a line under the header
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
-%\tableofcontents % Prints the main table of contents
+\tableofcontents % Prints the main table of contents
 
 %\listoffigures % Prints the list of figures
 
@@ -300,23 +300,23 @@ headsepline, % Uncomment to get a line under the header
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-\include{Chapters/Chapter1}
-\include{Chapters/Chapter2}
-\include{Chapters/Chapter3}
-\include{Chapters/Chapter4}
-\include{Chapters/Chapter5}
-\include{Chapters/Chapter6}
+\input{Chapters/Chapter1}
+\input{Chapters/Chapter2}
+\input{Chapters/Chapter3}
+\input{Chapters/Chapter4}
+\input{Chapters/Chapter5}
+\input{Chapters/Chapter6}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
-% \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
-%
-% % Include the appendices of the thesis as separate files from the Appendices folder
-% % Uncomment the lines as you write the Appendices
-%
-% \include{Appendices/AppendixA}
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+\input{Appendices/efficient-opening-detection-commented.tex}
 % %\include{Appendices/AppendixB}
 % %\include{Appendices/AppendixC}
 

@@ -1,0 +1,50 @@
+\begin{algorithm}[H]
+
+  \caption{Optimized algorithm for NAMO in unknown environments of Wu et. al. adapted according to M.Levihn et. al.'s (2014) recommandations - PLAN COMPUTATION}
+
+  \label{alg:02-levihn-makeplan}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{MAKE-PLAN}{$R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$}
+
+      \For{each $o \in \mathcal{O}$}
+          \State $C_{3_{(Est)}} \gets \min(\{\forall graspPoint \in o.graspPoints \hspace{0.2cm} || \hspace{0.2cm} |\{graspPoint, R_{goal}\}|\})$
+          \State $euCostL$.insertOrUpdate$(\{o, C_{3_{(Est)}}\})$
+      \EndFor
+
+      \State $i_{e}, i_{m} \gets 0 , 0$ \Comment{\nameref{get_list_element_note}}
+
+      \While{$\min(minCostL[i_{m}].minCost, euCostL[i_{e}].c_{3_{est}}) < p_{opt}.cost$} \Comment{\nameref{list_traversal_note}}
+        \If{$minCostL[i_{m}].minCost < euCostL[i_{e}].c_{3_{est}}$} \Comment{\nameref{minCostL_priority_note}}
+          \State $p \gets$ PLAN-FOR-OBSTACLE($minCostL[i_{m}].obstacle$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+          \If{$p \neq$ null}
+            \State $minCostL.$insertOrUpdate$(\{minCostL[i_{m}].obstacle, p.minCost\})$
+            \State $i_{m} \gets i_{m} + 1$
+            \If{$p.cost < p_{opt}.cost$}
+              \State $p_{opt} \gets p$
+            \EndIf
+          \Else
+            \State $minCostL.$insertOrUpdate$(\{minCostL[i_{m}].obstacle, +\infty\})$
+            \State $i_{m} \gets i_{m} + 1$
+          \EndIf
+        \Else
+          \If{not $minCostL$.contains($euCostL[i_{e}].obstacle)$} \Comment{\nameref{postponing_note}}
+            \State $p \gets$ PLAN-FOR-OBSTACLE($euCostL[i_{e}].obstacle$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+            \If{$p \neq$ null}
+              \State $minCostL.$insertOrUpdate$(\{euCostL[i_{e}].obstacle, p.minCost\})$
+              \State $i_{m} \gets i_{m} + 1$
+              \If{$p.cost < p_{opt}.cost$}
+                \State $p_{opt} \gets p$
+              \EndIf
+            \Else \Comment{Corresponds to the "If $p \neq$ null" statement.}
+              \State $minCostL.$insertOrUpdate$(\{euCostL[i_{e}].obstacle, +\infty\})$
+              \State $i_{m} \gets i_{m} + 1$
+            \EndIf
+          \EndIf
+          \State $i_{e} \gets i_{e} + 1$
+        \EndIf
+      \EndWhile
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,44 @@
+\begin{algorithm}[H]
+
+  \caption{Optimized algorithm for NAMO in unknown environments of Wu et. al. (2010), fixed - ACTION EVALUATION SUBROUTINE}
+
+  \label{alg:01-wu-optevaluateaction}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{OPT-EVALUATE-ACTION}{$o$, $d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
+
+      \If{$o \in blockedObsL$}
+        \State \textbf{return} null
+      \EndIf
+
+      \State $P_{o,d} \gets \emptyset$
+      \State $c_{1} \gets A$*($R$, $o.init$, $I.occGrid$) \Comment{\nameref{obstacle_pushpose_note}}
+      \If{$c_{1} = \emptyset$} \Comment{\nameref{c1_note}}
+        \State \textbf{return} null
+      \EndIf
+      \State $c_{2} \gets \emptyset$
+      \State $oSimPose \gets o.init$
+
+      \While{push on $o$ in $d$ possible AND $|c_{2}| * pushCost \leq p_{opt}.cost$} \Comment{\nameref{bound_note}}
+        \State $oSimPose \gets oSimPose + one\_push\_in\_d$ \Comment{\nameref{push_in_d_note}}
+        \If{push created new opening} \Comment{\nameref{opening_detection_note}}
+          \State $c_{2} \gets \{o.init, oSimPose\}$ \Comment{\nameref{c2_note}}
+          \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)
+          \If{$c_{3} \neq \emptyset$} \Comment{\nameref{c3_note}}
+            \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
+            \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * pushCost$
+            \State $p.minCost \gets |c_{2}| * pushCost + |c_{3}| * moveCost$
+            \State $p.o, p.d \gets o, d$
+            \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+          \EndIf
+        \EndIf
+      \EndWhile
+
+      \State \textbf{return} $p \in P_{o,d}$ with minimal $p.cost$ or null if $P_{o,d} = \emptyset$
+
+    \EndProcedure
+
+  \end{algorithmic}
+
+\end{algorithm}

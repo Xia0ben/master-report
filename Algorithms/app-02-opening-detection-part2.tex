@@ -8,14 +8,14 @@
       \For{$j$ from -1 to 1}
         \If{$BA[x+i][y+j] \neq 0$} \Comment{If a number is already in the neighborhood, ...}
           \State $BA[x][y] \gets BA[x+i][y+j]$ \Comment{... the same number is assigned to the element.}
-          \State return
+          \State \textbf{return}
         \EndIf
       \EndFor
     \EndFor
 
     \State $BA[x][y] \gets index$ \Comment{Else a new number is assigned, equal to the new index.}
     \State $index \gets index + 1$ \Comment{Only increment index if new intersection is created.}
-    \State return
+    \State \textbf{return}
 
     \EndProcedure
 
@@ -23,7 +23,7 @@
 
     \Procedure{COMPARE}{$BA$, $BA^*_{s}$} \Comment{This function checks for non-zero entries in both matrices.}
 
-    \State $BS \gets BA + BA^*_{s}$ \Comment{Merge the two matrices in one.}
+    \State $BS \gets$ COPY($BA$)
     \State $del_{num} \gets \emptyset$ \Comment{Set of the indexes of obstacles to delete from $BS$.}
 
     \For{$x$ from 0 to $|BS|$} \Comment{Iterate over $BS$.}
@@ -38,7 +38,7 @@
       \EndFor
     \EndFor
 
-    \State return $BS$
+    \State \textbf{return} $BS$
 
     \EndProcedure
 

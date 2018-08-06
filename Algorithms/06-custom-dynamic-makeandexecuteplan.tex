@@ -1,0 +1,67 @@
+\begin{algorithm}[H]
+
+  \caption{Execution loop taking dynamic obstacles into account.}
+
+  \label{alg:06-custom-dynamic-makeandexecuteplan}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{MAKE-AND-EXECUTE-PLAN}{$R_{init}$, $R_{goal}$, $I_{init}$}
+
+      \State \dots \Comment{Initialization (lines 2 and 4 to 6 in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
+
+      \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I.occGrid$)]
+      \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
+
+      \State $blockingObsL \gets \emptyset$
+      \State $isBlockingObsMoved \gets False$
+
+      \State $I \gets I_{init}$
+
+      \While{$R \neq R_{goal}$}
+
+        \State UPDATE-FROM-NEW-INFORMATION($I$)
+
+        \If{$I$.freeSpaceCreated}
+          \State $minCostL \gets \emptyset$
+        \EndIf
+
+        \State $\mathcal{O} \gets I.allObstacles$
+
+        \State \hlgreen{$latestBlockingObsL \gets p_{opt} \bigcap \mathcal{O}$}
+
+        \State \hlgreen{$isPathFree \gets latestBlockingObsL \neq \emptyset$}
+
+        \State \hlgreen{$blockingObsL \gets blockingObsL \bigcup latestBlockingObsL$} \Comment{Now we must consider all obstacles, since not only new obstacles can get in the way : $\mathcal{O}_{new}$ is no longer useful.}
+
+        \State \hlgreen{$isBlockingObsMoved \gets False$}
+        \For{\hlgreen{each $o$ in $blockingObsL$}}
+          \If{\hlgreen{\textbf{not} $isBlockingObsMoved$ AND $o \in I.movedObstacles$}} \Comment{When updated, $I$ saves in list the obstacles that have moved by checking whether they don't occupy some of the space they previously occupied.}
+            \State \hlgreen{$isBlockingObsMoved \gets True$}
+          \EndIf
+        \EndFor
+
+        \State \dots \Comment{Plan validity checks (lines 14 to 29 in Algorithm \ref{alg:03-custom-basicmods-makeandexecuteplan})}
+
+        \State \hlgreen{$isPlanValid \gets$ ($isPathFree$ AND $isManipSuccess$ AND $isManipSafe$ AND $isPushPoseValid$)}
+
+        \If{\hlgreen{\textbf{not} $isPlanValid$}}
+          \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I.occGrid$)]
+          \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
+        \EndIf
+        \If{\hlgreen{\textbf{not} $isPlanValid$ OR ($isBlockingObsMoved$)}}
+          \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
+          \State \hlgreen{$isManipSuccess \gets True$} \Comment{Line 30 in Algorithm \ref{alg:02-levihn-makeandexecuteplan} is moved here.}
+          \State \hlgreen{\textbf{continue}} \Comment{Go back to beginning of the loop to check for new information because MAKE-PLAN may take a long time to run and obstacles may have moved since we began the evaluation. If the world state hasn't changed in the meantime, the produced plan will still be valid and MAKE-PLAN won't be called again. We don't forget to reset $isManipSuccess$ sooner.}
+        \EndIf
+
+        \State \dots \Comment{Execution (lines 24 to 29 and 21 to 35 in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
+
+      \EndWhile
+
+      \State \textbf{return} $True$
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}
