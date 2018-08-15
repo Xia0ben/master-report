@@ -8,16 +8,16 @@
 
     \Procedure{MAKE-AND-EXECUTE-PLAN}{$R_{init}$, $R_{goal}$, $I_{init}$}
 
-      \State \dots \Comment{Initialization (lines 2 to 6 in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
-      
+      \State \dots \label{lst:line:initbis1} \Comment{Initialization (lines \ref{lst:line:init1} to \ref{lst:line:init2} in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
+
       \State \hlgreen{$I \gets I_{init}$}
 
-      \State $p_{opt}.components \gets [$\hlgreen{$A$*}($R_{init}$, $R_{goal}$, $I.occGrid$)]
-      \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
+      \State $p_{opt}.components \gets [$\hlgreen{$A$*}($R_{init}$, $R_{goal}$, $I$)]
+      \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \label{lst:line:initbis2}
 
       \While{$R \neq R_{goal}$}
 
-        \State UPDATE-FROM-NEW-INFORMATION($I$)
+        \State UPDATE-FROM-NEW-INFORMATION($I$) \label{lst:line:knowledge1}
 
         \If{$I$.freeSpaceCreated}
           \State $minCostL \gets \emptyset$
@@ -29,7 +29,7 @@
 
         \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
-        \State \hlgreen{$isPushPoseValid \gets True$}
+        \State \hlgreen{$isPushPoseValid \gets True$} \label{lst:line:validity1}
         \State \hlgreen{$isManipSafe \gets True$}
         \State \hlgreen{$isObstacleSame \gets True$}
         \If{\hlgreen{$p_{opt}.o$ exists}} \Comment{If $p_{opt}$ includes the manipulation of an obstacle.}
@@ -44,16 +44,16 @@
           \If{\hlgreen{$p_{opt}.safeSweptArea \bigcap \mathcal{O} \neq \emptyset$}} \Comment{\nameref{area_intersect_note}}
             \State \hlgreen{$isManipSafe \gets False$}
           \EndIf
-        \EndIf
+        \EndIf \label{lst:line:knowledge2} \label{lst:line:validity2}
 
         \If{\textbf{not}($isPathFree$ AND $isManipSuccess$ \hlgreen{AND $isManipSafe$ AND $isPushPoseValid$})}
-          \State $p_{opt}.components \gets$ [\hlgreen{$A$*}($R$, $R_{goal}$, $I.occGrid$)]
+          \State $p_{opt}.components \gets$ [\hlgreen{$A$*}($R$, $R_{goal}$, $I$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
           \State $\mathcal{O}_{new} \gets \emptyset$
         \EndIf
 
-        \State \dots \Comment{Execution (lines 24 to 35 in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
+        \State \dots \Comment{Execution (lines \ref{lst:line:exec1} to \ref{lst:line:exec2} in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
 
       \EndWhile
 

@@ -1,0 +1,29 @@
+\begin{algorithm}[H]
+
+  \caption{Obstacle evaluation subroutine modified for considering placement.}
+
+  \label{alg:05-custom-placement-getocccost}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{GET-OCC-COST}{$simOccPoints$, $occCostGrid$}
+
+      \State{$VALUE\_RANGE \gets (FORBIDDEN\_VALUE - ALLOWED\_VALUE)$}
+
+      \State{$cost \gets 1$}
+
+      \For{each $point$ in $simOccPoints$}
+        \State $valueForPoint \gets occCostGrid[point]$
+        \If{$valueForPoint = FORBIDDEN\_VALUE$}
+          \State \textbf{return} $+\infty$
+        \ElsIf{$valueForPoint = ALLOWED\_VALUE$}
+          \State $valueForPoint \gets 0$
+        \EndIf
+        \State{$cost \gets cost + valueForPoint / VALUE\_RANGE$}
+      \EndFor
+
+      \State \textbf{return} $cost$
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

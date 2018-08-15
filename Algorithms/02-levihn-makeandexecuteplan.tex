@@ -8,13 +8,13 @@
 
     \Procedure{MAKE-AND-EXECUTE-PLAN}{$R_{init}$, $R_{goal}$}
 
-      \State $R \gets R_{init}$
+      \State $R \gets R_{init}$ \label{lst:line:init1}
       \State $\mathcal{O}_{new} \gets \emptyset$
       \State $isManipSuccess \gets True$
       \State $blockedObsL \gets \emptyset$
-      \State $euCostL, minCostL \gets \emptyset, \emptyset$
+      \State $euCostL, minCostL \gets \emptyset, \emptyset$ \label{lst:line:init2}
       \State $I \gets empty\_occupation\_grid$
-      \State $p_{opt}.components \gets [D$*Lite($R_{init}$, $R_{goal}$, $I.occGrid$)] \Comment{\nameref{d_star_note}}
+      \State $p_{opt}.components \gets [D$*Lite($R_{init}$, $R_{goal}$, $I$)] \Comment{\nameref{d_star_note}}
       \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
 
       \While{$R \neq R_{goal}$}
@@ -32,25 +32,25 @@
         \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
         \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
-          \State $p_{opt}.components \gets [D$*Lite($R$, $R_{goal}$, $I.occGrid$)]
+          \State $p_{opt}.components \gets [D$*Lite($R$, $R_{goal}$, $I$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
           \State $\mathcal{O}_{new} \gets \emptyset$
         \EndIf
 
-        \If{$p_{opt}.components = \emptyset$}
+        \If{$p_{opt}.components = \emptyset$} \label{lst:line:exec1}
           \State \textbf{return} $False$
-        \EndIf
+        \EndIf \label{lst:line:exec1bis}
 
-        \State $isManipSuccess \gets True$
-        \State $R_{next} \gets p_{opt}$.getNextStep()
+        \State $isManipSuccess \gets True$ \label{lst:line:ismanipsuccess}
+        \State $R_{next} \gets p_{opt}$.getNextStep() \label{lst:line:exec2bis}
         \State $c_{next} \gets p_{opt}$.getNextStepComponent()
         \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
         \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
           \State $isManipSuccess \gets False$
           \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
         \EndIf
-        \State $R \gets R_{real}$
+        \State $R \gets R_{real}$ \label{lst:line:exec2}
 
         % \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
         %   \State $isManipSuccess \gets False$

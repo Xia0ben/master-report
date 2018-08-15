@@ -4,12 +4,48 @@
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1}
 
-\section{Problem}
-
 % L'introduction situe le problème, l'expose, insiste sur son importance et indique la manière dont il est envisagé. A l'introduction est associée une  présentation préliminaire de la manière de traiter la question (méthode). L'introduction doit aussi exposer l’étude de l’existant dans le domaine précis qui concerne le PFE et faire ressortir la nécessité de réalisations complémentaires comme celle qui fait l'objet du PFE.
 
-% La suite du document constitue un développement structuré en sections, avec autant de niveaux de subdivision qu’il est nécessaire:
+\section{Motivation}
 
-% Vous y expliquerez le contexte du PFE, le problème traité, la démarche suivie, les résultats obtenus. Vous veillerez à bien préciser votre contribution personnelle dans le déroulement du projet global. Vous définirez soigneusement toutes les notations particulières que vous utiliserez. Vous présenterez des tableaux et des figures numérotés et référencés dans le texte et accompagnés de légendes.
+\paragraph{} Service robotics are an active research field: there is a growing demand for intelligent machines that are meant to be used in human environments for domestic tasks (e.g, maintaining people homes, entertaining them, caring for them; especially old ones or with disabilities, \dots) \cmmnt{\parencite{mettler_service_2017, graf_care-o-bot_2004}}. To fulfill such tasks, a service robot obviously needs to be able to autonomously navigate through space, according to the given constraints: these navigation capabilities and constraints are the main focus of the following work.
 
-\section{Existing approaches}
+\paragraph{} Human environments represent a very complex challenge, since they are dynamic, alterable and imply social conventions and rules that the robot must also respect in the way it navigates and interacts with the world. For example, in a home, humans (or other autonomous actors, such as pets) are moving obstacles that must be taken into account. Also, for a robot to go from a point A to B, a solution may only be found if it implies moving an obstacle out of the way. And all this must be done in socially acceptable manner: one would not appreciate a robot moving at high speeds around people or to move obstacles that are not supposed to be moved.
+
+\paragraph{} The most common constraint for robot navigation is solely to find the shortest collision-free path, and this is perfectly fine in a static context (nothing moves, at the exception of the robot). However, from the description of a human environment given above, this is not sufficient.
+
+\paragraph{} On one hand, planning in dynamic environments populated with humans is its very own domain \parencite{kruse_human-aware_2013, rios-martinez_proxemics_2015}. The \groupname \, (to which the author is affiliated) is active in this domain (among others), and proposed algorithms that optimize the generation of trajectories by managing the risk of colliding with obstacles \parencite{fulgenzi_autonomous_2009, rios-martinez_socially-aware_2013}, respecting social conventions such as avoiding human interaction spaces \parencite{papadakis_adaptive_2014, rios-martinez_understanding_2011}, or predicting the trajectories of moving obstacles \parencite{jumel_mapping_2017}, \dots
+
+\paragraph{} On the other hand, planning in alterable environments is also its own research field called NAMO (Navigation Among Movable Obstacles)\parencite{stilman_navigation_2007}. Indeed, the problem of generating a navigation plan that may imply the manipulation of obstacles is very vast, and has been dealt with in a great variety of contexts, detailed in Chapter \ref{Chapter2}.
+
+\paragraph{} To this day, from our research, it seems that these two domains have yet to be brought together, and the new problematics that are to arise from this confluence are still to be identified and addressed.
+
+\clearpage
+
+\section{Objective}
+
+\paragraph{} Therefore, the overall objectives of this work are to:
+\begin{itemize}
+  \item explore the NAMO domain and extract characteristics that allow to sort through existing works,
+  \item identify both new concerns and bridges between this domain and the one of dynamic and social navigation,
+  \item and finally build upon existing work to propose solutions to the previously identified concerns.
+\end{itemize}
+
+\paragraph{} As a context for formulating, comparing and evaluating hypotheses, we will assume that our goal implementation platform is the Pepper robot \footnote{\url{http://doc.aldebaran.com/2-4/family/pepper_technical/index_dev_pepper.html}} since it is the standard platform for the Robocup@Home\footnote{http://www.robocupathome.org/}. This international-level competition provides service robotics challenges to evaluate solutions proposed by researchers and students, and since the \groupname \, participates to it, it makes for a good goal setting. Furthermore, the team uses ROS \footnote{ROS, the Robot Operating System: \url{http://www.ros.org/}} to command the robot, further clarifying our goal context. Notably, this defines the context of our search in that:
+\begin{itemize}
+  \item only the onboard sensors of the robot are used to update the robot's \textbf{partial environment knowledge} making,
+  \item we thus seek \textbf{local optimality}: that is, optimal decision-making given the current belief state of the robot on its environment,
+\end{itemize}
+
+\section{Overview}
+
+\paragraph{} The following work is organized as follows:
+
+\begin{itemize}
+  \item Chapter \ref{Chapter2} is a detailed state of the art of the NAMO domain, and derives comparison criteria from a selection of articles that are closely related to our goals. It also explains the choice of the papers we chose to build upon.
+  \item Chapter \ref{Chapter3} is a thorough study and criticism of the chosen base algorithm. We explain the logic of the original algorithm while also providing definitions and conventions that remove the many original ambiguities. Finally, we propose a pseudocode interpretation of the improvements proposed by Levihn et. al. on the first algorithm.
+  \item Chapter \ref{Chapter4} revisits the algorithm to really restore optimality, make it stick to our hypotheses, and extend it to solve new social and dynamic environment concerns.
+  \item Chapter \ref{Chapter5} recounts our experimentations with the Pepper robot and simulations to validate our propositions.
+  \item Chapter \ref{Chapter6} summarizes our contributions and details opportunities for research arisen by this work.
+  \item Appendices \ref{comparison_tables} and \ref{algorithms} gather comparison tables and pseudocode representations of algorithm propositions.
+\end{itemize}

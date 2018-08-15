@@ -14,32 +14,32 @@
       \EndFor
 
       \State $i_{e}, i_{m} \gets 0 , 0$ \Comment{\nameref{get_list_element_note}}
+      \State $evaluatedObstacles \gets \emptyset$ \Comment{\nameref{evaluated_obstacles_note}}
 
       \While{$\min(minCostL[i_{m}].minCost, euCostL[i_{e}].c_{3_{est}}) < p_{opt}.cost$} \Comment{\nameref{list_traversal_note}}
         \If{$minCostL[i_{m}].minCost < euCostL[i_{e}].c_{3_{est}}$} \Comment{\nameref{minCostL_priority_note}}
-          \State $p \gets$ PLAN-FOR-OBSTACLE($minCostL[i_{m}].obstacle$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
-          \If{$p \neq$ null}
-            \State $minCostL.$insertOrUpdate$(\{minCostL[i_{m}].obstacle, p.minCost\})$
-            \State $i_{m} \gets i_{m} + 1$
-            \If{$p.cost < p_{opt}.cost$}
-              \State $p_{opt} \gets p$
+          \State $o \gets minCostL[i_{m}].obstacle$
+          \If{$o \not\in evaluatedObstacles$}
+            \State $p \gets$ PLAN-FOR-OBSTACLE($o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+            \If{$p \neq$ null}
+              \State $minCostL.$insertOrUpdate$(\{o, p.minCost\})$
+            \Else
+              \State $minCostL.$insertOrUpdate$(\{o, +\infty\})$
             \EndIf
-          \Else
-            \State $minCostL.$insertOrUpdate$(\{minCostL[i_{m}].obstacle, +\infty\})$
-            \State $i_{m} \gets i_{m} + 1$
+            \State $evaluatedObstacles.$insert$(o)$
           \EndIf
+          \State $i_{m} \gets i_{m} + 1$
         \Else
           \If{not $minCostL$.contains($euCostL[i_{e}].obstacle)$} \Comment{\nameref{postponing_note}}
-            \State $p \gets$ PLAN-FOR-OBSTACLE($euCostL[i_{e}].obstacle$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
-            \If{$p \neq$ null}
-              \State $minCostL.$insertOrUpdate$(\{euCostL[i_{e}].obstacle, p.minCost\})$
-              \State $i_{m} \gets i_{m} + 1$
-              \If{$p.cost < p_{opt}.cost$}
-                \State $p_{opt} \gets p$
+          \State $o \gets euCostL[i_{e}].obstacle$
+            \If{$o \not\in evaluatedObstacles$}
+              \State $p \gets$ PLAN-FOR-OBSTACLE($o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+              \If{$p \neq$ null}
+                \State $minCostL.$insertOrUpdate$(\{o, p.minCost\})$
+              \Else \Comment{Corresponds to the "If $p \neq$ null" statement.}
+                \State $minCostL.$insertOrUpdate$(\{o, +\infty\})$
               \EndIf
-            \Else \Comment{Corresponds to the "If $p \neq$ null" statement.}
-              \State $minCostL.$insertOrUpdate$(\{euCostL[i_{e}].obstacle, +\infty\})$
-              \State $i_{m} \gets i_{m} + 1$
+              \State $evaluatedObstacles.$insert$(o)$
             \EndIf
           \EndIf
           \State $i_{e} \gets i_{e} + 1$

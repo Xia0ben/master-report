@@ -46,6 +46,8 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 \addbibresource{namo.bib} % The filename of the bibliography
+\addbibresource{dynamic.bib}
+\addbibresource{extra.bib}
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -68,8 +70,13 @@ headsepline, % Uncomment to get a line under the header
 \newcommand{\hlcyan}[1]{{\sethlcolor{cyan}\hl{#1}}}
 \newcommand{\hlgreen}[1]{{\sethlcolor{green}\hl{#1}}}
 
+% Command for inline comments
+\newcommand{\cmmnt}[1]{\ignorespaces}
+
 % Package for inserting pdfs pages into the document
 \usepackage{pdfpages}
+%% Use \includepdf[pages={-},fitpaper,rotateoversize]{<filepath>.pdf} to include a pdf
+
 
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
@@ -89,7 +96,8 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Toward social navigation among movable obstacles} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+% First title was: Toward social navigation among movable obstacles
+\thesistitle{First steps toward integrating social and dynamic concerns in the domain of\\Navigation Among Movable Obstacles} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
 \supervisor{Dr. Fabrice \textsc{Jumel}\\
 			Dr. Jacques \textsc{Saraydaryan}\\
 			Dr. Olivier \textsc{Simonin}\\} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
@@ -316,9 +324,9 @@ headsepline, % Uncomment to get a line under the header
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-\input{Appendices/efficient-opening-detection-commented.tex}
-% %\include{Appendices/AppendixB}
-% %\include{Appendices/AppendixC}
+\input{Appendices/algorithms.tex}
+\input{Appendices/comparison_tables.tex}
+% %\input{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY

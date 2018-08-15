@@ -1,23 +1,24 @@
 \begin{algorithm}[H]
+
+  \caption{Obstacle evaluation subroutine taking our hypotheses into account.}
+
+  \label{alg:03-custom-basicmods-planforobstacle}
+
   \begin{algorithmic}[1]
-
-    \caption{Obstacle evaluation subroutine taking our hypotheses into account.}
-
-    \label{alg:03-custom-basicmods-planforobstacle}
 
     \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
 
-      \If{$o \in blockedObsL$}
+      \If{$o \in blockedObsL$} \label{lst:line:initobs1}
         \State \textbf{return} null
-      \EndIf
+      \EndIf \label{lst:line:initobs2}
 
       \State $P_{o,d}$ $\gets \emptyset$
       % \State $BA \gets null$
 
       \For{\hlgreen{each $pushPose$ in $o.pushPoses$}}
-        \State \hlgreen{$pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$}  \Comment{Unit vector for push direction}
+        \State \hlgreen{$pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$} \label{lst:line:loop1} \Comment{Unit vector for push direction}
 
-        \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)} \Comment{$c_{1}$ is computed for each push pose}
+        \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I$)} \Comment{$c_{1}$ is computed for each push pose}
 
         \If{$c_{1} = \emptyset$}
           \State \hlgreen{\textbf{continue}} \Comment{\nameref{continue_note}}
@@ -29,7 +30,7 @@
 
         \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
 
-        \State $oSimPose \gets $\hlgreen{$pushPose + translation$}
+        \State $oSimPose \gets $\hlgreen{$pushPose + translation$} \label{lst:line:loop2}
 
         \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
 
@@ -39,25 +40,28 @@
 
           % \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$)}
             \State $c_{2} \gets \{$\hlgreen{$pushPose$}$, oSimPose\}$
-            \State \hlgreen{$c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)}
+            \State \hlgreen{$c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)}
             \If{$c_{3} \neq \emptyset$}
               \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
               \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * $\hlgreen{$o.pushCost$}
               \State $p.minCost \gets |c_{2}| * $\hlgreen{$o.pushCost$}$ + |c_{3}| * moveCost$
-              \State $p.o \gets$ \hlgreen{COPY($o$)} \Comment{\nameref{copy_note}}
+              \State $p.o \gets$ \hlgreen{COPY($o$)} \label{lst:line:ovaraffec1} \Comment{\nameref{copy_note}}
               \State \hlgreen{$p.translation \gets translation$} \Comment{\nameref{translation_note}}
               \State \hlgreen{$p.safeSweptArea \gets safeSweptArea$}
               \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+              \If{$p.cost < p_{opt}.cost$}
+                \State $p_{opt} \gets p$
+              \EndIf \label{lst:line:ovaraffec2}
             \EndIf
           % \EndIf
 
-          \State $seq \gets seq + 1$
+          \State $seq \gets seq + 1$ \label{lst:line:loopvarup1}
 
           \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$}
 
           \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
 
-          \State $oSimPose \gets $\hlgreen{$pushPose + translation$}
+          \State $oSimPose \gets $\hlgreen{$pushPose + translation$} \label{lst:line:loopvarup2}
 
           \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
 

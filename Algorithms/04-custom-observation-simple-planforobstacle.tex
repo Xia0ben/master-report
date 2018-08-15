@@ -1,9 +1,10 @@
 \begin{algorithm}[H]
+
+  \caption{Obstacle evaluation subroutine modified for allowing observation.}
+
+  \label{alg:04-custom-observation-planforobstacle}
+
   \begin{algorithmic}[1]
-
-    \caption{Obstacle evaluation subroutine modified for allowing observation.}
-
-    \label{alg:04-custom-observation-planforobstacle}
 
     \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
 
@@ -17,25 +18,25 @@
       \For{each $pushPose$ in $o.pushPoses$}
         \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
 
-        \State $c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)
+        \State $c_{1} \gets A$*($R$, $pushPose$, $I$)
 
         \If{$c_{1} = \emptyset$}
           \State \textbf{continue}
         \EndIf
 
         %% BEGIN HLGREEN
-        \State \hlgreen{$o_{1} \gets \emptyset$}
+        \State \hlgreen{$c_{0} \gets \emptyset$}
 
         \If{\hlgreen{$o.movableStatus = IS\_MAYBE\_MOVABLE$}}
 
           \State \hlgreen{$obsPose \gets$ GET-FIRST-PATH-OBSPOSE($o$, $c_{1}$, $I$)}
 
           \If{\hlgreen{$obsPose \neq$ null}}
-            \State \hlgreen{$o_{1}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$} \Comment{}
+            \State \hlgreen{$c_{0}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$}
           \Else
-            \State \hlgreen{COMPUTE-O1-C1($o$, $I$, $R$, $pushPose$, $o_{1}$, $c_{1}$)}
+            \State \hlgreen{COMPUTE-O1-C1($o$, $I$, $R$, $pushPose$, $c_{0}$, $c_{1}$)}
 
-            \If{\hlgreen{$o_{1} = \emptyset$ OR $c_{1} = \emptyset$}}
+            \If{\hlgreen{$c_{0} = \emptyset$ OR $c_{1} = \emptyset$}}
               \State \hlgreen{\textbf{continue}}
             \EndIf
           \EndIf
@@ -52,21 +53,18 @@
 
         \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
 
-        \State $C_{est} \gets ($\hlgreen{$(o_{1} \neq \emptyset ? |o_{1}| : 0)$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost$
+        \State $C_{est} \gets ($\hlgreen{$(c_{0} \neq \emptyset ? |c_{0}| : 0)$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost$
 
         \While{$C_{est}$ $ \leq p_{opt}.cost$ AND $safeSweptArea \neq$ null}
 
           % \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$)}
             \State $c_{2} \gets \{pushPose, oSimPose\}$
-            \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)
+            \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)
             \If{$c_{3} \neq \emptyset$}
-              \State $p.components \gets$ \hlgreen{$o_{1} \neq \emptyset$ ? [$o_{1}$, $c_{1}$, $c_{2}$, $c_{3}$] : [$c_{1}$, $c_{2}$, $c_{3}$]}
-              \State $p.cost \gets ($\hlgreen{$(o_{1} \neq \emptyset ? |o_{1}| : 0)$}$ + |c_{1}| + |c_{3}|) * moveCost + |c_{2}| * o.pushCost$
+              \State $p.components \gets$ \hlgreen{$c_{0} \neq \emptyset$ ? [$c_{0}$, $c_{1}$, $c_{2}$, $c_{3}$] : [$c_{1}$, $c_{2}$, $c_{3}$]}
+              \State $p.cost \gets ($\hlgreen{$(c_{0} \neq \emptyset ? |c_{0}| : 0)$}$ + |c_{1}| + |c_{3}|) * moveCost + |c_{2}| * o.pushCost$
               \State $p.minCost \gets |c_{2}| * o.pushCost + |c_{3}| * moveCost$
-              \State $p.o \gets$ COPY($o$)
-              \State $p.translation \gets translation$
-              \State $p.safeSweptArea \gets safeSweptArea$
-              \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+              \State \dots \Comment{Affectation of other variables of $p$ (lines \ref{lst:line:ovaraffec1} to \ref{lst:line:ovaraffec2} in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
             \EndIf
           % \EndIf
 
@@ -80,7 +78,7 @@
 
           \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
 
-          \State $C_{est} \gets ($\hlgreen{$(o_{1} \neq \emptyset ? |o_{1}| : 0)$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost$
+          \State $C_{est} \gets ($\hlgreen{$(c_{0} \neq \emptyset ? |c_{0}| : 0)$}$ + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost$
 
         \EndWhile
 

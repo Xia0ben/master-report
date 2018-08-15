@@ -13,7 +13,7 @@
       \EndIf
 
       \State $P_{o,d} \gets \emptyset$
-      \State $c_{1} \gets A$*($R$, $o.init$, $I.occGrid$) \Comment{\nameref{obstacle_pushpose_note}}
+      \State $c_{1} \gets A$*($R$, $o.init$, $I$) \Comment{\nameref{obstacle_pushpose_note}}
       \If{$c_{1} = \emptyset$} \Comment{\nameref{c1_note}}
         \State \textbf{return} null
       \EndIf
@@ -24,7 +24,7 @@
         \State $oSimPose \gets oSimPose + one\_push\_in\_d$ \Comment{\nameref{push_in_d_note}}
         \If{push created new opening} \Comment{\nameref{opening_detection_note}}
           \State $c_{2} \gets \{o.init, oSimPose\}$ \Comment{\nameref{c2_note}}
-          \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)
+          \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$) \Comment{\nameref{i_note}}
           \If{$c_{3} \neq \emptyset$} \Comment{\nameref{c3_note}}
             \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
             \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * pushCost$

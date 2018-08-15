@@ -2,7 +2,7 @@
 
   \caption{Optimized algorithm for NAMO in unknown environments of Wu et. al. (2010), fixed - MAIN LOOP}
 
-  \label{alg:01-wu-optimized}
+  \label{alg:01-wu-optimized-part1}
 
   \begin{algorithmic}[1]
 
@@ -20,7 +20,7 @@
 
         \State $I \gets empty\_occupation\_grid$
 
-        \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I.occGrid$)]
+        \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I$)]
 
         \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
 
@@ -34,7 +34,7 @@
 
           \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
 
-            \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I.occGrid$)]
+            \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I$)]
             \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
 
             \For{each $o \in \mathcal{O}_{new}$}
@@ -49,7 +49,7 @@
             \If{$P_{sort} \neq \emptyset$}
               \State $p_{next} \gets P_{sort}[0]$
               \While{$p_{opt}.cost \geq p_{next}.minCost$ AND $p_{next} \neq$ null} \Comment{\nameref{re-evaluation_note}}
-                \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o$, $p_{next}.d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
+                \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o$, $p_{next}.d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$) \label{lst:line:suppcondition}
                 \If{$p \neq$ null AND $p.cost \leq p_{opt}.cost$}
                   \State $p_{opt} \gets p$
                 \EndIf
@@ -57,10 +57,23 @@
               \EndWhile
             \EndIf
 
+            \algstore{wustore}
+
+  \end{algorithmic}
+
+\end{algorithm}
+
+\begin{algorithm}[H]
+
+  \label{alg:01-wu-optimized-part2}
+
+  \begin{algorithmic}[1]
+
+            \algrestore{wustore}
+            
             \State $\mathcal{O}_{new} \gets \emptyset$
 
           \EndIf
-
           \If{$p_{opt}.components = \emptyset$}
             \State \textbf{return} $False$ \Comment{\nameref{stop_condition_note}}
           \EndIf

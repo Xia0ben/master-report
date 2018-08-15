@@ -1,4 +1,4 @@
-manipulation point% Chapter 3
+% Chapter 3
 
 \chapter{Study of Wu et. al.'s algorithm for locally optimal NAMO in unknown environments} % Main chapter title
 
@@ -45,7 +45,7 @@ manipulation point% Chapter 3
 
 \paragraph{Second Optimization}\label{optimization_2} Stop simulating pushes in a given direction before it becomes costlier than the current valid optimal plan, thanks to a bound (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 5). This also keeps optimality, since there are no reasons to continue evaluating actions that are already costlier than simply following the current valid optimal plan.
 
-\paragraph{Third Optimization}\label{optimization_3} Only compute the third path component (from obstacle to goal) with A* if the simulated movement actually creates an opening (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 7), since checking an opening creation is less computing time-consuming than running a search algorithm to the goal. However, this step also causes the loss of local optimality, because it prevents the algorithm to fully evaluate some plans that could improve the cost. Below are examples figures of cases where this happens, assuming the cost of following a path is the same wheter it implies moving an obstacle or not. In Figure \ref{fig:corridor_case} and \ref{fig:openspace_case}, no new opening is ever found, either because the blocking areas around the obstacle don't change (\ref{corridor_case}) or because there were no blocking areas to begin with (\ref{openspace_case}). Theses case are tentatively adressed in Chapter \ref{Chapter4}.
+\paragraph{Third Optimization}\label{optimization_3} Only compute the third path component (from obstacle to goal) with A* if the simulated movement actually creates an opening (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 7), since checking an opening creation is less computing time-consuming than running a search algorithm to the goal. However, this step also causes the loss of local optimality, because it prevents the algorithm to fully evaluate some plans that could improve the cost. Below are examples figures of cases where this happens, assuming the cost of following a path is the same whether it implies moving an obstacle or not. In Figure \ref{fig:corridor_case} and \ref{fig:openspace_case}, no new opening is ever found, either because the blocking areas around the obstacle don't change (\ref{fig:corridor_case}) or because there were no blocking areas to begin with (\ref{fig:openspace_case}). Theses case are tentatively adressed in Chapter \ref{Chapter4}.
 
 \begin{figure}[H]
 \centering
@@ -67,13 +67,13 @@ manipulation point% Chapter 3
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/openspace_original.png}
   \caption{Initial situation and suboptimal plan avoiding the obstacle that will be returned by the original algorithm.}
   \label{fig:openspace_original}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/openspace_optimal_path.png}
   \caption{Expected plan is the one that pushes the obstacle.}
@@ -89,13 +89,13 @@ manipulation point% Chapter 3
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo3.png}
   \caption{Main loop}
   \label{fig:Wu_Original_Algorithm-algo3}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Wu_Original_Algorithm/algo4.png}
   \caption{Subroutine}
@@ -105,10 +105,8 @@ manipulation point% Chapter 3
 \label{fig:Wu_Original_Algorithm-optimized}
 \end{figure}
 
-\clearpage
-
 \section{Removing ambiguity}
-\paragraph{} The original pseudocode presented above has quite a few typos, implicit or incongruous notations that create ambiguity (e.g., storing costs and paths in the same variable, having two different variable affectation operators ($\gets$ and $=$), ...), confusing the reading. Since no pseudocode is provided by the authors for the second article's improvements propositions, it was necessary to first fix the pseudocode of the first article. The following paragraphs and pseudocode aim at fixing this.
+\paragraph{} The original pseudocode presented above has quite a few typos, implicit or incongruous notations that create ambiguity (e.g., storing costs and paths in the same variable, having two different variable affectation operators ($\gets$ and $=$), ...), confusing the reading. Since no pseudocode is provided by the authors for the second article's improvements propositions, it was necessary to first fix the pseudocode of the first article. The following paragraphs and the pseudocode formulation \ref{reworked_wu_section} in Appendix \ref{algorithms} aim at fixing this.
 
 \paragraph{A foreword on notations:}
 
@@ -127,7 +125,7 @@ manipulation point% Chapter 3
 
 \paragraph{Note on intersection detection}\label{intersection_note} The $p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$ notation is used here as shorthand for checking that any of the new obstacles do not intersect with the robot's path. In implementation, this could be done for example by checking whether every pose in the path is not comprised in the inflated obstacles representation.
 
-\paragraph{Note on re-evaluation}\label{re-evaluation_note} The way the algorithm is written now, even new obstacles that have just been evaluated might be reevaluated, since they have been inserted into the $P_{sort}$ list right before. Consequently, we should add a condition $p_{next}.o \notin \mathcal{O}_{new}$ around the line 16 of Algorithm \ref{alg:01-wu-reworked-mincomments} to further optimize the algorithm.
+\paragraph{Note on re-evaluation}\label{re-evaluation_note} The way the algorithm is written now, even new obstacles that have just been evaluated might be reevaluated, since they have been inserted into the $P_{sort}$ list right before. Consequently, we should add a condition $p_{next}.o \notin \mathcal{O}_{new}$ around the line \ref{lst:line:suppcondition} of Algorithm \ref{alg:01-wu-optimized-part1} to further optimize the algorithm.
 
 \paragraph{Note on getNext}\label{getnext_note} This is a helper method to traverse a list. It returns null when all elements have been traversed.
 
@@ -135,7 +133,7 @@ manipulation point% Chapter 3
 
 \paragraph{Note on plan following}\label{plan_following_note} In the article, the hypothesis is given that if the robot tries to move an obstacle but does not succeed, this obstacle will never be considered for manipulation again. It is meant to allow the robot to detect unmovable obstacles and to avoid an infinite loop caused by an endless evaluation of a same obstacle that cannot be moved. This hypothesis is translated in pseudocode by replacing the vague "$R \gets$ Next step in $p_{opt}$" statement by checking whether the robot actually checking whether robot succeeded or not the desired movement by comparing the actual pose $R_{real}$ after execution and the one we wished to reach $R_{next}$ , and using the $blockedObsL$ set to remember obstacles that should never be evaluated again.
 
-\paragraph{Note on obstacle push pose}\label{obstacle_pushpose_note} For a given obstacle, the algorithm iterates over every push direction applicable to it, but doesn't iterate over every point from which it could apply said push direction. We must deduce that there is an \textbf{implicit hypothesis that for a given push direction, only one point around the obstacle is a valid manipulation start point}. Therefore, we will assume that $o.init$ corresponds to the pose the robot must get into in order to move obstacle $o$ in direction $d$. From \href{https://youtu.be/oQZLbJHYrl8}{the video} that presents an implementation of the original algorithm, this pose :
+\paragraph{Note on obstacle push pose}\label{obstacle_pushpose_note} For a given obstacle, the algorithm iterates over every push direction applicable to it, but doesn't iterate over every point from which it could apply said push direction. We must deduce that there is an \textbf{implicit hypothesis that for a given push direction, only one point around the obstacle is a valid manipulation start point}. Therefore, we will assume that $o.init$ corresponds to the pose the robot must get into in order to move obstacle $o$ in direction $d$. From the video\footnote{\url{https://youtu.be/oQZLbJHYrl8}} that presents an implementation of the original algorithm, this pose :
 
 \begin{itemize}
   \item Is orientated in the given direction, toward the side of the obstacle that allows to push in the given direction,
@@ -147,6 +145,8 @@ manipulation point% Chapter 3
 
 \paragraph{Note on bounding}\label{bound_note} It is not said in the article how the "push on $o$ in $d$ possible" condition is verified, but we can assume that it is checked by verifying at each step that the obstacle's new occupied space doesn't intersect with any other obstacle. The $c_{2} * pushCost$ bound here is not tight at all, which is fixed in the new optimization steps proposed in the second article. Still, it allows to cut down on unnecessary evaluations of extra pushes.
 
+\paragraph{Note on $I.withSimulatedObstacleMove$}\label{i_note} This notation is to explicit the fact that the $c_{3}$ component must be computed assuming that the obstacle has been pushed, otherwise it does not make any sense.
+
 \paragraph{Note on elementary push}\label{push_in_d_note} It is not explicit in the article how an elementary $one\_push\_in\_d$ is computed, but we can assume it is the multiplication of a distance constant by the unit direction vector for the given direction $d$. We will make this more explicit in our own algorithm.
 
 \paragraph{Note on opening detection}\label{opening_detection_note} Opening detection is not adressed in this paper and the method used is not explicit. A technical paper later written by co-authors Levihn and Stilman \parencite{levihn_efficient_2011} however clears this ambiguity: \textit{"The algorithm did not rely on search but simply observed the amount of adjacent free spaces on corners of the manipulated obstacle. While efficient, this algorithm is only applicable for world configurations populated with simple rectangular shaped static and movable obstacles. This is not realistic."}.
@@ -155,13 +155,9 @@ manipulation point% Chapter 3
 
 \paragraph{Note on $c_{3} \neq \emptyset$}\label{c3_note} This condition is not in the original pseudocode, but is necessary to avoid the limit case where no path from the obstacle to the goal is found, in which case, the manipulation plan cannot exist.
 
-\input{Algorithms/01-wu-optimized.tex}
-
-\input{Algorithms/01-wu-optevaluateaction.tex}
-
 \section{Pseudocode expression of Levihn's recommendations}
 
-\paragraph{} In the second article \parencite{levihn_locally_2014}, Levihn brings alternate solutions for the \nameref{optimization_2}, \nameref{optimization_3} and \nameref{optimization_4}, reducing the computational effort and enlarging the scope of problems the algorithm can manage. For the \nameref{optimization_4}, the changes make it so optimality is not affected by this optimization step.
+\paragraph{} In the second article \parencite{levihn_locally_2014}, Levihn brings alternate solutions for the \nameref{optimization_2}, \nameref{optimization_3} and \nameref{optimization_4}, reducing the computational effort and enlarging the scope of problems the algorithm can manage. For the \nameref{optimization_4}, the changes make it so optimality is not affected by this optimization step. Our pseudocode formulation \ref{levihn_interpretation_section} is available in Appendix \ref{algorithms}.
 
 \paragraph{\nameref{optimization_2}} In this article, the authors precise that they are using an improved opening detection algorithm, detailed in their separate technical paper \parencite{levihn_efficient_2011}. Since contrary to the previous one, this new algorithm doesn't rely on obstacles being rectangles, but accepts any kind of polygon, it extends the capability of the overall algorithm to any convex polygon.
 
@@ -169,7 +165,7 @@ manipulation point% Chapter 3
 
 \paragraph{\nameref{optimization_3}} The bound that allows to reduce the number of unnecessary evaluations of extra pushes is tightened by adding to the current value of $|c_{2}|$ the cost of the first plan component $c_{1}$ and an underestimate of the cost of the third plan component $c_{3}$. This underestimate is the euclidean distance between the last position of the simulated push pose $oSimPose$ and the goal pose $R_{goal}$. This bound is thus proved to be an underestimate of the real cost, keeping optimality.
 
-\paragraph{\nameref{optimization_4}} Last but not least, a new heuristic is proposed alongside a modified version of the previous one. Basically, all obstacles that haven't been evaluated at least once are ordered in a separate list $euCostL$ (Algorithm \ref{alg:namoue_augmented}, lines 3, 14 to 16) by a heuristic cost that is independent from $c_{2}$ and $c_{3}$: the euclidean distance between the goal pose $R_{goal}$ and the obstacle's nearest "manipulation point" (computation is done in Algorithm \ref{alg:namoue_augmented}, line 15) at which the robot could manipulate it. When an obstacle has been evaluated, it is added to another list $minCostL$ (Algorithm \ref{alg:namoue_augmented}, lines 3, 23 and 33) ordered by the usual $minCost$. Since this heuristic is more informed, $minCostL$ is used first when available. If not, $euCostL$ is used, the obstacle is re-evaluated and naturally added to the list ordered by $minCost$. This is achieved through the use of separate indexes for traversing the lists: $i_{e}$ and $i_{m}$. This heuristic is invalidated anytime an obstacle has changed of place (Algorithm \ref{alg:namoue_augmented}, lines 8 to 10), potentially lowering $c_{2}$ or $c_{3}$. Thus, local optimality is no longer affected. For a more detailed explanation, please consult the following pseudocode or the original article \parencite{levihn_locally_2014}.
+\paragraph{\nameref{optimization_4}} Last but not least, a new heuristic is proposed alongside a modified version of the previous one. Basically, all obstacles that haven't been evaluated at least once are ordered in a separate list $euCostL$ by a heuristic cost that is independent from $c_{2}$ and $c_{3}$: the euclidean distance between the goal pose $R_{goal}$ and the obstacle's nearest "manipulation point" at which the robot could manipulate it. When an obstacle has been evaluated, it is added to another list $minCostL$ ordered by the usual $minCost$. Since this heuristic is more informed, $minCostL$ is used first when available. If not, $euCostL$ is used, the obstacle is re-evaluated and naturally added to the list ordered by $minCost$. This is achieved through the use of separate indexes for traversing the lists: $i_{e}$ and $i_{m}$. This heuristic is invalidated anytime an obstacle has changed of place, potentially lowering $c_{2}$ or $c_{3}$. Thus, local optimality is no longer affected. For a more detailed explanation, please consult the following pseudocode or the original article \parencite{levihn_locally_2014}.
 
 \paragraph{Reordering the algorithm} Since this is an interpretation, and for easier understanding, we took the liberty of cutting the "OPTIMIZED" algorithm (main loop) into two algorithms : the main loop where the plan is executed and knowledge about the environment updated (i.e. Algorithm \ref{alg:02-levihn-makeandexecuteplan}: "MAKE-AND-EXECUTE-PLAN"), and the subroutine where the iteration over the obstacles is done to generate a new plan when necessary (i.e Algorithm \ref{alg:02-levihn-makeplan}: "MAKE-PLAN"). We also renamed the "OPT-EVALUATE-ACTION" subroutine (i.e Algorithm \ref{alg:01-wu-optevaluateaction}) into "PLAN-FOR-OBSTACLE" (i.e Algorithm \ref{alg:02-levihn-planforobstacle}). Note that the parameters $p_{opt}$, $euCostL$ and $minCostL$ are directly modified during the execution of the MAKE-PLAN() method, hence no return statement in it.
 
@@ -178,6 +174,8 @@ manipulation point% Chapter 3
 \paragraph{Note on update}\label{second_update-from-new-information_note} In addition to the previous note (\ref{update-from-new-information_note}) We assume that $I$.freeSpaceCreated is True if any obstacle's occupied space has been reduced, False otherwise, and that $I$.allObstacles is the list of all observed obstacles in the current state.
 
 \paragraph{Note on getting the list element and limit cases}\label{get_list_element_note} For the sake of readability in the pseudocode, if the list element that is asked for is out of bounds (empty list or reached end of list), the "[ ]" operator shall return a "fake" tuple with a null obstacle reference, and infinite cost: \{null, $+\infty$\}. This could easily be implented in code by either using a ternary operator (for example, "$minCostL[i_{m}].minCost$" would become "$minCostL[i_{m}] =$ null ? $+\infty: minCostL[i_{m}].minCost$") or implementing a custom array object with the wanted behaviour.
+
+\paragraph{Note on $evaluatedObstacles$}\label{evaluated_obstacles_note} $evaluatedObstacles$ is a set that remembers which obstacles have been evaluated in the current MAKE-PLAN instance. This is not mentioned in the original article, but it avoids evaluating an obstacle twice when it is added to $minCostL$.
 
 \paragraph{Traversal note}\label{list_traversal_note} Stop condition: if the next entry from $minCostL$ or $euCostL$ to be considered (the one with the lowest cost) is associated with a cost that is greater than the current optimal plan, it is not worth trying to evaluate any more options, and therefore the loop must end.
 
@@ -210,9 +208,3 @@ manipulation point% Chapter 3
 \paragraph{Note on allowed manipulations}\label{allowed_manipulations_note} In the second article, the authors assert that they don't limit manipulation to pushes. However, it is clear, especially from \href{https://youtu.be/3AvfPVzBb-s}{the video}, that manipulations are restricted to translations in a single direction.
 
 \paragraph{Note on $seq$}\label{seq_note} Seq corresponds to the number of unit translations that have been simulated.
-
-\input{Algorithms/02-levihn-makeandexecuteplan.tex}
-
-\input{Algorithms/02-levihn-makeplan.tex}
-
-\input{Algorithms/02-levihn-planforobstacle.tex}

@@ -13,7 +13,7 @@
       \EndIf
 
       \State $P_{o,d}$ $\gets \emptyset$
-      \State $c_{1} \gets D$*Lite$(R, o.init, I.occGrid)$ \Comment{\nameref{c1_computation_note}}
+      \State $c_{1} \gets D$*Lite$(R, o.init, I)$ \Comment{\nameref{c1_computation_note}}
       \If{$c_{1} = \emptyset$}
         \State \textbf{return} null
       \EndIf
@@ -33,13 +33,16 @@
 
           \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $seq * one\_translation\_in\_d$, $BA$)}
             \State $c_{2} \gets \{o.init, oSimPose\}$
-            \State $c_{3} \gets D$*Lite($oSimPose$, $R_{goal}$, $I.occGrid$)
+            \State $c_{3} \gets D$*Lite($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)
             \If{$c_{3} \neq \emptyset$}
               \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
               \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * pushCost$
               \State $p.minCost \gets |c_{2}| * pushCost + |c_{3}| * moveCost$
               \State $p.o, p.d \gets o, d$
               \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+              \If{$p.cost < p_{opt}.cost$}
+                \State $p_{opt} \gets p$
+              \EndIf
             \EndIf
           \EndIf
 

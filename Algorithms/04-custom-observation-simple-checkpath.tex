@@ -1,9 +1,10 @@
 \begin{algorithm}[H]
+
+  \caption{Subroutine for getting the first pose in a $path$ that allows identification of $o$, it it exists.}
+
+  \label{alg:04-custom-observation-simple-checkpath}
+  
   \begin{algorithmic}[1]
-
-    \caption{Subroutine for checking if $path$ allows to identify the obstacle.}
-
-    \label{alg:04-custom-observation-simple-checkpath}
 
     \Procedure{GET-FIRST-PATH-OBSPOSE}{$o$, $path$, $I$}
       \For{each $pose$ in $path$}

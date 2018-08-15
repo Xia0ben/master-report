@@ -1,0 +1,113 @@
+\begin{algorithm}[H]
+
+  \caption{Merged obstacle evaluation subroutine}
+
+  \label{alg:07-custom-merge-optimized-planforobstacle-part1}
+
+  \begin{algorithmic}[1]
+
+    \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
+
+      \If{$o \in blockedObsL$ OR $o.movableStatus = IS\_NOT\_MOVABLE$}
+        \State \textbf{return} null
+      \EndIf
+
+      \State $P_{o,d}$ $\gets \emptyset$
+      % \State $BA \gets null$
+
+      \For{each $pushPose$ in $o.pushPoses$}
+        \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
+
+        \State $c_{1} \gets A$*($R$, $pushPose$, $I$)
+
+        \If{$c_{1} = \emptyset$}
+          \State \textbf{continue}
+        \EndIf
+
+        \State $c_{0} \gets \emptyset$
+
+        \If{$o.movableStatus = IS\_MAYBE\_MOVABLE$}
+
+          \State $obsPose \gets$ GET-FIRST-PATH-OBSPOSE($o$, $c_{1}$, $I$)
+
+          \If{$obsPose \neq$ null}
+            \State $c_{0}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$
+          \Else
+            \State OPT-COMPUTE-O1-C1($o$, $I$, $R$, $pushPose$, $c_{0}$, $c_{1}$)
+
+            \If{$c_{0} = \emptyset$ OR $c_{1} = \emptyset$}
+              \State \textbf{continue}
+            \EndIf
+          \EndIf
+        \EndIf
+
+        \State $seq \gets 1$
+
+        \State $translation \gets pushUnit * onePushDist * seq$
+
+        \State $safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)
+
+        \State $oSimPose \gets pushPose + translation$
+
+        \State $suppC_{M} \gets $GET-OCC-COST(GET-OBS-POINTS($o$, $translation$), $occCostGrid$)
+
+        \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
+
+        \State $C_{est} \gets ((c_{0} \neq \emptyset ? |c_{0}| : 0) + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost * suppC_{M}$
+
+        \algstore{planforobstacle_merge_store}
+
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+
+  \label{alg:07-custom-merge-optimized-planforobstacle-part2}
+
+  \begin{algorithmic}[1]
+
+        \algrestore{planforobstacle_merge_store}
+
+        \While{$C_{est}$ $ \leq p_{opt}.cost$ AND $safeSweptArea \neq$ null}
+
+          % \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$)}
+            \State $c_{2} \gets \{pushPose, oSimPose\}$
+            \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)
+            \If{$c_{3} \neq \emptyset$}
+              \State $p.components \gets$ $c_{0} \neq \emptyset$ ? [$c_{0}$, $c_{1}$, $c_{2}$, $c_{3}$] : [$c_{1}$, $c_{2}$, $c_{3}$]
+              \State $p.cost \gets ((c_{0} \neq \emptyset ? |c_{0}| : 0) + |c_{1}| + |c_{3}|) * moveCost + |c_{2}| * o.pushCost * suppC_{M}$
+              \State $p.minCost \gets |c_{2}| * o.pushCost * suppC_{M} + |c_{3}| * moveCost$
+              \State $p.o \gets$ COPY($o$)
+              \State $p.translation \gets translation$
+              \State $p.safeSweptArea \gets safeSweptArea$
+              \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+              \If{$p.cost < p_{opt}.cost$}
+                \State $p_{opt} \gets p$
+              \EndIf
+            \EndIf
+          % \EndIf
+
+          \State $seq \gets seq + 1$
+
+          \State $translation \gets pushUnit * onePushDist * seq$
+
+          \State $safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)
+
+          \State $oSimPose \gets pushPose + translation$
+
+          \State $suppC_{M} \gets $GET-OCC-COST(GET-OBS-POINTS($o$, $translation$), $occCostGrid$)
+
+          \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
+
+          \State $C_{est} \gets ((c_{0} \neq \emptyset ? |c_{0}| : 0) + |c_{1}| + |c_{3_{(Est)}}|) * moveCost + |translation| * o.pushCost * suppC_{M}$
+
+        \EndWhile
+
+      \EndFor
+
+    \State \textbf{return} $p \in P_{o,d}$ with minimal $p.cost$ or null if $P_{o,d} = \emptyset$
+
+    \EndProcedure
+
+  \end{algorithmic}
+\end{algorithm}

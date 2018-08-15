@@ -1,30 +1,17 @@
 \begin{algorithm}[H]
+
+  \caption{Obstacle evaluation subroutine modified for considering placement.}
+
+  \label{alg:05-custom-placement-planforobstacle}
+
   \begin{algorithmic}[1]
-
-    \caption{Obstacle evaluation subroutine modified for considering placement.}
-
-    \label{alg:05-custom-placement-planforobstacle}
 
     \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$, $occCostGrid$}
 
-      \State \dots \Comment{Initialization (lines 2 to 5 in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
+      \State \dots \Comment{Initialization (lines \ref{lst:line:initobs1} to \ref{lst:line:initobs2} in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
 
       \For{each $pushPose$ in $o.pushPoses$}
-        \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
-
-        \State $c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)
-
-        \If{$c_{1} = \emptyset$}
-          \State \textbf{continue}
-        \EndIf
-
-        \State $seq \gets 1$
-
-        \State $translation \gets pushUnit * onePushDist * seq$
-
-        \State $safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)
-
-        \State $oSimPose \gets pushPose + translation$
+        \State \dots \Comment{Loop initialization (lines \ref{lst:line:loop1} to \ref{lst:line:loop2} in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
 
         \State \hlgreen{$suppC_{M} \gets $GET-OCC-COST(GET-OBS-POINTS($o$, $translation$), $occCostGrid$)}
 
@@ -36,25 +23,16 @@
 
           % \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$)}
             \State $c_{2} \gets \{pushPose, oSimPose\}$
-            \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.occGrid$)
+            \State $c_{3} \gets A$*($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)
             \If{$c_{3} \neq \emptyset$}
               \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
               \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * o.pushCost *$ \hlgreen{$suppC_{M}$}
               \State $p.minCost \gets |c_{2}| * o.pushCost *$ \hlgreen{$suppC_{M}$} $+ |c_{3}| * moveCost$
-              \State $p.o \gets$ COPY($o$)
-              \State $p.translation \gets translation$
-              \State $p.safeSweptArea \gets safeSweptArea$
-              \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
+              \State \dots \Comment{Affectation of other variables of $p$ (lines \ref{lst:line:ovaraffec1} to \ref{lst:line:ovaraffec2} in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
             \EndIf
           % \EndIf
 
-          \State $seq \gets seq + 1$
-
-          \State $translation \gets pushUnit * onePushDist * seq$
-
-          \State $safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)
-
-          \State $oSimPose \gets pushPose + translation$
+          \State \dots \Comment{Loop variable update (lines \ref{lst:line:loopvarup1} to \ref{lst:line:loopvarup2} in Algorithm \ref{alg:03-custom-basicmods-planforobstacle})}
 
           \State \hlgreen{$suppC_{M} \gets $GET-OCC-COST(GET-OBS-POINTS($o$, $translation$), $occCostGrid$)}
 
@@ -68,21 +46,6 @@
 
     \State \textbf{return} $p \in P_{o,d}$ with minimal $p.cost$ or null if $P_{o,d} = \emptyset$
 
-    \EndProcedure
-
-    \Procedure{GET-OCC-COST}{$simOccPoints$, $occCostGrid$}
-
-      \State{$cost \gets 0$}
-
-      \For{each $point$ in $simOccPoints$}
-        \State $valueForPoint \gets occCostGrid[point]$
-        \If{$valueForPoint = FORBIDDEN\_VALUE$}
-          \State \textbf{return} $INF$
-        \EndIf
-        \State{$cost \gets cost + valueForPoint / MAX\_VALUE$}
-      \EndFor
-
-      \State \textbf{return} $cost$
     \EndProcedure
 
   \end{algorithmic}
