@@ -34,7 +34,7 @@
           \If{\hlgreen{$obsPose \neq$ null}}
             \State \hlgreen{$c_{0}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$}
           \Else
-            \State \hlgreen{COMPUTE-O1-C1($o$, $I$, $R$, $pushPose$, $c_{0}$, $c_{1}$)}
+            \State \hlgreen{COMPUTE-C0-C1($o$, $I$, $R$, $pushPose$, $c_{0}$, $c_{1}$)}
 
             \If{\hlgreen{$c_{0} = \emptyset$ OR $c_{1} = \emptyset$}}
               \State \hlgreen{\textbf{continue}}
