@@ -18,7 +18,7 @@
   \item Three bumpers at each corner of its triangular base, to detect collisions that may occur,
   \item A 2D RGB camera on its forehead (Figure \ref{fig:2d_camera}), that allows it to do image recognition tasks or simply filming its environment,
   \item A 3D RGBD camera \footnote{Asus XTion Camera: \url{https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE/}} in its head (Figure \ref{fig:3d_camera}), behind the eye lenses, that allow it to construct a 3D point cloud of the obstacles in front of where its face is turned, which can be used to cover part of laser units blind spots,
-  \item An inertial measurement unit that allows it to know its orientation,
+  \item An inertial measurement unit that allows it to know its orientation.
 \end{itemize}
 
 \paragraph{} In particular, three other sensors are especially meant for interaction with humans:
@@ -81,13 +81,13 @@
 
 \paragraph{Objective} We want to test several house-environment movable obstacles types to see if and how Pepper could manipulate them with confidence as to the results.
 
-\paragraph{Hypothesis} Given the round nature of Pepper's base front, we suppose that light obstacles and obstacles with wheelcasters could be moved. We suppose that placing the robot at the center of the obstacle, and pushing in a perpendicular direction to it gives the most repeatable results.
+\paragraph{Hypothesis} Given the round nature of Pepper's base front, we suppose that light obstacles and obstacles with wheelcasters could be moved. We suppose that placing the robot at the center of the obstacle's side, and pushing in a perpendicular direction to it gives the most repeatable results.
 
 \paragraph{Protocol}
 
 \begin{itemize}
   \item We start a Docker container to connect to the robot, following the instructions in the \href{https://github.com/Xia0ben/rosdocked-kinetic-pepper}{previously presented repository}.
-  \item Position Pepper at the beginning of the test line with an obstacle at its base in a given configuration (for each object, we at least test the middle of the object's side, and if results were encouraging, also positions at the border of the obstacle where the robot would have two, then one contact points). Take photos from the side (wide + close angle), top (only close angle) and front (wide + close angle) (Figure \ref{fig:experimental_setup}).
+  \item Position Pepper at the beginning of the test line with an obstacle at its base in a given configuration (for each obstacle, we at least test the middle of the obstacle's side, and if results were encouraging, also positions at the border of the obstacle where the robot would have two, then one contact points). Take photos from the side (wide + close angle), top (only close angle) and front (wide + close angle), see Figure \ref{fig:experimental_setup}.
   \item Start a video take from side and front wide angles, and send the following command to tell Pepper to go forward for only about 1.5 meters
   \begin{minted}{bash}
   \$ rostopic pub /cmd_vel -1 geometry_msgs/Twist\
@@ -102,60 +102,58 @@
 
 \begin{figure}[H]
 
-\begin{subfigure}{0.30\textwidth}
+\begin{subfigure}{0.20\textwidth}
 \includegraphics[width=\linewidth]{Experiment/01_init_front_close.jpg}
 \caption{Front close angle} \label{fig:01_init_front_close}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.30\textwidth}
+\begin{subfigure}{0.20\textwidth}
 \includegraphics[width=\linewidth]{Experiment/01_init_front_wide.jpg}
 \caption{Front wide angle} \label{fig:01_init_front_wide}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.30\textwidth}
+\begin{subfigure}{0.20\textwidth}
 \includegraphics[width=\linewidth]{Experiment/01_init_side_close.jpg}
 \caption{Side close angle} \label{fig:01_init_side_close}
 \end{subfigure}
 
 \medskip
 
-\begin{subfigure}{0.48\textwidth}
+\begin{subfigure}{0.35\textwidth}
 \includegraphics[width=\linewidth]{Experiment/01_init_side_wide.jpg}
 \caption{Side wide angle} \label{fig:01_init_side_wide}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.48\textwidth}
+\begin{subfigure}{0.35\textwidth}
 \includegraphics[width=\linewidth]{Experiment/01_init_top.jpg}
 \caption{Top close angle} \label{fig:01_init_top}
 \end{subfigure}
 
-\caption{Experimental setup} \label{fig:experimental_setup}
+\caption{Experimental setup example with a small cardboard box} \label{fig:experimental_setup}
 \end{figure}
-
-\clearpage
 
 \paragraph{Results}
 
 \paragraph{} After tests conducted on empty cardboard boxes of varied sizes (bigger or smaller than the robot's base), a chair with wheelcasters and an office trash can, we experimentally conclude that:
 \begin{itemize}
   \item Pushing obstacles with wheelcasters without grasping nor adaptive procedures to compensate their drift, results in quick drifts from the robot's trajectory, because each wheelcaster generally has its own friction constraints, and even when all are manually orientated in the same direction, they rotate in an unpredictable way (Figures \ref{fig:03_init_top} and \ref{fig:03_end_top}).
-  \item Light polygonal or round obstacles with an even distribution of mass (boxes and can), drift little if not at all from the robot's trajectory if the robot is placed so that its center faces the center of the side of the obstacle being pushed (the center of the circle for round objects). For the cardboard boxes, as long as the robot's span is within the span of the object, little drift is produced from the robot's trajectory, but as soon as the robot's span overflows a little (Figures \ref{fig:02_init_front_wide} and \ref{fig:02_end_front_wide}), there is a significant drift (likely caused by the fact that it makes the robot start with only one contact point with the obstacle at the beginning).
+  \item Light polygonal or round obstacles with an even distribution of mass (boxes and can), drift little if not at all from the robot's trajectory if the robot is placed so that its center faces the center of the side of the obstacle being pushed (the center of the circle for round obstacles). For the cardboard boxes, as long as the robot's span is within the span of the obstacle, little drift is produced from the robot's trajectory, but as soon as the robot's span overflows a little (Figures \ref{fig:02_init_front_wide} and \ref{fig:02_end_front_wide}), there is a significant drift (likely caused by the fact that it makes the robot start with only one contact point with the obstacle at the beginning).
 \end{itemize}
 
 \paragraph{Conclusion} Therefore, it is relatively safe to assume that always placing our robot at the middle of the obstacle's side for a push action will almost always produce the expected translation without significant drift.
 
 \begin{figure}[H]
 
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.18\textwidth}
 \includegraphics[width=\linewidth]{Experiment/03_init_top.jpg}
 \caption{Initial top close angle of well-positioned robot and chair} \label{fig:03_init_top}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.18\textwidth}
 \includegraphics[width=\linewidth]{Experiment/03_end_top.jpg}
 \caption{Final top close angle of the failed chair push attempt} \label{fig:03_end_top}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.18\textwidth}
 \includegraphics[width=\linewidth]{Experiment/02_init_front_wide.jpg}
 \caption{Initial front wide angle of badly-positioned robot and box} \label{fig:02_init_front_wide}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.18\textwidth}
 \includegraphics[width=\linewidth]{Experiment/02_end_front_wide.jpg}
 \caption{Final front wide angle of the failed box push attempt} \label{fig:02_end_front_wide}
 \end{subfigure}
@@ -163,13 +161,11 @@
 \caption{Failed manipulation attempts with badly positioned robot and a carboard box, and with well-positioned robot and a chair with wheelcasters.} \label{fig:failed_attempts}
 \end{figure}
 
-\clearpage
-
 \section{Simulation in a ROS-Standards compatible simulator}
 
 \subsection{Simulator presentation}
 
-\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: http://wiki.ros.org/rviz}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
+\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: http://wiki.ros.org/rviz}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
 
 \paragraph{} It is to be noted that the optimality target for this implementation is at the moment only expressed in distance, but it is relatively trivial to express it in time or energy, by using the $move\_cost$ and $push\_cost$ currently present in the algorithm and passing them to the A* path finding subroutine.
 
@@ -182,11 +178,9 @@
 \label{fig:rviz}
 \end{figure}
 
-\clearpage
-
 \subsection{Simulation results}
 
-\paragraph{} At the time of the writing of this report, we were only able to implement the algorithm and the necessary simulation code for the base solution presented in section \ref{discussion_hypotheses_section}, but not the three propositions that build upon it. This still allowed us to validate all comments and improvements made in Chapter \ref{Chapter3} and in the first section of Chapter \ref{Chapter4}. Below are a few figures (\ref{fig:simulation}) showing a test case in a corridor with two obstacles.
+\paragraph{} At the time of the writing of this report, we were only able to implement the algorithm and the necessary simulation code for the solution presented in section \ref{discussion_hypotheses_section} (and corresponding algorithms \ref{alg:03-custom-basicmods-makeandexecuteplan}, \ref{alg:02-levihn-makeplan} and \ref{alg:03-custom-basicmods-planforobstacle}), but not the three propositions that build upon it. This still allowed us to validate all comments and improvements made in Chapter \ref{Chapter3} and in the first section of Chapter \ref{Chapter4}. Below are a few figures (\ref{fig:simulation}) showing a test case in a corridor with two obstacles.
 
 \paragraph{} Figure \ref{fig:simulation_01} represents the static obstacles that \textbf{never change} (walls). Figure \ref{fig:simulation_02} also represents the yet unknown obstacles (the bottom one is unmovable, the top one is movable). Figure \ref{fig:simulation_03} is our initial robot configuration. The robot is geometrically represented by a little blue circle and a blue arrow for its orientation, and it's field of vision (represented by the pink circle) allows it to detect the point cloud (white point) that represents the bottom obstacle (known environment to the robot is represented by the purple shades).
 
