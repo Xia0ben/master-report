@@ -4,23 +4,8 @@
 
 \label{Chapter6} % For referencing the chapter elsewhere, use \ref{Chapter6}
 
-\section{Contributions}
+\paragraph{} In this work, we presented a detailed state of the art of the NAMO domain, and provided a set of criterias that allowed us to compare the many propositions that exist in this domain, and situate our overall proposition in contrast to them. We analyzed the state of the art algorithms for locally optimal NAMO in unknown environments, fixed and reformulated it properly with pseudocode, and finally, built a new set of propositions on this foundation, that constitute the first steps toward bringing dynamic and social constraints to the domain. While we were not able to test all of them in simulation or reality at the time of this writing, we were able to validate our first proposition and the possibility for the Pepper robot current actuators to be used in the real application.
 
-\section{Future work}
-
-
-% La conclusion n'est pas le résumé de l'écrit,  mais la fin. Elle récapitule d'abord brièvement le cheminement de pensée et en particulier les conclusions intermédiaires décrites dans le développement. Puis elle énumère les contributions/réalisations.
-
-% La conclusion ne peut faire référence à des idées dont il n'a pas été question dans le développement. On ne saurait y trouver des faits nouveaux car la conclusion n'est en principe pas une ouverture sur d'autres idées; pour cela il est préférable d'ajouter un paragraphe "Perspectives".
-
-% La conclusion s'ouvre plutôt sur l'action et doit être formulée très clairement, sous peine d'en diminuer l'impact.
-
-
-%%% COPY PASTA
-% \paragraph{} Que faire en cas de rencontre d’une personne (ne pas gêner, la contourner ou attendre son départ?), que faire en cas de rencontre d’un objet dans un passage mentionné libre dans la carte (le contourner, le déplacer ou mettre à jour la carte et replanifier?). L’ensemble de ces questions devra être abordé en tenant compte, d’une part, du respect des règles sociales des humains, et d’autre part, du besoin d’arriver au plus vite à la destination visée.
-%
-% \paragraph{} Le travail sera mené en s’appuyant sur des travaux existants dans l’équipe. En particulier pour les aspects cartographie (ROS-navigation), reconnaissance des humains et des objets (librairies de références, adaptations faites dans l’équipe et travaux de Christian Wolf) et navigation sociale (détection des comportements humains et modélisation des flux humains).
-%%% END COPY PASTA
-
+\paragraph{} A doctoral contract has already been granted to allow the pursuit of our research, on the broader theme of "Cooperative and social robot navigation among movable obstacles". Thus, our first perspective is to validate then build upon our existing propositions, in order to manage more complex dynamic and social navigation models, but also to interact with other agents, be them humans or other robots. One can easily imagine robot interactions for NAMO where the robot kindly asks another agent to move out of its way, or ask help in moving obstacles that it is not capable of moving alone (which is a problem that has already been addressed in existing research, but only for the purpose of moving a user-specified object \parencite{amato_planning_2015}). Another interesting perspective is that we could also explore about the environment observation problem surrounding NAMO, and find an optimal way for a robot to use data provided by other agents (robots or IoT sensors), and ask for other agents to check the surroundings of an obstacle the robot is currently considering for movement. As the need for better performance may rise, we can also study ways of sacrificing the local optimality of our proposition in a controlled manner in order to improve performance as in \parencite{levihn_planning_2013}. In the same way, as we head toward real-world experimentations, we will maybe need to use approaches that better take uncertainty into account, as in \parencite{stilman_planning_2007, levihn_foresight_2013, levihn_planning_2013, scholz_navigation_2016}.
 
 % \textbf{Link of Jilles about cooperating robots that push obstacles together: http://www.ccs.neu.edu/home/camato/videos.html.}

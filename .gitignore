@@ -257,5 +257,3 @@ Origin/
 # Ignore libreoffice lock files
 \.~lock*
 
-# Original folder with all photos
-Figures/Experiment/
