@@ -13,25 +13,25 @@
       \EndIf
 
       \State $P_{o,d}$ $\gets \emptyset$
-      \State $c_{1} \gets D$*Lite$(R, o.init, I)$ \Comment{\nameref{c1_computation_note}}
+      \State $c_{1} \gets D$*Lite$(R, o.init, I)$
       \If{$c_{1} = \emptyset$}
         \State \textbf{return} null
       \EndIf
-      \State $BA \gets null$ \Comment{\nameref{remember_ba_note}}
+      \State $BA \gets null$ \label{lst:line:remember_ba_note_1}
 
-      \For{each possible manipulation direction $d$ on $o$} \Comment{\nameref{allowed_manipulations_note}}
+      \For{each possible manipulation direction $d$ on $o$}
 
-        \State $seq \gets 1$ \Comment{\nameref{seq_note}}
+        \State $seq \gets 1$
 
         \State $oSimPose \gets o.init + one\_translation\_in\_d$
 
-        \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
+        \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$ \label{lst:line:new_bound_1}
 
-        \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * one\_translation\_in\_d * pushCost$
+        \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * |one\_translation\_in\_d| * pushCost$
 
-        \While{$C_{est}$ $ \leq p_{opt}.cost$ AND manipulation on $o$ possible}
+        \While{$C_{est}$ $ \leq p_{opt}.cost$ AND manipulation on $o$ possible} \label{lst:line:new_bound_2}
 
-          \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $seq * one\_translation\_in\_d$, $BA$)}
+          \If{CHECK-NEW-OPENING($I.occGrid$, $o$, $seq * one\_translation\_in\_d$, $BA$)} \label{lst:line:remember_ba_note_2}
             \State $c_{2} \gets \{o.init, oSimPose\}$
             \State $c_{3} \gets D$*Lite($oSimPose$, $R_{goal}$, $I.withSimulatedObstacleMove$)
             \If{$c_{3} \neq \emptyset$}
@@ -52,7 +52,7 @@
 
           \State $c_{3_{(Est)}} \gets \{oSimPose, R_{goal}\}$
 
-          \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * one\_translation\_in\_d * pushCost$
+          \State $C_{est} \gets (|c_{1}| + |c_{3_{(Est)}}|) * moveCost + seq * |one\_translation\_in\_d| * pushCost$
 
         \EndWhile
 

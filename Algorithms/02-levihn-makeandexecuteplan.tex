@@ -14,25 +14,25 @@
       \State $blockedObsL \gets \emptyset$
       \State $euCostL, minCostL \gets \emptyset, \emptyset$ \label{lst:line:init2}
       \State $I \gets empty\_occupation\_grid$
-      \State $p_{opt}.components \gets [D$*Lite($R_{init}$, $R_{goal}$, $I$)] \Comment{\nameref{d_star_note}}
+      \State $p_{opt}.components \gets [D$*Lite($R_{init}$, $R_{goal}$, $I.occGrid$)]
       \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
 
       \While{$R \neq R_{goal}$}
 
-        \State UPDATE-FROM-NEW-INFORMATION($I$) \Comment{\nameref{second_update-from-new-information_note}}
+        \State UPDATE-FROM-NEW-INFORMATION($I$)
 
-        \If{$I$.freeSpaceCreated()}
+        \If{$I$.freeSpaceCreated()} \label{lst:line:second_update-from-new-information_note}
           \State $minCostL \gets \emptyset$
         \EndIf
 
         \State $\mathcal{O}_{new} \gets \mathcal{O}_{new} \bigcup I.newObstacles$
 
-        \State $\mathcal{O} \gets I.allObstacles$
+        \State $\mathcal{O} \gets I.allObstacles$ \label{lst:line:allobstacles}
 
         \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
         \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
-          \State $p_{opt}.components \gets [D$*Lite($R$, $R_{goal}$, $I$)]
+          \State $p_{opt}.components \gets [D$*Lite($R$, $R_{goal}$, $I.occGrid$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
           \State $\mathcal{O}_{new} \gets \emptyset$
@@ -51,11 +51,6 @@
           \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
         \EndIf
         \State $R \gets R_{real}$ \label{lst:line:exec2}
-
-        % \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
-        %   \State $isManipSuccess \gets False$
-        %   \State $blockedObsL \gets blockedObsL \bigcup {p_{opt}.o, R_{real}, GET-SET-OF-POSSIBLY-BLOCKING-POINTS()}$ \Comment{The current pose $R_{real}$ required to push $o$ from where we left it is marked as "blocked" and will only be removed from the list if either the obstacle moves/is moved in a way that the saved pose is no longer corresponding to one of the $pushPoses$ of the obstacle or if the set of possibly blocking points is known as free.}
-        % \EndIf
 
       \EndWhile
 

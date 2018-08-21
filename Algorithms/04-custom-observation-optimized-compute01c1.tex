@@ -30,12 +30,12 @@
       \If{$euPosesCostL \neq \emptyset$}
         \State $op_{next} \gets euPosesCostL[0]$
         \While{$totalCost \geq op_{next}.cost$ AND $op_{next} \neq$ null}
-          \State $o \gets A$*($R$, $op_{next}.obsPose$, $I$)
-          \State $c \gets A$*($op_{next}.obsPose$, $pushPose$, $I$)
-          \State $newTotalCost = |o| + |c|$
-          \If{$newTotalCost < +\infty$ AND ($newTotalCost < totalCost$ OR ($newTotalCost = totalCost$ AND $|o| < |c_{0}|$)}
-            \State $c_{0} = o$
-            \State $c_{1} = c$
+          \State $c_{0_{cur}} \gets A$*($R$, $op_{next}.obsPose$, $I.occGrid$)
+          \State $c_{1_{cur}} \gets A$*($op_{next}.obsPose$, $pushPose$, $I.occGrid$)
+          \State $newTotalCost = |c_{0_{cur}}| + |c_{1_{cur}}|$
+          \If{$newTotalCost < +\infty$ AND ($newTotalCost < totalCost$ OR ($newTotalCost = totalCost$ AND $|c_{0_{cur}}| < |c_{0}|$)}
+            \State $c_{0} = c_{0_{cur}}$
+            \State $c_{1} = c_{1_{cur}}$
             \State $totalCost = |c_{0}| + |c_{1}|$
           \EndIf
           \State $op_{next} \gets euPosesCostL$.getNext()

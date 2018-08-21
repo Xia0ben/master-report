@@ -8,7 +8,7 @@
 
       \Procedure{OPTIMIZED}{$R_{init}$, $R_{goal}$}
 
-        \State $R \gets R_{init}$
+        \State $R \gets R_{init}$ \label{lst:line:01_plan_execution_loop_1}
 
         \State $blockedObsL \gets \emptyset$
 
@@ -20,24 +20,24 @@
 
         \State $I \gets empty\_occupation\_grid$
 
-        \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I$)]
+        \State $p_{opt}.components \gets$ [$A$*($R_{init}$, $R_{goal}$, $I.occGrid$)]
 
         \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
 
         \While{$R \neq R_{goal}$}
 
-          \State UPDATE-FROM-NEW-INFORMATION($I$) \Comment{\nameref{update-from-new-information_note}}
+          \State UPDATE-FROM-NEW-INFORMATION($I$)\label{lst:line:update-from-new-information_note}
 
           \State $\mathcal{O}_{new} \gets \mathcal{O}_{new} \bigcup I.newObstacles$
 
-          \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$ \Comment{\nameref{intersection_note}}
+          \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$ \label{lst:line:intersection_note}
 
           \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
 
-            \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I$)]
-            \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$
+            \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I.occGrid$)]
+            \State $p_{opt}.cost \gets |p_{opt}.components[0]| * moveCost$ \label{lst:line:01_plan_execution_loop_2}
 
-            \For{each $o \in \mathcal{O}_{new}$}
+            \For{each $o \in \mathcal{O}_{new}$} \label{lst:line:01_obstacle evaluation_loop_1}
               \For{each possible push direction $d$ on $o$}
                 \State $p \gets$ OPT-EVALUATE-ACTION($o$, $d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
                 \If{$p \neq$ null}
@@ -48,14 +48,14 @@
 
             \If{$P_{sort} \neq \emptyset$}
               \State $p_{next} \gets P_{sort}[0]$
-              \While{$p_{opt}.cost \geq p_{next}.minCost$ AND $p_{next} \neq$ null} \Comment{\nameref{re-evaluation_note}}
+              \While{$p_{opt}.cost \geq p_{next}.minCost$ AND $p_{next} \neq$ null}
                 \State $p \gets$ OPT-EVALUATE-ACTION($p_{next}.o$, $p_{next}.d$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$) \label{lst:line:suppcondition}
                 \If{$p \neq$ null AND $p.cost \leq p_{opt}.cost$}
                   \State $p_{opt} \gets p$
                 \EndIf
-                \State $p_{next} \gets P_{sort}$.getNext() \Comment{\nameref{getnext_note}}
+                \State $p_{next} \gets P_{sort}$.getNext()
               \EndWhile
-            \EndIf
+            \EndIf \label{lst:line:01_obstacle evaluation_loop_2}
 
             \algstore{wustore}
 
@@ -70,27 +70,27 @@
   \begin{algorithmic}[1]
 
             \algrestore{wustore}
-            
-            \State $\mathcal{O}_{new} \gets \emptyset$
+
+            \State $\mathcal{O}_{new} \gets \emptyset$ \label{lst:line:01_plan_execution_loop_3}
 
           \EndIf
-          \If{$p_{opt}.components = \emptyset$}
-            \State \textbf{return} $False$ \Comment{\nameref{stop_condition_note}}
+          \If{$p_{opt}.components = \emptyset$} \label{lst:line:stop_condition_note}
+            \State \textbf{return} $False$
           \EndIf
 
-          \State $isManipSuccess \gets True$
-          \State $R_{next} \gets p_{opt}$.getNextStep() \Comment{\nameref{plan_following_note}}
+          \State $isManipSuccess \gets True$ \label{lst:line:plan_following_note_1}
+          \State $R_{next} \gets p_{opt}$.getNextStep()
           \State $c_{next} \gets p_{opt}$.getNextStepComponent()
           \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
           \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
             \State $isManipSuccess \gets False$
             \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
           \EndIf
-          \State $R \gets R_{real}$
+          \State $R \gets R_{real}$ \label{lst:line:plan_following_note_2}
 
         \EndWhile
 
-        \State \textbf{return} $True$
+        \State \textbf{return} $True$ \label{lst:line:01_plan_execution_loop_4}
 
     \EndProcedure
 

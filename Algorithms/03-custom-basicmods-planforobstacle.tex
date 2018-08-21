@@ -18,7 +18,7 @@
       \For{\hlgreen{each $pushPose$ in $o.pushPoses$}}
         \State \hlgreen{$pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$} \label{lst:line:loop1} \Comment{Unit vector for push direction}
 
-        \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I$)} \Comment{$c_{1}$ is computed for each push pose}
+        \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)} \Comment{$c_{1}$ is computed for each push pose}
 
         \If{$c_{1} = \emptyset$}
           \State \hlgreen{\textbf{continue}} \Comment{\nameref{continue_note}}
@@ -28,7 +28,7 @@
 
         \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$} \Comment{onePushDist is a distance constant}
 
-        \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
+        \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I.occGrid$)}
 
         \State $oSimPose \gets $\hlgreen{$pushPose + translation$} \label{lst:line:loop2}
 

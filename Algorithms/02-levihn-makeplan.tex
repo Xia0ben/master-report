@@ -13,36 +13,36 @@
           \State $euCostL$.insertOrUpdate$(\{o, C_{3_{(Est)}}\})$
       \EndFor
 
-      \State $i_{e}, i_{m} \gets 0 , 0$ \Comment{\nameref{get_list_element_note}}
-      \State $evaluatedObstacles \gets \emptyset$ \Comment{\nameref{evaluated_obstacles_note}}
+      \State $i_{e}, i_{m} \gets 0 , 0$
+      \State $evaluatedObstacles \gets \emptyset$ \label{lst:line:evaluated_obstacles_note_1}
 
-      \While{$\min(minCostL[i_{m}].minCost, euCostL[i_{e}].c_{3_{est}}) < p_{opt}.cost$} \Comment{\nameref{list_traversal_note}}
-        \If{$minCostL[i_{m}].minCost < euCostL[i_{e}].c_{3_{est}}$} \Comment{\nameref{minCostL_priority_note}}
+      \While{$\min(minCostL[i_{m}].minCost, euCostL[i_{e}].c_{3_{est}}) < p_{opt}.cost$} \label{lst:line:stop_condition_obs_loop}
+        \If{$minCostL[i_{m}].minCost < euCostL[i_{e}].c_{3_{est}}$} \label{lst:line:mincostl_first}
           \State $o \gets minCostL[i_{m}].obstacle$
-          \If{$o \not\in evaluatedObstacles$}
+          \If{$o \not\in evaluatedObstacles$} \label{lst:line:evaluated_obstacles_note_2}
             \State $p \gets$ PLAN-FOR-OBSTACLE($o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
             \If{$p \neq$ null}
               \State $minCostL.$insertOrUpdate$(\{o, p.minCost\})$
             \Else
               \State $minCostL.$insertOrUpdate$(\{o, +\infty\})$
             \EndIf
-            \State $evaluatedObstacles.$insert$(o)$
+            \State $evaluatedObstacles.$insert$(o)$ \label{lst:line:evaluated_obstacles_note_3}
           \EndIf
           \State $i_{m} \gets i_{m} + 1$
         \Else
-          \If{not $minCostL$.contains($euCostL[i_{e}].obstacle)$} \Comment{\nameref{postponing_note}}
+          \If{not $minCostL$.contains($euCostL[i_{e}].obstacle)$} \label{lst:line:use_eucostl_1}
           \State $o \gets euCostL[i_{e}].obstacle$
-            \If{$o \not\in evaluatedObstacles$}
+            \If{$o \not\in evaluatedObstacles$} \label{lst:line:evaluated_obstacles_note_4}
               \State $p \gets$ PLAN-FOR-OBSTACLE($o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$)
               \If{$p \neq$ null}
                 \State $minCostL.$insertOrUpdate$(\{o, p.minCost\})$
-              \Else \Comment{Corresponds to the "If $p \neq$ null" statement.}
+              \Else
                 \State $minCostL.$insertOrUpdate$(\{o, +\infty\})$
               \EndIf
-              \State $evaluatedObstacles.$insert$(o)$
+              \State $evaluatedObstacles.$insert$(o)$ \label{lst:line:evaluated_obstacles_note_5}
             \EndIf
           \EndIf
-          \State $i_{e} \gets i_{e} + 1$
+          \State $i_{e} \gets i_{e} + 1$ \label{lst:line:use_eucostl_2}
         \EndIf
       \EndWhile
     \EndProcedure

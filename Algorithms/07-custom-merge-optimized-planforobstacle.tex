@@ -18,7 +18,7 @@
       \For{each $pushPose$ in $o.pushPoses$}
         \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
 
-        \State $c_{1} \gets A$*($R$, $pushPose$, $I$)
+        \State $c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)
 
         \If{$c_{1} = \emptyset$}
           \State \textbf{continue}

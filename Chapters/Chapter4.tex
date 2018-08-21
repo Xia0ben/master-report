@@ -12,53 +12,24 @@
 
 \begin{itemize}
   \item \textbf{Initial knowledge of the environment} is partial, in that all static obstacles (i.e. objects that are not meant to be moved by any actor, like walls or very heavy furniture) have already been mapped. In the context of the Robocup@Home Challenge, participants are allowed to build such a map prior to the actual trials. This hypothesis is actually quite justified since in a home setting, it is very likely that the robot has undergone a configuration phase prior to its daily use, when it is provided with a manually drawn map of the home, or at least allowed to roam about and map the static obstacles. Having a map of static obstacles is very important for standard localization algorithms used in ROS, like \href{http://wiki.ros.org/amcl}{AMCL}, since they use this environment knowledge to compensate for odometry error.
-  \item \textbf{Manipulation actions}, for the moment, are to be limited to pushes in a perpendicular direction to the obstacle's side being pushed. Given the many problematics related to grasping objects (e.g., appropriate positioning of the robot joints, keeping the robot balanced, ...), it is best for a first iteration not to dwell on these.
+  \item \textbf{Manipulation actions}, for the moment, are to be limited to pushes in a perpendicular direction to the obstacle's side being pushed. Given the many problematics related to grasping objects (e.g., appropriate positioning of the robot joints, keeping the robot balanced, ...), and the low power that can be delivered by Pepper's arms, it is best for a first iteration not to dwell on these.
   \item \textbf{Manipulation poses} are a key concept of manipulating obstacles, as we have shown in the previous chapter, and, contrary to the original algorithms we will explicitly explain our hypotheses as to them. Experimentations with the Pepper Robot (see Chapter \ref{Chapter5}) and carboard boxes as movable obstacles have shown that a good first approximation that guarantees quasi-systematic push manipulation successes are poses situated at the middle of the object's sides. This is, of course, supposing that we are only considering light objects with negligible friction against the ground, and with no other cinematic constraint than a plan-plan link between one of the obstacle's faces and the ground (a perfect plane).
+
+
   \item \textbf{Manipulation cost} A constant $pushCost$ has been used in the previously shown algorithm to allow weighting of the manipulation action in regard to a simple move action. Semantically, it makes more sense that this constant be related to the object (the difficulty of moving a specific object depending mainly on its physical properties), so we will store it as an obstacle attribute.
   \item \textbf{Manipulation possibility check} Checking whether a manipulation is possible or not is done by checking whether the area covered by the robot and the obstacle as they move together is in intersection with any other obstacle. As we limit our action set to pushes in a specific direction, this area can be defined as the convex hull containing both the robot's and the obstacle's polygonal representation at their initial and final pose. According to the existing litterature, we will call this the "safe-swept area" if no other obstacle is in intersection with it. In the pseudocode, this is done by the "GET-SAFE-SWEPT-AREA" method, which returns null if any obstacle is in intersection with the manipulation area. This area is saved as part of the plan so that when the plan is being executed, checking for a collision is as simple as checking if an obstacle appeared in this area (assuming our knowledge of the obstacle did not evolve in the mean time).
-  \item \textbf{Obstacle discovery} As the robot approaches obstacles, their geometrical representation is updated according to what the robot's sensors can see. When executing a plan that includes the manipulation of an obstacle, said obstacle can actually change during the execution of the $c_{1}$ component, which is problematic for the preservation of optimality, since the obstacle's push poses may change (as a push pose has been defined with a dependency to the side's middle point). Therefore re-evaluation should not only be triggered if a new obstacle intersects with the current optimal plan, but also if the current optimal plan includes the manipulation of an obstacle and if said obstacle has changed in a way that makes the originally targeted $pushPose$ unavailable.
+  \item \textbf{Obstacle discovery} As the robot approaches obstacles, their geometrical representation is updated according to what the robot's sensors can see. When executing a plan that includes the manipulation of an obstacle, said obstacle knowledge can actually evolve during the execution of the $c_{1}$ component, which is problematic for the preservation of optimality, since the obstacle's push poses may change (as a push pose has been defined with a dependency to the side's middle point). Therefore re-evaluation should not only be triggered if a new obstacle intersects with the current optimal plan, but also if the current optimal plan includes the manipulation of an obstacle and if said obstacle has changed in a way that makes the originally targeted $pushPose$ unavailable.
 \end{itemize}
 
-\paragraph{}\label{check_opening_solution} Below, we propose, a way for restoring the optimality, assuming we are under the hypothesis of sole translations, in a single direction:
+\subsection{Newly introduced notations and definitions}
 
-\paragraph{} A new opening detection is defined by the disparition of at least one blocking area thanks to the considered manipulation \parencite{levihn_efficient_2011}. A new opening is never detected if:
+\paragraph{\textbf{continue}}\label{continue_note} The \textbf{continue} statement returns the control to the beginning of the loop, and simply won't execute any of the remaining statements in the current iteration of the loop. This is done because a plan with a manipulation cannot exist without an empty $c_{1}$ component (i.e. the targeted push pose is not accessible).
 
-\begin{itemize}
-  \item Not a single blocking area disappears thanks to the considered manipulation, because the blocking areas do not vary enough or at all ("corridor" case),
-  \item There are no blocking areas to begin with ("open space" case).
-\end{itemize}
+\paragraph{COPY}\label{copy_note} Here, $p_{opt}.o$ is a copy of object $o$, and not the same object, so that when $o$ is updated because of the call to UPDATE-FROM-NEW-INFORMATION() on $I$, we can compare the difference between the two. We do the same for $p_{opt}.pushPose$ for the same reason. This allows us to trigger re-evaluation if the obstacle's push poses change and the one the robot aimed for no longer exists.
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{Figures/Check_New_Opening/corridor_swept.png}
-  \caption{"Corridor" case}
-  \label{fig:corridor_swept}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{Figures/Check_New_Opening/openspace_swept.png}
-  \caption{"Open space" case}
-  \label{fig:openspace_swept}
-\end{subfigure}
-\caption{Limit cases of the original algorithm with illustration of the "Inflated swept area"}
-\label{fig:inflated_swept_area}
-\end{figure}
+\paragraph{[], $\neq$ and $\bigcap$ operators}\label{operators_note} The [] operator is now also used as a short handle for "get the obstacle that corresponds in $\mathcal{O}$ that corresponds to the saved obstacle $p_{opt}.o$. The $\neq$ operator checks if the two states of the obstacle are the same or not (i.e, if the obstacle changed).
 
-\paragraph{} In both cases, it is only interesting to consider the manipulation if it actually creates any chance of finding a path that has a lower cost than the one that avoids the obstacle. If no new opening is detected, and if, like in the "corridor" case, no path avoiding the obstacle was found, or, like in the "open space" case, a path avoiding the obstacle was found, we should only consider the manipulation if it allows us to push the obstacle through the goal pose; in more precise terms, \textbf{if the goal pose is within the "inflated swept area" and the obstacle in its final position does not intersect with the goal pose}. The inflated swept area is defined as the area covered by the inflated (by the robot's radius) obstacle when moved. In the end, the overall check condition should be:
-
-\paragraph{} \textbf{If} CHECK-NEW-OPENING($I.occGrid$, $o$, $translation$, $BA$) AND $goalPose \in$ GET-INFLATED-SWEPT-AREA($o$, $translation$, $I$) AND $goalPose \not\in o.inflatedArea$
-
-\paragraph{} We have an intuition that these two extra verifications steps are sufficient to restore optimality, but this is no proper demonstration. Since performance is not the main focus of our work here, but optimality is, we will prefer not to use the opening check optimization step in our following algorithms propositions, and postpone a proof to later work.
-
-\paragraph{Note on \textbf{continue}}\label{continue_note} The \textbf{continue} statement returns the control to the beginning of the loop, and simply won't execute any of the remaining statements in the current iteration of the loop. This is done because a plan with a manipulation cannot exist without an empty $c_{1}$ component (i.e. the targeted push pose is not accessible).
-
-\paragraph{Note on COPY}\label{copy_note} Here, $p_{opt}.o$ is a copy of object $o$, and not the same object, so that when $o$ is updated because of the call to UPDATE-FROM-NEW-INFORMATION() on $I$, we can compare the difference between the two. We do the same for $p_{opt}.pushPose$ for the same reason. This allows us to trigger re-evaluation if the obstacle's push poses change and the one the robot aimed for no longer exists.
-
-\paragraph{Note on [] and $\neq$}\label{operators_note} Here, the [] operator is used as a short handle for "get the obstacle that corresponds in $\mathcal{O}$ that corresponds to the saved obstacle $p_{opt}.o$. The $\neq$ operator checks if the two states of the obstacle are the same or not (i.e, if the obstacle changed).
-
-\paragraph{Note on the use of $\bigcap$}\label{area_intersect_note} The notation $\bigcap$ means here that we check for possible collisions between the swept area and any obstacle, since they may have changed.
+\paragraph{$\bigcap$}\label{area_intersect_note} The notation $\bigcap$ means here that we check for possible collisions between the swept area and any obstacle, since they may have changed.
 
 \paragraph{Note on saving $translation$ in $p_{opt}$}\label{translation_note} The $translation$ necessary for manipulating the obstacle is saved to easily recompute the safe swept area when the obstacle changes.
 
