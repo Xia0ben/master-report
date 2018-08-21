@@ -111,8 +111,8 @@ headsepline, % Uncomment to get a line under the header
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{Robotics} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
-\keywords{NAMO, Navigation Among Movable Obstacles, Social Navigation} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
-\keywordsfr{NAMO, Navigation en milieu modifiable, Navigation Sociale}
+\keywords{NAMO, Navigation Among Movable Obstacles, Optimality, Social Navigation, Dynamic environments} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
+\keywordsfr{NAMO, Navigation parmi des obstacles mobiles, Optimalité, Navigation Sociale, Environnement dynamique}
 \university{\href{http://insa-lyon.fr}{INSA Lyon}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 \department{\href{http://if.insa-lyon.fr}{Computer Sciences and Engineering Department (IF)}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{https://team.inria.fr/chroma/}{INRIA Chroma team}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
@@ -221,13 +221,13 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-\paragraph{Résumé:} L'objectif est de permettre la navigation optimale d’un seul robot dans un environnement intérieur partiellement connu, dynamique et modifiable, en respectant les conventions sociales. % 25 mots
+\paragraph{Résumé:} Nous présentons un état de l'art détaillé du domaine de la NAMO ("Navigation Among Movable Obstacles": Navigation parmi des obstacles mobiles), ainsi qu'un crible de critères de comparaison nous permettant de situer les propositions existantes et la notre. Nous analysons les algorithmes locallement optimaux de NAMO en milieu inconnu, les reformulons en pseudocode et construisons un nouvelle ensemble de propositions sur cette fondation. Nos propositions sont les premiers pas requis pour amener des contraintes dynamiques et sociales au domaine. Nous validons partiellement notre proposition avec un simulateur compatible avec les standards ROS (Robot Operating System), et des tests de poussée avec un robot physique Pepper, qui est la plateforme standard pour la compétition Robocup@Home.
 
 % Le résumé doit décrire le contenu du rapport. Il doit contenir au moins 70 mots et ne pas dépasser 150 mots.
 
 \paragraph{Mots-clefs:} \keywordnamesfr
 
-\paragraph{Abstract:} The objective is to allow optimal navigation among movable obstacles of a single robot in a partially known interior setting, while respecting social conventions. % 24 mots
+\paragraph{Abstract:} We present a detailed state of the art of the NAMO (Navigation Among Movable Obstacles) domain, and a set of comparison criterias to sort through existing propositions and situate our own. We analyze the state of the art algorithms for locally optimal NAMO in unknown environments, reformulate them with pseudocode, and build a new set of propositions on this foundation. Our propositions are the first required steps toward bringing dynamic and social constraints to the domain. We partially validate our proposition with a ROS-compatible (Robot Operating System) simulator and pushing tests with real Pepper robot, standard platform the Robocup@Home challenge.
 
 % The abstract should summarize the contents of the paper and should contain at least 70 and at most 150 words.
 
