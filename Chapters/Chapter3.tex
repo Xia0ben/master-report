@@ -6,7 +6,7 @@
 
 \section{Original algorithms}\label{original_algo_section}
 
-\paragraph{} In Wu et. al.'s proposition, the basic idea is to consider either a plan that doesn't involve interacting with obstacles (which can be achieved with any pre-existing path finding algorithm), or a three-steps plan. As shown in Figure \ref{fig:Wu_Original_Algorithm-wu_components_illus}, the latter consists in, first, reaching the obstacle ($c_{1}$), second, pushing it in a single direction ($c_{2}$), and finally reaching the goal from the position we left the obstacle at ($c_{3}$).
+\paragraph{} In Wu et. al.'s proposition \parencite{wu_navigation_2010}, the basic idea is to consider either a plan that doesn't involve interacting with obstacles (which can be achieved with any pre-existing path finding algorithm), or a three-steps plan. As shown in Figure \ref{fig:Wu_Original_Algorithm-wu_components_illus}, the latter consists in, first, reaching the obstacle ($c_{1}$), second, pushing it in a single direction ($c_{2}$), and finally reaching the goal from the position we left the obstacle at ($c_{3}$).
 
 \begin{figure}[H]
 \centering
@@ -17,7 +17,7 @@
 
 \paragraph{} In their first article \parencite{wu_navigation_2010}, Wu et. al. describe two versions of their algorithm: a naive but locally optimal baseline one, and an optimized one, built upon the logic foundation of the first, but that loses its local optimality. Several other improvements on performance are given that restore the local optimality of the original proposition in their second article \parencite{levihn_locally_2014}. As a reminder, by locally optimal, we mean that the algorithm will \textbf{always} choose the \textbf{best} plan given its current, limited knowledge of the environment.
 
-\paragraph{} Both algorithms assume that the robot has no prior knowledge of the environment at all, and that new information is gradually stored in a 2D metric map, assuming perfect data, and making the hypothesis that unknown space is free space. The 2D metric map is translated into a binary occupancy grid\footnote{Occupancy grid defition: \url{https://www.mathworks.com/help/robotics/ug/occupancy-grids.html}} for A* and the opening detection algorithm (presented in the \nameref{optimization_3} paragraph). Whereas the first proposition is limited to rectangular obstacles, the second is extended to any polygonal obstacles, and none take autonomously moving obstacles into account. In the first proposition, obstacles can only be pushed, whereas in the second one, obstacles can be translated in any direction. The considered robot is a simulated differential drive nondescript robot with a limited field of vision, that can only push obstacles in the first proposition, but can also pull them in the second one. The NAMO class of the problem is a subset of $L_1$, since a given plan can only ever imply the movement of one obstacle.
+\paragraph{} Both algorithms assume that the robot has no prior knowledge of the environment at all, and that new information is gradually stored in a 2D metric map, assuming perfect data, and making the hypothesis that unknown space is free space. The 2D metric map is translated into a binary occupancy grid\footnote{\textbf{Occupancy grids} are used in robotics to represent the environment as a discrete grid. Binary ones represent occupied space (obstacles) by true values and free space by false ones. More complex modelizations of occupied space are also used, like associating to cells floating-point values of the probability of occupation. A more complete defition can be found here: \url{https://www.mathworks.com/help/robotics/ug/occupancy-grids.html}} for A* and the opening detection algorithm (presented in the \nameref{optimization_3} paragraph). Whereas the first proposition is limited to rectangular obstacles, the second is extended to any polygonal obstacles, and none take autonomously moving obstacles (humans, animals or animated objects) into account. In the first proposition, obstacles can only be pushed, whereas in the second one, obstacles can be translated in any direction. The considered robot is a simulated differential drive nondescript robot with a limited field of vision, that can only push obstacles in the first proposition, but can also pull them in the second one. The NAMO class of the problem is a subset of $L_1$, since a given plan can only ever imply the movement of one obstacle.
 
 \begin{figure}[H]
 \centering
@@ -37,6 +37,14 @@
 \label{fig:Wu_Original_Algorithm-baseline}
 \end{figure}
 
+\paragraph{} The baseline algorithm is very straightforward: it uses an A* path finding subroutine to determine the optimal path between the current robot's position and the goal, avoiding all known obstacles (none at the beginning). As the robot moves forward (Figure \ref{fig:Wu_Original_Algorithm-algo1}, line 17), and therefore gains new information (same figure, line 5), whenever a new obstacle is encountered, every push action for every obstacle is re-simulated (Figure \ref{fig:Wu_Original_Algorithm-algo2}) and compared to the current optimal plan (Figure \ref{fig:Wu_Original_Algorithm-algo1}, line 11). Local optimality is guaranteed for this approach, since the A* algorithm is used with the admissible Euclidean heuristic, thus returning optimal solutions for a given state of the map and goal, and also because whenever a new obstacle is detected (= the map is in a new state), \textbf{all} possible plans are re-evaluated and compared to check if a better plan than the current one can be found or not before moving the robot again.
+
+\paragraph{} The optimized version of the algorithm published in the first article offers four optimization steps:
+
+\paragraph{First Optimization}\label{optimization_1} Only consider computing a new plan if the current one is actually blocked by a new obstacle (Figure \ref{fig:Wu_Original_Algorithm-algo3}, line 6). This keeps the local optimality, since a newly detected obstacle can only imply a costlier plan either moving around it or moving it (\textbf{assuming obstacles don't move by themselves, which if it were the case, could open new, better routes}): given that we can assume that the current optimal plan was optimal before the discovery of the new obstacle, we need only reconsider it if the new obstacle invalidates it.
+
+\paragraph{Second Optimization}\label{optimization_2} Stop simulating pushes in a given direction before it becomes costlier than the current valid optimal plan, thanks to a bound (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 5). This also keeps optimality, since there are no reasons to continue evaluating actions that are already costlier than simply following the current valid optimal plan.
+
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.45\textwidth}
@@ -55,17 +63,7 @@
 \label{fig:Wu_Original_Algorithm-optimized}
 \end{figure}
 
-\clearpage
-
-\paragraph{} The baseline algorithm is very straightforward: it uses an A* path finding subroutine to determine the optimal path between the current robot's position and the goal, avoiding all known obstacles (none at the beginning). As the robot moves forward (Figure \ref{fig:Wu_Original_Algorithm-algo1}, line 17), and therefore gains new information (same figure, line 5), whenever a new obstacle is encountered, every push action for every obstacle is re-simulated (Figure \ref{fig:Wu_Original_Algorithm-algo2}) and compared to the current optimal plan (Figure \ref{fig:Wu_Original_Algorithm-algo1}, line 11). Local optimality is guaranteed for this approach, since the A* algorithm is used with the admissible Euclidean heuristic, thus returning optimal solutions for a given state of the map and goal, and also because whenever a new obstacle is detected (= the map is in a new state), \textbf{all} possible plans are re-evaluated and compared to check if a better plan than the current one can be found or not before moving the robot again.
-
-\paragraph{} The optimized version of the algorithm published in the first article offers four optimization steps:
-
-\paragraph{First Optimization}\label{optimization_1} Only consider computing a new plan if the current one is actually blocked by a new obstacle (Figure \ref{fig:Wu_Original_Algorithm-algo3}, line 6). This keeps the local optimality, since a newly detected obstacle can only imply a costlier plan either moving around it or moving it (\textbf{assuming obstacles don't move by themselves, which if it were the case, could open new, better routes}): given that we can assume that the current optimal plan was optimal before the discovery of the new obstacle, we need only reconsider it if the new obstacle invalidates it.
-
-\paragraph{Second Optimization}\label{optimization_2} Stop simulating pushes in a given direction before it becomes costlier than the current valid optimal plan, thanks to a bound (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 5). This also keeps optimality, since there are no reasons to continue evaluating actions that are already costlier than simply following the current valid optimal plan.
-
-\paragraph{Third Optimization}\label{optimization_3} Only compute the third path component (from obstacle to goal) with A* if the simulated movement actually creates an opening (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 7), since, according to the author, checking an opening creation is less computing time-consuming than running a search algorithm to the goal. The exact opening detection algorithm used is not adressed in this paper and the method used is not explicit. A technical paper later written by co-authors Levihn and Stilman \parencite{levihn_efficient_2011}, describing their new opening detection algorithm used in \parencite{levihn_locally_2014} however gives a hint at the used method: \textit{"The algorithm did not rely on search but simply observed the amount of adjacent free spaces on corners of the manipulated obstacle. While efficient, this algorithm is only applicable for world configurations populated with simple rectangular shaped static and movable obstacles. This is not realistic."}. This algorithm, like the one presented in the technical paper, only observes the variations of occupied space in the local vicinity of the movable obstacle. In the technical paper, it is explained that a new opening is detected only if the robot-diameter-inflated area of the movable obstacle is no longer intersected by the non-inflated area of another obstacle.
+\paragraph{Third Optimization}\label{optimization_3} Only compute the third path component (from obstacle to goal) with A* if the simulated movement actually creates an opening (Figure \ref{fig:Wu_Original_Algorithm-algo4}, line 7), since, according to the author, checking an opening creation is less computing time-consuming than running a search algorithm to the goal. The exact opening detection algorithm used is not adressed in this paper and the method used is not explicit. A technical paper later written by co-authors Levihn and Stilman \parencite{levihn_efficient_2011}, describing their new opening detection algorithm used in \parencite{levihn_locally_2014} however gives a hint at the used method: \textit{"The algorithm did not rely on search but simply observed the amount of adjacent free spaces on corners of the manipulated obstacle. While efficient, this algorithm is only applicable for world configurations populated with simple rectangular shaped static and movable obstacles. This is not realistic."}. This algorithm, like the one presented in the technical paper, only observes the variations of occupied space in the local vicinity of the movable obstacle. In the technical paper, it is explained that a new opening is detected only if the robot-diameter-inflated area of the movable obstacle is no longer intersected by the non-inflated area of another obstacle. If there are no obstacles in the robot-diameter-inflated area, then it means that the robot can pass through it, which can be considered as a local opening in the vicinity of the obstacle. This is illustrated in Figure \ref{fig:opening_detection_figures}.
 
 \clearpage
 
@@ -85,7 +83,7 @@
 \end{subfigure}\hspace*{\fill}
 \begin{subfigure}{0.19\textwidth}
 \includegraphics[width=\linewidth]{Opening_Detection/04.png}
-\caption{State after translation to the left.} \label{fig:opening_detection_04}
+\caption{State after M1 was translated to the left.} \label{fig:opening_detection_04}
 \end{subfigure}\hspace*{\fill}
 \begin{subfigure}{0.19\textwidth}
 \includegraphics[width=\linewidth]{Opening_Detection/05.png}
@@ -93,23 +91,24 @@
 \end{subfigure}
 
 \caption{Opening detection example given in the technical paper \parencite{levihn_efficient_2011}.}
+\label{fig:opening_detection_figures}
 \end{figure}
 
-\paragraph{} However, with this definition of new opening detection, we also end up with a loss of local optimality, and also lose the algorithm's completeness. Indeed, conditioning the full evaluation of a plan by the detection of a new opening prevents from finding the solution in cases where the local environment of the obstacle does not contain any other obstacle (Figure \ref{fig:openspace_case}), or if for the considered manipulation, the local environment of the obstacle does not change (Figure \ref{fig:corridor_case}). Below are examples figures of these cases, assuming the cost of following a path is the same whether it implies moving an obstacle or not.
+\paragraph{} However, with this definition of new opening detection, we also end up with a loss of local optimality, and also lose the algorithm's completeness. Indeed, conditioning the full evaluation of a plan by the detection of a new opening prevents from finding the solution in cases where the local environment of the obstacle does not contain any other obstacle (Figure \ref{fig:openspace_case}), or if for the considered manipulation, the local environment of the obstacle does not change (Figure \ref{fig:corridor_case}). Below are examples figures of these cases, assuming that the cost of following a path is the same whether it implies moving an obstacle or not.
 
-\paragraph{} In the corridor case initial situation (Figure \ref{fig:corridor_original}),   the robot (dark grey disk with a triangle) can not go to its goal (green disk with triangle) without moving the obstacle M1 (dark grey is for a movable obstacle, black is for unmovable obstacle, and light grey is for the inflation of the obstacles by the robot's radius), since the space is divided into two independent free space components (the robot cannot penetrate the grey or black zones without entering in collision). Furthermore, the robot can only move the obstacle by either pushing or pulling it left or right. However far the robot simulates moves in either direction, the robot-diameter-inflated area of M1 (red line) will never lose its two blocking areas (intersections between the red rectangle and the unmovable obstacle in black), therefore, no new opening will ever be detected according to the definition of the algorithm, and no plan moving the obstacle will ever be considered. However, Figure \ref{fig:corridor_optimal_path} shows clearly that a plan exists that is valid if we simply don't check for new openings (new configuration of M1, noted M1' is represented in dotted lines).
+\paragraph{}\label{figure_legends_paragraph} In the corridor case initial situation (Figure \ref{fig:corridor_original}), the robot (dark grey disk with a triangle) can not go to its goal (green disk with triangle) without moving the obstacle M1 (dark grey is for a movable obstacle, black is for unmovable obstacle, and light grey is for the inflation of the obstacles by the robot's radius), since the space is divided into two independent free space components (the robot cannot penetrate the grey or black zones without entering in collision). Furthermore, the robot can only move the obstacle by either pushing or pulling it left or right. However far the robot simulates moves in either direction, the robot-diameter-inflated area of M1 (red line) will never lose its two blocking areas (intersections between the red rectangle and the unmovable obstacle in black), therefore, no new opening will ever be detected according to the definition of the algorithm, and no plan moving the obstacle will ever be considered. However, Figure \ref{fig:corridor_optimal_path} shows clearly that a plan exists that is valid if we simply don't check for new openings (new configuration of M1, noted M1' is represented in dotted lines).
 
 \paragraph{} In the open space case initial situation (Figure \ref{fig:openspace_original}), no new opening will ever be found however we move the obstacle, since there are no obstacles (represented in black or dark grey) in its robot-diameter-inflated area. Since, this time, there is space for the robot to move around the obstacle instead of pushing it, the algorithm will thus return this suboptimal plan, instead of the optimal one shown in Figure \ref{fig:openspace_optimal_path} that implies moving M1 to its new configuration M1'.
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.40\textwidth}
+\begin{subfigure}{.48\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/corridor_original.png}
   \caption{Initial situation where no plan will be found when using new opening checking.}
   \label{fig:corridor_original}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{.40\textwidth}
+\begin{subfigure}{.48\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/corridor_optimal_path.png}
   \caption{Expected optimal plan.}
@@ -121,19 +120,19 @@
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.40\textwidth}
+\begin{subfigure}{.48\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/openspace_original.png}
   \caption{Initial situation and suboptimal plan avoiding the obstacle that will be returned by the algorithm when using new opening checking.}
   \label{fig:openspace_original}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{.40\textwidth}
+\begin{subfigure}{.48\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Check_New_Opening/openspace_optimal_path.png}
   \caption{Expected optimal plan is the one that pushes the obstacle.}
   \label{fig:openspace_optimal_path}
 \end{subfigure}
-\caption{"Open space" case where the original algorithm will only find a suboptimal plan.}
+\caption{"Open space" case where the original algorithm will only find a suboptimal plan, under the assumption that the cost of following a path is the same whether it implies moving an obstacle or not.}
 \label{fig:openspace_case}
 \end{figure}
 
@@ -198,7 +197,7 @@
 
 \paragraph{Paths} are ordered sets of "steps", which are themselves robot poses.
 
-\paragraph{A* or D*Lite} calls return A PATH as defined above. If no path is found, the returned set is empty: $\emptyset$.
+\paragraph{A* or D* Lite} calls return A PATH as defined above. If no path is found, the returned set is empty: $\emptyset$.
 
 \paragraph{Plans} are noted with a lowercase $p$. Lists or sets of plans will be noted with an uppercase $P$. A plan is a data structure with a "components" list attribute in which paths are stored in order of execution, and a "cost" attribute that represents the cost of executing the plan.
 
@@ -210,15 +209,13 @@
 
 \paragraph{Obstacles} are noted with a lowercase $o$. Lists or sets of obstacles will be noted with an uppercase $O$.
 
-
-
 \paragraph{$moveCost$ and $pushCost$} are constants without dimension and set to 1 if we consider an optimality in distance. If we wish for optimality in energy or time, we could suppose that they would respectively represent a force or an inverse speed.
 
 \paragraph{$one\_push\_in\_d$} is also a constant representing one elementary push. It is not explicit in the article how it is computed, but we can assume it is the multiplication of a distance constant (likely the resolution of the grid used for A*) by the unit direction vector for the given direction $d$. We will make this more explicit in our own algorithm
 
 \paragraph{Intersection checks} between a plan and obstacles, or between obstacles, are noted with $\bigcap$ and return the set of obstacles that are intersecting, hence the line \ref{lst:line:intersection_note} in Algorithm \ref{alg:01-wu-optimized-part1}: $p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$. In an implementation, this could be done for example by checking whether every pose in the path is not comprised in the inflated obstacles representation, and for obstacle intersection, by checking whether their polygonal representations intersect.
 
-\paragraph{List traversal} getNext() is a helper method to traverse a list. It returns null when all elements have been traversed. Variations like getNextStep() work in the same way.
+\paragraph{List traversal} getNext() is a helper method to traverse a list. It returns null when all elements have been traversed. Variations like getNextStep() work in the same way, at the detail that it also updates the plan's $nextStepComponent$ attribute at the same time it is called.
 
 \paragraph{$I.withSimulatedObstacleMove$} is a notation to explicit the fact that the $c_{3}$ component must be computed assuming that the obstacle has been pushed, otherwise it does not make any sense.
 
@@ -272,26 +269,26 @@
 
 \subsection{New ambiguities in the algorithm's logic}
 
-\paragraph{} The first ambiguity in the second article \parencite{levihn_locally_2014} is that the D*Lite algorithm is mentioned instead of A*, but not even a hint of an explanation is given as to why this change, or what difference in the implementation it makes. The main feature of D*Lite being that it is designed for navigation in dynamic environments, given that no propositions are given to adapt the rest of the algorithm to dynamic environments, we will assume that no particular advantage is obtained by using D*Lite rather than A* in the proposition. Therefore, in our own proposition presented in the next chapter, we shall continue using A* as our path finding subroutine.
+\paragraph{} The first ambiguity in the second article \parencite{levihn_locally_2014} is that the D* Lite algorithm is mentioned instead of A*, but not even a hint of an explanation is given as to why this change, or what difference in the implementation it makes. The main feature of D* Lite being that it is designed for navigation in dynamic environments, given that no propositions are given to adapt the rest of the algorithm to dynamic environments, we will assume that no particular advantage is obtained by using D* Lite rather than A* in the proposition. Therefore, in our own proposition presented in the next chapter, we shall continue using A* as our path finding subroutine.
 
-\paragraph{} The second ambiguity is about manipulation poses, again, as in previous section. In the article, the authors claim that \textit{"c1 only needs to be calculated once for the entire process of evaluating the current object."}. With the same reasoning as in the previous paragraph \nameref{obstacle_pushpose_note}, this affirmation can only be true if the algorithm operates under the \textbf{implicit hypothesis that for all given manipulation directions, only one point around the obstacle is considered a valid manipulation start point}. From \href{https://youtu.be/3AvfPVzBb-s}{the video} accompanying the article, this point seems to be the nearest point from the robot, situated at a radius distance from the middle of a side of the obstacle. However, this hypothesis actually hinders optimality: if there is in fact a valid manipulation point for each side of the obstacle, and the algorithm knowingly doesn't consider them because they are further from the current robot's position, it will ignore the fact that a same manipulation direction could end up in opening a better path if the obstacle were moved from another manipulation point (see figures below). To guarantee optimality, we would have to simulate the manipulation in the given direction for every reachable manipulation point, thus re-evaluating $c_{1}$ for each. That would result in adding an extra "for" loop englobing the existing one. This is illustrated by the figures below.
+\paragraph{} The second ambiguity is about manipulation poses, again, as in previous section. In the article, the authors claim that \textit{"c1 only needs to be calculated once for the entire process of evaluating the current object."}. With the same reasoning as in the previous paragraph \nameref{obstacle_pushpose_note}, this affirmation can only be true if the algorithm operates under the \textbf{implicit hypothesis that for all given manipulation directions, only one point around the obstacle is considered a valid manipulation start point}. From the video \footnote{Video: \url{https://youtu.be/3AvfPVzBb-s}} accompanying the article, this point seems to be the nearest point from the robot, situated at a radius distance from the middle of a side of the obstacle. However, this hypothesis actually hinders optimality: if there is in fact a valid manipulation point for each side of the obstacle, and the algorithm knowingly doesn't consider them because they are further from the current robot's position, it will ignore the fact that a same manipulation direction could end up in opening a better path if the obstacle were moved from another manipulation point (see figures below). To guarantee optimality, we would have to simulate the manipulation in the given direction for every reachable manipulation point, thus re-evaluating $c_{1}$ for each, which would result in adding an extra "for" loop englobing the existing one.
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.48\textwidth}
+\begin{subfigure}{.35\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_1.png}
-  \caption{Nearest manipulation pose doesn't allow moving the obstacle at all.}
+  \caption{Nearest manipulation pose doesn't allow moving the obstacle at all (red crosses represent impossible manipulation directions).}
   \label{fig:manip_pose_2}
 \end{subfigure}\hspace*{\fill}
-\begin{subfigure}{.48\textwidth}
+\begin{subfigure}{.35\textwidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_2.png}
-  \caption{But if we also consider the other pose, a valid plan can be found.}
+  \caption{But if we also consider the other pose, a valid plan can be found (green circle represents possible manipulation direction).}
   \label{fig:manip_pose_4}
 \end{subfigure}
-\caption{Illustration of the importance of considering all possibles manipulations for all manipulation poses and not just considering the nearest one.}
+\caption{Illustration of the importance of considering all possibles manipulations for all manipulation poses and not just considering the nearest one. Representations are the same as in figures \ref{fig:corridor_case} and \ref{fig:openspace_case}.}
 \label{fig:manipulation_poses}
 \end{figure}
 
-\paragraph{} With all the ambiguities out of the way, we now have a solid foundation on which to build upon our own proposition, according to our own hypotheses: this will be the focus of the next chapter.
+\paragraph{} With all ambiguities out of the way, we now have a solid foundation on which to build upon our own proposition, with our own hypotheses: this will our focus for the next chapter.

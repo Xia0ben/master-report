@@ -21,7 +21,7 @@
         \State \hlgreen{$c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)} \Comment{$c_{1}$ is computed for each push pose}
 
         \If{$c_{1} = \emptyset$}
-          \State \hlgreen{\textbf{continue}} \Comment{\nameref{continue_note}}
+          \State \hlgreen{\textbf{continue}} \label{lst:line:continue_note}
         \EndIf
 
         \State $seq \gets 1$
@@ -45,9 +45,10 @@
               \State $p.components \gets$ [$c_{1}$, $c_{2}$, $c_{3}$]
               \State $p.cost \gets (|c_{1}| + |c_{3}|) * moveCost + |c_{2}| * $\hlgreen{$o.pushCost$}
               \State $p.minCost \gets |c_{2}| * $\hlgreen{$o.pushCost$}$ + |c_{3}| * moveCost$
-              \State $p.o \gets$ \hlgreen{COPY($o$)} \label{lst:line:ovaraffec1} \Comment{\nameref{copy_note}}
-              \State \hlgreen{$p.translation \gets translation$} \Comment{\nameref{translation_note}}
+              \State $p.o \gets$ \hlgreen{COPY($o$)} \label{lst:line:ovaraffec1} \label{lst:line:copy_note}
+              \State \hlgreen{$p.translation \gets translation$}
               \State \hlgreen{$p.safeSweptArea \gets safeSweptArea$}
+              \State \hlgreen{$p.pushPose \gets pushPose$}
               \State $P_{o,d} \gets P_{o,d} \bigcup \{p\}$
               \If{$p.cost < p_{opt}.cost$}
                 \State $p_{opt} \gets p$
@@ -59,7 +60,7 @@
 
           \State \hlgreen{$translation \gets pushUnit * onePushDist * seq$}
 
-          \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)}
+          \State \hlgreen{$safeSweptArea \gets $GET-SAFE-SWEPT-AREA($o$, $translation$, $I$)} \label{lst:line:get_safe_swept_are_call_2}
 
           \State $oSimPose \gets $\hlgreen{$pushPose + translation$} \label{lst:line:loopvarup2}
 

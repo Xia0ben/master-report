@@ -33,7 +33,7 @@
 
         \State $\mathcal{O} \gets I.allObstacles$
 
-        \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
+        \State $isPlanNotColliding \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
         \State $isBlockingObsMoved \gets I.movedObstacles \neq \emptyset$
 
@@ -45,7 +45,7 @@
           \If{\textbf{not} $isObstacleSame$}
             \State $p_{opt}.o \gets \mathcal{O}[p_{opt}.o.id]$
             \State $p_{opt}.safeSweptArea \gets$ GET-SAFE-SWEPT-AREA($p_{opt}.o$, $p_{opt}.translation$, $I$)
-            \If{$p_{opt}.pushPose \not\in p_{opt}.o.pushPoses$}
+            \If{$p_{opt}.nextStepComponent$ is $ c_{1}$ AND $p_{opt}.pushPose \not\in p_{opt}.o.pushPoses$}
               \State $isPushPoseValid \gets False$
             \EndIf
           \EndIf
@@ -54,7 +54,7 @@
           \EndIf
         \EndIf
 
-        \State $isPlanValid \gets$ ($isPathFree$ AND $isManipSuccess$ AND $isManipSafe$ AND $isPushPoseValid$ AND $isObservable$)
+        \State $isPlanValid \gets$ ($isPlanNotColliding$ AND $isManipSuccess$ AND $isManipSafe$ AND $isPushPoseValid$ AND $isObservable$)
 
         \If{\textbf{not} $isPlanValid$}
           \State $p_{opt}.components \gets$ [$A$*($R$, $R_{goal}$, $I.occGrid$)]
@@ -86,7 +86,6 @@
         \State $isManipSuccess \gets True$
         \State $isObservable \gets True$
         \State $R_{next} \gets p_{opt}$.getNextStep()
-        \State $c_{next} \gets p_{opt}$.getNextStepComponent()
         \If{$p_{opt}.o \neq$ null $p_{opt}.o.movableStatus = IS\_MAYBE\_MOVABLE$ AND \textbf{not} $isObstacleSame$ AND ($c_{next} = c_{0}$ OR $c_{next} = c_{1}$)}
           \State $fObsPose \gets$ GET-FIRST-PATH-OBSPOSE($p_{opt}.o$, $p_{opt}$.get-$c_{0}$() + $p_{opt}$.get-$c_{1}$(), $I$)
           \If{$fObsPose =$ null}
@@ -95,7 +94,7 @@
           \EndIf
         \EndIf
         \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
-        \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
+        \If{$p_{opt}.nextStepComponent$ is $c_{2}$ AND $R_{real} \neq R_{next}$}
           \State $isManipSuccess \gets False$
           \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
         \EndIf

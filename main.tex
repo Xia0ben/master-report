@@ -43,7 +43,7 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{mathpazo} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[backend=bibtex,style=numeric,natbib=true,sorting=ydnt]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 \addbibresource{namo.bib} % The filename of the bibliography
 \addbibresource{dynamic.bib}
@@ -100,9 +100,9 @@ headsepline, % Uncomment to get a line under the header
 
 % First title was: Toward social navigation among movable obstacles
 \thesistitle{Analyzing robot Navigation Among Movable Obstacles in unknown environments to extend it to social and dynamic constraints} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Fabrice \textsc{Jumel}\\
+\supervisor{Olivier \textsc{Simonin}\\
 			Jacques \textsc{Saraydaryan}\\
-			Olivier \textsc{Simonin}\\} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+			Fabrice \textsc{Jumel}\\} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{Jean-François \textsc{Boulicaut}\\
 			Vasile-Marian \textsc{Scuturici}\\
 			Christine \textsc{Solnon}\\} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
@@ -221,7 +221,7 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-\paragraph{Résumé:} Nous présentons un état de l'art détaillé du domaine de la NAMO ("Navigation Among Movable Obstacles": Navigation parmi des obstacles mobiles), ainsi qu'un crible de critères de comparaison nous permettant de situer les propositions existantes et la notre. Nous analysons les algorithmes locallement optimaux de NAMO en milieu inconnu, les reformulons en pseudocode et construisons un nouvelle ensemble de propositions sur cette fondation. Nos propositions sont les premiers pas requis pour amener des contraintes dynamiques et sociales au domaine. Nous validons partiellement notre proposition avec un simulateur compatible avec les standards ROS (Robot Operating System), et des tests de poussée avec un robot physique Pepper, qui est la plateforme standard pour la compétition Robocup@Home.
+\paragraph{Résumé:} Nous présentons un état de l'art détaillé du domaine de la NAMO ("Navigation Among Movable Obstacles": Navigation parmi des obstacles mobiles), ainsi qu'un ensemble de critères de comparaison nous permettant de situer les propositions existantes et la notre. Nous analysons les algorithmes locallement optimaux de NAMO en milieu inconnu, les reformulons en pseudocode et construisons un nouvelle ensemble de propositions sur cette fondation. Nos propositions sont les premiers pas requis pour amener des contraintes dynamiques et sociales au domaine. Nous validons partiellement notre proposition avec un simulateur compatible avec les standards ROS (Robot Operating System), et des tests de poussée avec un robot physique Pepper, qui est la plateforme standard pour la compétition Robocup@Home.
 
 % Le résumé doit décrire le contenu du rapport. Il doit contenir au moins 70 mots et ne pas dépasser 150 mots.
 
