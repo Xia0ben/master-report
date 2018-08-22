@@ -1,4 +1,4 @@
-% Chapter 5
+Position% Chapter 5
 
 \chapter{Experimentations \& Validation} % Main chapter title
 
@@ -43,7 +43,7 @@
   \caption{Lasers}
   \label{fig:lasers}
 \end{subfigure}
-\caption{Positioning and field of vision of Pepper's sonars and lasers}
+\caption{Position and field of vision of Pepper's sonars and lasers}
 \label{fig:sonars_lasers}
 \end{figure}
 
@@ -165,9 +165,9 @@
 
 \subsection{Simulator presentation}
 
-\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: http://wiki.ros.org/rviz}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
+\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: \url{http://wiki.ros.org/rviz}}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
 
-\paragraph{} It is to be noted that the optimality target for this implementation is at the moment only expressed in distance, but it is relatively trivial to express it in time or energy, by using the $move\_cost$ and $push\_cost$ currently present in the algorithm and passing them to the A* path finding subroutine.
+\paragraph{} It is to be noted that the optimality target for this implementation is at the moment only expressed in distance, but it is relatively trivial to express it in time or energy, by using the $moveCost$ and $pushCost$ constants currently present in the algorithm and passing them to the A* path finding subroutine.
 
 \paragraph{} All the code and its execution instructions are available on the following repository: \\ \url{https://github.com/Xia0ben/namo_navigation} .
 
