@@ -130,3 +130,32 @@
 	keywords = {communication policies, complex systems, control policies synthesis, control system synthesis, cooperative behavior, Dec-{POMDP}, decentralised control, decentralized control planning, decentralized partially observable Markov decision processes, decision making, decision theory, decision-making, direct communication, general multirobot systems, History, Joints, large-scale systems, macro-actions, Markov processes, multi-robot systems, Multi-robot systems, multiple robots, probabilistic framework, real-world problems, Robot kinematics, Robot sensing systems, sensor information, signaling, task allocation, uncertain systems, uncertainty, Uncertainty, warehouse task},
 	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/7XBRNF5D/7139350.html:text/html}
 }
+
+@article{redmon_yolo9000:_2016,
+	title = {{YOLO}9000: Better, Faster, Stronger},
+	url = {http://arxiv.org/abs/1612.08242},
+	shorttitle = {{YOLO}9000},
+	abstract = {We introduce {YOLO}9000, a state-of-the-art, real-time object detection system that can detect over 9000 object categories. First we propose various improvements to the {YOLO} detection method, both novel and drawn from prior work. The improved model, {YOLOv}2, is state-of-the-art on standard detection tasks like {PASCAL} {VOC} and {COCO}. At 67 {FPS}, {YOLOv}2 gets 76.8 {mAP} on {VOC} 2007. At 40 {FPS}, {YOLOv}2 gets 78.6 {mAP}, outperforming state-of-the-art methods like Faster {RCNN} with {ResNet} and {SSD} while still running significantly faster. Finally we propose a method to jointly train on object detection and classification. Using this method we train {YOLO}9000 simultaneously on the {COCO} detection dataset and the {ImageNet} classification dataset. Our joint training allows {YOLO}9000 to predict detections for object classes that don't have labelled detection data. We validate our approach on the {ImageNet} detection task. {YOLO}9000 gets 19.7 {mAP} on the {ImageNet} detection validation set despite only having detection data for 44 of the 200 classes. On the 156 classes not in {COCO}, {YOLO}9000 gets 16.0 {mAP}. But {YOLO} can detect more than just 200 classes; it predicts detections for more than 9000 different object categories. And it still runs in real-time.},
+	journaltitle = {{arXiv}:1612.08242 [cs]},
+	author = {Redmon, Joseph and Farhadi, Ali},
+	urldate = {2018-08-22},
+	date = {2016-12-25},
+	eprinttype = {arxiv},
+	eprint = {1612.08242},
+	keywords = {Computer Science - Computer Vision and Pattern Recognition},
+	file = {arXiv\:1612.08242 PDF:/home/xia0ben/Zotero/storage/BBSUSF5L/Redmon and Farhadi - 2016 - YOLO9000 Better, Faster, Stronger.pdf:application/pdf;arXiv.org Snapshot:/home/xia0ben/Zotero/storage/J38NZTBV/1612.html:text/html}
+}
+
+@inproceedings{trautman_unfreezing_2010,
+	title = {Unfreezing the robot: Navigation in dense, interacting crowds},
+	doi = {10.1109/IROS.2010.5654369},
+	shorttitle = {Unfreezing the robot},
+	abstract = {In this paper, we study the safe navigation of a mobile robot through crowds of dynamic agents with uncertain trajectories. Existing algorithms suffer from the “freezing robot” problem: once the environment surpasses a certain level of complexity, the planner decides that all forward paths are unsafe, and the robot freezes in place (or performs unnecessary maneuvers) to avoid collisions. Since a feasible path typically exists, this behavior is suboptimal. Existing approaches have focused on reducing the predictive uncertainty for individual agents by employing more informed models or heuristically limiting the predictive covariance to prevent this overcautious behavior. In this work, we demonstrate that both the individual prediction and the predictive uncertainty have little to do with the frozen robot problem. Our key insight is that dynamic agents solve the frozen robot problem by engaging in “joint collision avoidance”: They cooperatively make room to create feasible trajectories. We develop {IGP}, a nonparametric statistical model based on dependent output Gaussian processes that can estimate crowd interaction from data. Our model naturally captures the non-Markov nature of agent trajectories, as well as their goal-driven navigation. We then show how planning in this model can be efficiently implemented using particle based inference. Lastly, we evaluate our model on a dataset of pedestrians entering and leaving a building, first comparing the model with actual pedestrians, and find that the algorithm either outperforms human pedestrians or performs very similarly to the pedestrians. We also present an experiment where a covariance reduction method results in highly overcautious behavior, while our model performs desirably.},
+	eventtitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	pages = {797--803},
+	booktitle = {2010 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems},
+	author = {Trautman, P. and Krause, A.},
+	date = {2010-10},
+	keywords = {collision avoidance, Collision avoidance, crowd interaction estimation, freezing robot problem, Gaussian processes, goal-driven navigation, human pedestrian, {IGP}, interacting Gaussian process, Joints, mobile robot, mobile robots, Navigation, nonparametric statistical model, predictive covariance, Predictive models, Robot kinematics, robot navigation, robot vision, safe navigation, Trajectory, uncertain systems, uncertain trajectory},
+	file = {IEEE Xplore Abstract Record:/home/xia0ben/Zotero/storage/V6NZUDID/5654369.html:text/html}
+}
