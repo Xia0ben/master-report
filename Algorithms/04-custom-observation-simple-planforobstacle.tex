@@ -8,7 +8,7 @@
 
     \Procedure{PLAN-FOR-OBSTACLE}{$o$, $p_{opt}$, $I$, $R$, $R_{goal}$, $blockedObsL$}
 
-      \If{$o \in blockedObsL$ \hlgreen{OR $o.movableStatus = IS\_NOT\_MOVABLE$}}
+      \If{$o \in blockedObsL$ \hlgreen{OR $o.movableStatus = IS\_NOT\_MOVABLE$}} \label{lst:line:identified_1}
         \State \textbf{return} null
       \EndIf
 
@@ -18,7 +18,7 @@
       \For{each $pushPose$ in $o.pushPoses$}
         \State $pushUnit \gets (cos(pushPose.yaw), sin(pushPose.yaw))$
 
-        \State $c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$)
+        \State $c_{1} \gets A$*($R$, $pushPose$, $I.occGrid$) \label{lst:line:c1_computation}
 
         \If{$c_{1} = \emptyset$}
           \State \textbf{continue}
@@ -27,18 +27,18 @@
         %% BEGIN HLGREEN
         \State \hlgreen{$c_{0} \gets \emptyset$}
 
-        \If{\hlgreen{$o.movableStatus = IS\_MAYBE\_MOVABLE$}}
+        \If{\hlgreen{$o.movableStatus = IS\_MAYBE\_MOVABLE$}} \label{lst:line:identified_2}
 
-          \State \hlgreen{$obsPose \gets$ GET-FIRST-PATH-OBSPOSE($o$, $c_{1}$, $I$)}
+          \State \hlgreen{$obsPose \gets$ GET-FIRST-PATH-OBSPOSE($o$, $c_{1}$, $I$)} \label{lst:line:keep_c1_1}
 
           \If{\hlgreen{$obsPose \neq$ null}}
-            \State \hlgreen{$c_{0}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$}
+            \State \hlgreen{$c_{0}, c_{1} \gets c_{1}[c_{1}.firstPose:obsPose], c_{1}[obsPose:c_{1}.lastPose]$} \label{lst:line:keep_c1_2}
           \Else
             \State \hlgreen{COMPUTE-C0-C1($o$, $I$, $R$, $pushPose$, $c_{0}$, $c_{1}$)}
 
-            \If{\hlgreen{$c_{0} = \emptyset$ OR $c_{1} = \emptyset$}}
+            \If{\hlgreen{$c_{0} = \emptyset$ OR $c_{1} = \emptyset$}} \label{lst:line:noc0c1_1}
               \State \hlgreen{\textbf{continue}}
-            \EndIf
+            \EndIf \label{lst:line:noc0c1_2}
           \EndIf
         \EndIf
         %% STOP HLGREEN

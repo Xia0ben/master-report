@@ -1,6 +1,6 @@
 \begin{algorithm}[H]
 
-  \caption{Obstacle evaluation subroutine modified for considering placement.}
+  \caption{Obstacle placement cost evaluation subroutine.}
 
   \label{alg:05-custom-placement-getocccost}
 
@@ -14,12 +14,12 @@
 
       \For{each $point$ in $simOccPoints$}
         \State $valueForPoint \gets occCostGrid[point]$
-        \If{$valueForPoint = FORBIDDEN\_VALUE$}
-          \State \textbf{return} $+\infty$
-        \ElsIf{$valueForPoint = ALLOWED\_VALUE$}
+        \If{$valueForPoint = FORBIDDEN\_VALUE$} \label{lst:line:maxocccost_1}
+          \State \textbf{return} $+\infty$ \label{lst:line:maxocccost_2}
+        \ElsIf{$valueForPoint = ALLOWED\_VALUE$} \label{lst:line:noocccost_1}
           \State $valueForPoint \gets 0$
-        \EndIf
-        \State{$cost \gets cost + valueForPoint / VALUE\_RANGE$}
+        \EndIf \label{lst:line:noocccost_2}
+        \State{$cost \gets cost + valueForPoint / VALUE\_RANGE$} \label{lst:line:sumocccost}
       \EndFor
 
       \State \textbf{return} $cost$

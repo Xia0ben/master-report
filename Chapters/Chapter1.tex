@@ -10,19 +10,19 @@
 
 \paragraph{} Service robotics are an active research field: there is a growing demand for intelligent machines that are meant to be used in human environments for domestic tasks (e.g, maintaining people homes, entertaining them, caring for them; especially old ones or with disabilities, \dots) \cmmnt{\parencite{mettler_service_2017, graf_care-o-bot_2004}}. To fulfill such tasks, a service robot obviously needs to be able to autonomously navigate through space, according to the given constraints: these navigation capabilities and constraints are the main focus of the following work.
 
-\paragraph{} Human environments represent a very complex challenge, since they are dynamic, alterable and imply social conventions and rules that the robot must also respect in the way it navigates and interacts with the world. For example, in a home, humans (or other autonomous actors, such as pets) are moving obstacles that must be taken into account. Also, for a robot to go from a point A to B, a solution may only be found if it implies moving an obstacle out of the way. And all this must be done in socially acceptable manner: one would not appreciate a robot moving at high speeds around people or to move obstacles that are not supposed to be moved.
+\paragraph{} Human environments represent a very complex challenge, since they are dynamic, alterable and imply social conventions and rules that the robot must also respect in the way it navigates and interacts with the world. For example, in a home setting, humans (or other autonomous actors, such as pets) can be considered as moving obstacles that must be taken into account. Also, for a robot to go from a point A to B, a solution may only be found if it implies moving an obstacle out of the way. And all this must be done in a socially acceptable manner: one would not appreciate a robot moving at high speeds around people or to move obstacles that are not supposed to be moved.
 
-\paragraph{} The most common constraint for robot navigation is solely to find the shortest collision-free path, and this is an acceptable solution in a static context (nothing moves, at the exception of the robot). However, if we want the robot to navigate a human environment as described above, this is not sufficient.
+\paragraph{} The most common constraint for robot navigation is solely to find the shortest collision-free path, and this is an acceptable solution in a static context (nothing moves, at the exception of the robot). However, if we want the robot to navigate a human environment, this is not sufficient.
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.48\textwidth}
   \centering
-  \includegraphics[width=0.9\linewidth]{Figures/Problem_Illustration/social_problem.png}
+  \includegraphics[width=\linewidth]{Figures/Problem_Illustration/social_problem.png}
   \caption{Sample social navigation problem}
   \label{fig:social_problem}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}\hspace*{\fill}
+\begin{subfigure}{.48\textwidth}
   \centering
   \includegraphics[width=0.9\linewidth]{Figures/Problem_Illustration/namo_problem.png}
   \caption{Sample NAMO problem}
@@ -32,13 +32,13 @@
 \label{fig:navigation_problems}
 \end{figure}
 
-\paragraph{} To our knowledge, the problem of navigation planning in dynamic environments populated with humans \parencite{kruse_human-aware_2013, rios-martinez_proxemics_2015}, and the problem of navigation planning in robot-alterable environments (which is called Navigation Among Movable Obstacles, or NAMO, more precisely defined in \parencite{stilman_navigation_2007}) have always been treated separately. The \groupname \footnote{Team website: \url{https://team.inria.fr/chroma/}} \, for one, proposed social and dynamic navigation algorithms that optimize the generation of trajectories by managing the risk of colliding with obstacles \parencite{fulgenzi_autonomous_2009, rios-martinez_socially-aware_2013}, respecting social conventions such as avoiding human interaction spaces \parencite{papadakis_adaptive_2014, rios-martinez_understanding_2011} (Figure \ref{fig:social_problem}), or predicting the trajectories of moving obstacles \parencite{jumel_mapping_2017}, \dots The NAMO problem (Figure \ref{fig:namo_problem}) has been dealt with in a great variety of contexts, detailed in Chapter \ref{Chapter2}. It seems that these two problems have yet to be brought together, and the new problematics that are to arise from this confluence are still to be identified and addressed.
+\paragraph{} To our knowledge, the problem of navigation planning in dynamic environments populated with humans \parencite{kruse_human-aware_2013, rios-martinez_proxemics_2015}, and the problem of navigation planning in robot-alterable environments (which is called Navigation Among Movable Obstacles, or NAMO, more precisely defined in \parencite{stilman_navigation_2007}) have always been treated separately. The \groupname\footnote{Team website: \url{https://team.inria.fr/chroma/}} \, for one, proposed social and dynamic navigation algorithms that optimize the generation of trajectories by managing the risk of colliding with obstacles \parencite{fulgenzi_autonomous_2009, rios-martinez_socially-aware_2013}, respecting social conventions such as avoiding human interaction spaces \parencite{papadakis_adaptive_2014, rios-martinez_understanding_2011} (Figure \ref{fig:social_problem}), or predicting the trajectories of moving obstacles \parencite{jumel_mapping_2017}, \dots The NAMO problem (Figure \ref{fig:namo_problem}) has been dealt with in a great variety of contexts, detailed in Chapter \ref{Chapter2}. It seems that these two problems have yet to be brought together, and the new problematics that are to arise from this confluence are still to be identified and addressed.
 
 \section{Objective}
 
 \paragraph{} The long-term objective behind this work is to allow a real service robot to navigate in complex, human, dynamic and robot-alterable environments, preferably in an optimal way (minimize risk of collision, travel distance, time or energy, \dots).
 
-\paragraph{} More precisely, the context of this long-term objective for formulating, comparing and evaluating hypotheses, is the Robocup@Home\footnote{Competition website: \url{http://www.robocupathome.org/}}. The \groupname \, participates in the standard league of this international-level competition, that provides service robotics challenges to evaluate solutions proposed by researchers and students. The mandatory robotic platform for the standard league is the Pepper robot \footnote{Pepper characteristics are described in Chapter \ref{Chapter5} and also on this website: \url{http://doc.aldebaran.com/2-4/family/pepper_technical/index_dev_pepper.html}}, piloted through ROS \footnote{ROS, the Robot Operating System, website: \url{http://www.ros.org/}} for our team. Notably, this defines the context of our search in that:
+\paragraph{} More precisely, the context of this long-term objective for formulating, comparing and evaluating hypotheses, is the Robocup@Home\footnote{Competition website: \url{http://www.robocupathome.org/}}. The \groupname \, participates in the standard league of this international-level competition, that provides service robotics challenges to evaluate solutions proposed by researchers and students. The mandatory robotic platform for the standard league is the Pepper robot\footnote{Pepper characteristics are described in Chapter \ref{Chapter5} and also on this website: \url{http://doc.aldebaran.com/2-4/family/pepper_technical/index_dev_pepper.html}}, piloted through ROS\footnote{ROS, the Robot Operating System, website: \url{http://www.ros.org/}} for our team. Notably, this defines the context of our search in that:
 \begin{itemize}
   \item only the onboard sensors of the robot are used to update the robot's \textbf{partial environment knowledge} making,
   \item we thus seek \textbf{local optimality}: that is, optimal decision-making given the current belief state of the robot on its environment,

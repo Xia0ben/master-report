@@ -18,7 +18,7 @@
 
         \State \dots \Comment{Knowledge update and checks (lines \ref{lst:line:knowledge1} to \ref{lst:line:knowledge2} in Algorithm \ref{alg:03-custom-basicmods-makeandexecuteplan})}
 
-        \If{\textbf{not}($isPathFree$ AND $isManipSuccess$ AND $isManipSafe$ AND $isPushPoseValid$ \hlgreen{AND $isObservable$})}
+        \If{\textbf{not}($isPlanNotColliding$ AND $isManipSuccess$ AND $isManipSafe$ AND $isPushPoseValid$ \hlgreen{AND $isObservable$})}
           \State $p_{opt}.components \gets [A$*($R$, $R_{goal}$, $I.occGrid$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
@@ -32,7 +32,6 @@
         \State $isManipSuccess \gets True$
         \State \hlgreen{$isObservable \gets True$}
         \State $R_{next} \gets p_{opt}$.getNextStep()
-        \State $c_{next} \gets p_{opt}$.getNextStepComponent()
         \If{\hlgreen{$p_{opt}.o \neq$ null $p_{opt}.o.movableStatus = IS\_MAYBE\_MOVABLE$ AND \textbf{not} $isObstacleSame$ AND ($c_{next} = c_{0}$ OR $c_{next} = c_{1}$)}}
           \State \hlgreen{$fObsPose \gets$ GET-FIRST-PATH-OBSPOSE($p_{opt}.o$, $p_{opt}$.get-$c_{0}$() + $p_{opt}$.get-$c_{1}$(), $I$)}
           \If{\hlgreen{$fObsPose =$ null}}
@@ -41,7 +40,7 @@
           \EndIf
         \EndIf
         \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
-        \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
+        \If{$p_{opt}.nextStepComponent$ is $c_{2}$ AND $R_{real} \neq R_{next}$}
           \State $isManipSuccess \gets False$
           \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
         \EndIf

@@ -29,9 +29,9 @@
 
         \State $\mathcal{O} \gets I.allObstacles$ \label{lst:line:allobstacles}
 
-        \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
+        \State $isPlanNotColliding \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
-        \If{\textbf{not}($isPathFree$ AND $isManipSuccess$)}
+        \If{\textbf{not}($isPlanNotColliding$ AND $isManipSuccess$)}
           \State $p_{opt}.components \gets [D$*Lite($R$, $R_{goal}$, $I.occGrid$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)
@@ -44,9 +44,8 @@
 
         \State $isManipSuccess \gets True$ \label{lst:line:ismanipsuccess}
         \State $R_{next} \gets p_{opt}$.getNextStep() \label{lst:line:exec2bis}
-        \State $c_{next} \gets p_{opt}$.getNextStepComponent()
         \State $R_{real} \gets$ ROBOT-GOTO($R_{next}$)
-        \If{$c_{next} = c_{2}$ AND $R_{real} \neq R_{next}$}
+        \If{$p_{opt}.nextStepComponent$ is $c_{2}$ AND $R_{real} \neq R_{next}$}
           \State $isManipSuccess \gets False$
           \State $blockedObsL \gets blockedObsL \bigcup p_{opt}.o$
         \EndIf

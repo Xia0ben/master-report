@@ -22,12 +22,12 @@
       %
       % \EndIf
 
-      \State $euPosesCostL \gets \emptyset$ \Comment{Sort observation poses by ascending heuristic cost.}
+      \State $euPosesCostL \gets \emptyset$ \Comment{Sort observation poses by ascending heuristic cost.} \label{lst:line:occ_heur_1}
       \For{each $obsPose$ in $o.obsPoses$}
         \State $euPosesCostL$.insert$(\{obsPose, |{R, obsPose}| + |{obsPose, pushPose}|\})$
-      \EndFor
+      \EndFor \label{lst:line:occ_heur_2}
 
-      \If{$euPosesCostL \neq \emptyset$}
+      \If{$euPosesCostL \neq \emptyset$} \label{lst:line:traverse_eu_1}
         \State $op_{next} \gets euPosesCostL[0]$
         \While{$totalCost \geq op_{next}.cost$ AND $op_{next} \neq$ null}
           \State $c_{0_{cur}} \gets A$*($R$, $op_{next}.obsPose$, $I.occGrid$)
@@ -40,7 +40,7 @@
           \EndIf
           \State $op_{next} \gets euPosesCostL$.getNext()
         \EndWhile
-      \EndIf
+      \EndIf \label{lst:line:traverse_eu_2}
     \EndProcedure
 
   \end{algorithmic}

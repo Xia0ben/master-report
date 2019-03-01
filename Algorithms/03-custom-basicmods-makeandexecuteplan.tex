@@ -6,11 +6,11 @@
 
   \begin{algorithmic}[1]
 
-    \Procedure{MAKE-AND-EXECUTE-PLAN}{$R_{init}$, $R_{goal}$, $I_{init}$}
+    \Procedure{MAKE-AND-EXECUTE-PLAN}{$R_{init}$, $R_{goal}$, $I_{init}$} \label{lst:line:partialline_1}
 
       \State \dots \label{lst:line:initbis1} \Comment{Initialization (lines \ref{lst:line:init1} to \ref{lst:line:init2} in Algorithm \ref{alg:02-levihn-makeandexecuteplan})}
 
-      \State \hlgreen{$I \gets I_{init}$}
+      \State \hlgreen{$I \gets I_{init}$} \label{lst:line:partialline_2}
 
       \State $p_{opt}.components \gets [$\hlgreen{$A$*}($R_{init}$, $R_{goal}$, $I.occGrid$)]
       \State $p_{opt}.cost \gets |p_{opt}| * moveCost$ \label{lst:line:initbis2}
@@ -27,26 +27,26 @@
 
         \State $\mathcal{O} \gets I.allObstacles$
 
-        \State $isPathFree \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
+        \State $isPlanNotColliding \gets p_{opt} \bigcap \mathcal{O}_{new} \neq \emptyset$
 
         \State \hlgreen{$isPushPoseValid \gets True$} \label{lst:line:validity1}
         \State \hlgreen{$isManipSafe \gets True$}
         \State \hlgreen{$isObstacleSame \gets True$}
-        \If{\hlgreen{$p_{opt}.o$ exists}} \Comment{If $p_{opt}$ includes the manipulation of an obstacle.}
-          \State \hlgreen{$isObstacleSame \gets \mathcal{O}[p_{opt}.o] = p_{opt}.o$} \Comment{\nameref{operators_note}}
+        \If{\hlgreen{$p_{opt}.o$ exists}} \Comment{If $p_{opt}$ includes the manipulation of an obstacle.} \label{lst:line:checkvalidity_1}
+          \State \hlgreen{$isObstacleSame \gets \mathcal{O}[p_{opt}.o] = p_{opt}.o$} \label{lst:line:brackets_operator_1}
           \If{\hlgreen{\textbf{not} $isObstacleSame$}}
-            \State \hlgreen{$p_{opt}.o \gets \mathcal{O}[p_{opt}.o.id]$} \Comment{Update the copy.}
-            \State \hlgreen{$p_{opt}.safeSweptArea \gets$ GET-SAFE-SWEPT-AREA($p_{opt}.o$, $p_{opt}.translation$, $I$)}
-            \If{\hlgreen{$p_{opt}.pushPose \not\in p_{opt}.o.pushPoses$}}
+            \State \hlgreen{$p_{opt}.o \gets \mathcal{O}[p_{opt}.o.id]$} \Comment{Update the copy.} \label{lst:line:brackets_operator_2}
+            \State \hlgreen{$p_{opt}.safeSweptArea \gets$ GET-SAFE-SWEPT-AREA($p_{opt}.o$, $p_{opt}.translation$, $I$)} \label{lst:line:get_safe_swept_are_call_1}
+            \If{\hlgreen{$p_{opt}.nextStepComponent$ is $ c_{1}$ AND $p_{opt}.pushPose \not\in p_{opt}.o.pushPoses$}} \label{lst:line:pushpose_1}
               \State \hlgreen{$isPushPoseValid \gets False$}
-            \EndIf
+            \EndIf \label{lst:line:pushpose_2}
           \EndIf
-          \If{\hlgreen{$p_{opt}.safeSweptArea \bigcap \mathcal{O} \neq \emptyset$}} \Comment{\nameref{area_intersect_note}}
+          \If{\hlgreen{$p_{opt}.safeSweptArea \bigcap \mathcal{O} \neq \emptyset$}} \label{lst:line:area_intersect_1}
             \State \hlgreen{$isManipSafe \gets False$}
-          \EndIf
+          \EndIf \label{lst:line:area_intersect_2}
         \EndIf \label{lst:line:knowledge2} \label{lst:line:validity2}
 
-        \If{\textbf{not}($isPathFree$ AND $isManipSuccess$ \hlgreen{AND $isManipSafe$ AND $isPushPoseValid$})}
+        \If{\textbf{not}($isPlanNotColliding$ AND $isManipSuccess$ \hlgreen{AND $isManipSafe$ AND $isPushPoseValid$})}
           \State $p_{opt}.components \gets$ [\hlgreen{$A$*}($R$, $R_{goal}$, $I.occGrid$)]
           \State $p_{opt}.cost \gets |p_{opt}| * moveCost$
           \State MAKE-PLAN($R$, $R_{goal}$, $I$, $\mathcal{O}$, $blockedObsL$, $p_{opt}$, $euCostL$, $minCostL$)

@@ -1,4 +1,4 @@
-% Chapter 5
+Position% Chapter 5
 
 \chapter{Experimentations \& Validation} % Main chapter title
 
@@ -10,14 +10,14 @@
 
 \subsection{Pepper robot characteristics}
 
-\paragraph{} The Pepper robot is a mass-produced humanoid service robot by the company Softbank Robotics \footnote{Softbank Robotics website: \url{https://www.softbankrobotics.com/emea/en}}. For sensors, it is equipped with:
+\paragraph{} The Pepper robot is a mass-produced humanoid service robot by the company Softbank Robotics\footnote{Softbank Robotics website: \url{https://www.softbankrobotics.com/emea/en}}. For sensors, it is equipped with:
 
 \begin{itemize}
   \item Two sonars, at the front and the back (Figure \ref{fig:sonars}), that allow to detect obstacles in the close vicinity, but not to characterize their geometry (with them, the robot can only know that an obstacle is in front or behind, at a certain distance, but cannot discern its form),
   \item Three laser sensing units at the front and the sides (Figure \ref{fig:lasers}), that allow it to roughly detect the form of nearby obstacles (only 15 points per sensor at a maximum distance of 3 meters). It is to be noted that, together, these three units do not cover the surroundings of the robot at 360 degrees, but leave very big blind spots,
   \item Three bumpers at each corner of its triangular base, to detect collisions that may occur,
   \item A 2D RGB camera on its forehead (Figure \ref{fig:2d_camera}), that allows it to do image recognition tasks or simply filming its environment,
-  \item A 3D RGBD camera \footnote{Asus XTion Camera: \url{https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE/}} in its head (Figure \ref{fig:3d_camera}), behind the eye lenses, that allow it to construct a 3D point cloud of the obstacles in front of where its face is turned, which can be used to cover part of laser units blind spots,
+  \item A 3D RGBD camera\footnote{Asus XTion Camera: \url{https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE/}} in its head (Figure \ref{fig:3d_camera}), behind the eye lenses, that allow it to construct a 3D point cloud of the obstacles in front of where its face is turned, which can be used to cover part of laser units blind spots,
   \item An inertial measurement unit that allows it to know its orientation.
 \end{itemize}
 
@@ -43,7 +43,7 @@
   \caption{Lasers}
   \label{fig:lasers}
 \end{subfigure}
-\caption{Positioning and field of vision of Pepper's sonars and lasers}
+\caption{Position and field of vision of Pepper's sonars and lasers}
 \label{fig:sonars_lasers}
 \end{figure}
 
@@ -71,15 +71,15 @@
 
 \subsection{On experimentation repeatability with ROS and Pepper}
 
-\paragraph{} We mentioned at the beginning of our work that the \groupname \, uses ROS \footnote{ROS, the Robot Operating System, website: \url{http://www.ros.org/}} to program Pepper. ROS is a robotics middleware, and, in fact, not an operating system. It provides a high-level abstraction of hardware while still allowing for low-level device control, task distribution over a network capabilities, and most importantly, a message-passing system between processes, that allows a great diversity of programs written in many different languages to still be able to talk to one another. It also brings a package management system, that is coupled with the packaging system of the GNU/Linux distribution Ubuntu \footnote{Official website: https://www.ubuntu.com/}, allowing for plug-and-play capabilities for new software components.
+\paragraph{} We mentioned at the beginning of our work that the \groupname \, uses ROS\footnote{ROS, the Robot Operating System, website: \url{http://www.ros.org/}} to program Pepper. ROS is a robotics middleware, and, in fact, not an operating system. It provides a high-level abstraction of hardware while still allowing for low-level device control, task distribution over a network capabilities, and most importantly, a message-passing system between processes, that allows a great diversity of programs written in many different languages to still be able to talk to one another. It also brings a package management system, that is coupled with the packaging system of the GNU/Linux distribution Ubuntu\footnote{Official website: https://www.ubuntu.com/}, allowing for plug-and-play capabilities for new software components.
 
-\paragraph{} Experimentation reproducibility has been a long standing problem in robotics \parencite{guglielmelli_research_2015, bonsignorio_toward_2015}. As an example, in the entire studied corpus presented in Chapter \ref{Chapter2}, no paper links to actual code or a Virtual Machine (VM) to test the simulations. Even using a standard like ROS does not make an experiment done with it reproducible in itself, since one needs the exact same version of ROS, the same GNU/Linux distribution and version, the same libraries, the same robotic platform with the same peripherals (when using a real robot), \dots To solve this problem at least on a software level, in the last few years, the ROS foundation financed efforts toward using ROS inside of Docker \footnote{https://www.docker.com/} containers \parencite{white_ros_2017}, a technology close to the idea of a VM, but lighter and faster, since it does not isolate the running code as much as a VM.
+\paragraph{} Experimentation reproducibility has been a long standing problem in robotics \parencite{guglielmelli_research_2015, bonsignorio_toward_2015}. As an example, in the entire studied corpus presented in Chapter \ref{Chapter2}, no paper links to actual code or a Virtual Machine (VM) to test the simulations. Even using a standard like ROS does not make an experiment done with it reproducible in itself, since one needs the exact same version of ROS, the same GNU/Linux distribution and version, the same libraries, the same robotic platform with the same peripherals (when using a real robot), \dots To solve this problem at least on a software level, in the last few years, the ROS foundation financed efforts toward using ROS inside of Docker\footnote{https://www.docker.com/} containers \parencite{white_ros_2017}, a technology close to the idea of a VM, but lighter and faster, since it does not isolate the running code as much as a VM.
 
-\paragraph{} We have therefore built upon this work to propose a Docker container configuration that allows to connect to the Pepper Robot and reproduce the following experiment on any Linux-Enabled system. All instructions required to set it up are available in the following git repository: \\ \url{https://github.com/Xia0ben/rosdocked-kinetic-pepper}.
+\paragraph{} For us to be able to actually execute our experiment, and for allowing others to reproduce it more easily, we have therefore built upon this work to propose a Docker container configuration that allows to connect to the Pepper Robot and reproduce the following experiment on any Linux-Enabled system. All instructions required to set it up are available in the following git repository: \\ \url{https://github.com/Xia0ben/rosdocked-kinetic-pepper}.
 
 \subsection{Experiment}
 
-\paragraph{Objective} We want to test several house-environment movable obstacles types to see if and how Pepper could manipulate them with confidence as to the results.
+\paragraph{Objective} We want to test several movable obstacles types to see if and how Pepper could manipulate them with confidence as to the results.
 
 \paragraph{Hypothesis} Given the round nature of Pepper's base front, we suppose that light obstacles and obstacles with wheelcasters could be moved. We suppose that placing the robot at the center of the obstacle's side, and pushing in a perpendicular direction to it gives the most repeatable results.
 
@@ -165,20 +165,20 @@
 
 \subsection{Simulator presentation}
 
-\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: http://wiki.ros.org/rviz}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
+\paragraph{} In order to test our propositions in Chapter \ref{Chapter4}, and validate our many improvements over the original algorithm formulation in Chapter \ref{Chapter3}, we developed a custom simulator based on ROS standards. By that, we mean that the simulator uses ROS standard message types\footnote{See ROS documentation page: \url{http://wiki.ros.org/common_msgs}}, to exchange data about the poses, observations of the robot, path to follow, ... This, in itself, reduces the gap to implement our propositions on a real robot (Pepper), since the only missing piece for a first implementation in the real world is an obstacle sensing identification component that would produce the data currently provided by our simulator (pointcloud of the obstacles geometry with each point identified with a specific obstacle id). The vizualition is done by RViz\footnote{See ROS documentation page: \url{http://wiki.ros.org/rviz}}(Figure \ref{fig:rviz}), the standard 3D visualizer for ROS, simply by listening to the messages exchanged by the program and the simulator and displaying them with its default visual components.
 
-\paragraph{} It is to be noted that the optimality target for this implementation is at the moment only expressed in distance, but it is relatively trivial to express it in time or energy, by using the $move\_cost$ and $push\_cost$ currently present in the algorithm and passing them to the A* path finding subroutine.
+\paragraph{} It is to be noted that the optimality target for this implementation is at the moment only expressed in distance, but it is relatively trivial to express it in time or energy, by using the $moveCost$ and $pushCost$ constants currently present in the algorithm and passing them to the A* path finding subroutine.
 
 \paragraph{} All the code and its execution instructions are available on the following repository: \\ \url{https://github.com/Xia0ben/namo_navigation} .
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=14cm]{Figures/Simulation/rviz.png}
-\caption{Rviz interface screenshot. On the left, we can see the visual components used and the message topics they listen to. In the center, we can see in real time the execution of the algorithm.}
+\caption{Rviz interface screenshot. On the left, we can see the visual components used and the message topics they listen to. In the center, we can see in real time the execution of the algorithm: the representations are explained in the following section \ref{simulation_results_subsection}.}
 \label{fig:rviz}
 \end{figure}
 
-\subsection{Simulation results}
+\subsection{Simulation results}\label{simulation_results_subsection}
 
 \paragraph{} At the time of the writing of this report, we were only able to implement the algorithm and the necessary simulation code for the solution presented in section \ref{discussion_hypotheses_section} (and corresponding algorithms \ref{alg:03-custom-basicmods-makeandexecuteplan}, \ref{alg:02-levihn-makeplan} and \ref{alg:03-custom-basicmods-planforobstacle}), but not the three propositions that build upon it. This still allowed us to validate all comments and improvements made in Chapter \ref{Chapter3} and in the first section of Chapter \ref{Chapter4}. Below are a few figures (\ref{fig:simulation}) showing a test case in a corridor with two obstacles.
 
@@ -252,5 +252,5 @@
 \caption{} \label{fig:simulation_12}
 \end{subfigure}
 
-\caption{Simple simulation in a corridor with a movable (top one) and an unmovable (bottom one) obstacles with our algorithm as presented in sectoin \ref{discussion_hypotheses_section}.} \label{fig:simulation}
+\caption{Simple simulation in a corridor with a movable (top one) and an unmovable (bottom one) obstacles with our algorithm as presented in section \ref{discussion_hypotheses_section}. Our representations are explained in the previous paragraphs.} \label{fig:simulation}
 \end{figure}
