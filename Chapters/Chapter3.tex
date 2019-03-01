@@ -271,27 +271,19 @@
 
 \paragraph{} The first ambiguity in the second article \parencite{levihn_locally_2014} is that the D* Lite algorithm is mentioned instead of A*, but not even a hint of an explanation is given as to why this change, or what difference in the implementation it makes. The main feature of D* Lite being that it is designed for navigation in dynamic environments, given that no propositions are given to adapt the rest of the algorithm to dynamic environments, we will assume that no particular advantage is obtained by using D* Lite rather than A* in the proposition. Therefore, in our own proposition presented in the next chapter, we shall continue using A* as our path finding subroutine.
 
-\paragraph{} The second ambiguity is about manipulation poses, again, as in previous section. In the article, the authors claim that \textit{"c1 only needs to be calculated once for the entire process of evaluating the current object."}. With the same reasoning as in the previous paragraph \nameref{obstacle_pushpose_note}, this affirmation can only be true if the algorithm operates under the \textbf{implicit hypothesis that for all given manipulation directions, only one point around the obstacle is considered a valid manipulation start point}. From the video \footnote{Video: \url{https://youtu.be/3AvfPVzBb-s}} accompanying the article, this point seems to be the nearest point from the robot, situated at a radius distance from the middle of a side of the obstacle. However, this hypothesis actually hinders optimality: if there is in fact a valid manipulation point for each side of the obstacle, and the algorithm knowingly doesn't consider them because they are further from the current robot's position, it will ignore the fact that a same manipulation direction could end up in opening a better path if the obstacle were moved from another manipulation point (see figures below). To guarantee optimality, we would have to simulate the manipulation in the given direction for every reachable manipulation point, thus re-evaluating $c_{1}$ for each, which would result in adding an extra "for" loop englobing the existing one.
+\paragraph{} The second ambiguity is about manipulation poses, again, as in previous section. In the article, the authors claim that \textit{"c1 only needs to be calculated once for the entire process of evaluating the current object."}. With the same reasoning as in the previous paragraph \nameref{obstacle_pushpose_note}, this affirmation can only be true if the algorithm operates under the \textbf{implicit hypothesis that for all given manipulation directions, only one point around the obstacle is considered a valid manipulation start point}. From the video \foostnote{Video: \url{https://youtu.be/3AvfPVzBb-s}} accompanying the article, this point seems to be the nearest point from the robot, situated at a radius distance from the middle of a side of the obstacle. However, this hypothesis actually hinders optimality: if there is in fact a valid manipulation point for each side of the obstacle, and the algorithm knowingly doesn't consider them because they are further from the current robot's position, it will ignore the fact that a same manipulation direction could end up in opening a better path if the obstacle were moved from another manipulation point (see figures below). To guarantee optimality, we would have to simulate the manipulation in the given direction for every reachable manipulation point, thus re-evaluating $c_{1}$ for each, which would result in adding an extra "for" loop englobing the existing one.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.35\textwidth}
   \centering
-<<<<<<< HEAD
   \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_2.png}
-=======
-  \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_1.png}
->>>>>>> cf04df23c2850c31c0414a4c62a412372108597b
   \caption{Nearest manipulation pose doesn't allow moving the obstacle at all (red crosses represent impossible manipulation directions).}
   \label{fig:manip_pose_2}
 \end{subfigure}\hspace*{\fill}
 \begin{subfigure}{.35\textwidth}
   \centering
-<<<<<<< HEAD
   \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_4.png}
-=======
-  \includegraphics[width=\linewidth]{Figures/Manipulation_Pose/manip_pose_2.png}
->>>>>>> cf04df23c2850c31c0414a4c62a412372108597b
   \caption{But if we also consider the other pose, a valid plan can be found (green circle represents possible manipulation direction).}
   \label{fig:manip_pose_4}
 \end{subfigure}
